@@ -1,6 +1,9 @@
 name: Neurofluxion research validation
 
 on:
+  push:
+    branches:
+      - research/empirical-validation-protocol
   workflow_dispatch:
   pull_request:
     paths:
