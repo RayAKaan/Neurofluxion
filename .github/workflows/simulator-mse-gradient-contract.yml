@@ -1,0 +1,33 @@
+name: Simulator MSE gradient contract
+
+on:
+  push:
+    branches:
+      - fix/simulator-mse-gradient-contract
+  pull_request:
+    paths:
+      - "backend/simulator/backward_engine.py"
+      - "backend/tests/test_simulator_mse_gradient_contract.py"
+      - ".github/workflows/simulator-mse-gradient-contract.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  gradient-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install test dependencies
+        run: python -m pip install --disable-pip-version-check numpy pytest
+      - name: Run gradient contract and simulator smoke tests
+        env:
+          PYTHONPATH: backend
+        run: |
+          python -m pytest \
+            backend/tests/test_simulator_mse_gradient_contract.py \
+            backend/tests/test_simulator_smoke.py -q
