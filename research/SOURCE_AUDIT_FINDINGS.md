@@ -17,7 +17,7 @@ These paths are not interchangeable. Paper figures, experiments, and conclusions
 
 Static inspection of backend/simulator/execution_engine.py shows that its backward method creates deltas from random values, assigns constant placeholder gradients, and returns a random loss value. Its train method generates random synthetic loss/accuracy histories rather than updating parameters from the supplied dataset.
 
-The corresponding API routes expose these methods through /api/execute/backward and /api/execute/train. This is a source-level finding, not a claim about whether the frontend currently uses those endpoints. Route usage and UI wiring require a separate audit.
+The corresponding API routes expose these methods through /api/execute/backward and /api/execute/train. This is a source-level finding, not a claim that the main Simulator page uses those endpoints. Targeted inspection of frontend/src/pages/SimulatorPage.tsx and frontend/src/hooks/useSimulatorApi.ts shows that the main Simulator UI calls /api/simulator/* routes. frontend/src/api/execution.ts calls /api/lab/* routes, not /api/execute/*. A full frontend-wide call-site audit remains open, so the exposed /api/execute endpoints must not be represented as the active Simulator UI's training implementation.
 
 **Paper consequence:** do not claim that the /api/execute/* path implements mathematically correct backpropagation or real dataset training. Keep any claims about the separate graph_engine/backward_engine path independent, and validate that path with the finite-difference harness. If the paper describes the whole product, this behavior must be included as a limitation or explicitly scoped out.
 
