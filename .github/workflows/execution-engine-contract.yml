@@ -1,0 +1,28 @@
+name: Execution engine numerical contracts
+
+on:
+  pull_request:
+    paths:
+      - "backend/simulator/execution_engine.py"
+      - "backend/api/execute_routes.py"
+      - "backend/tests/test_execution_engine_numerics.py"
+      - ".github/workflows/execution-engine-contract.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  execution-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install minimal numerical dependencies
+        run: python -m pip install --disable-pip-version-check numpy pytest
+      - name: Run execution engine contracts
+        env:
+          PYTHONPATH: backend
+        run: python -m pytest backend/tests/test_execution_engine_numerics.py -q
