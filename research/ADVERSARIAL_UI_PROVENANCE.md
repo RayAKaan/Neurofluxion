@@ -23,3 +23,8 @@ The dedicated workflow [38574488415](https://github.com/RayAKaan/Neurofluxion/ac
 The workflow is green because the known defect is marked as an expected failure, not because the invariant passed. The artifact is retained at [neurofluxion-adversarial-browser-report](https://github.com/RayAKaan/Neurofluxion/actions/runs/38574488415/artifacts/11898532514).
 
 Next action to close the defect requires a separately authorized runtime change that correlates responses to graph/request identity and invalidates obsolete inspection state. Until then, keep this test as an explicit expected failure and do not claim provenance integrity.
+
+
+## Graph-switch invalidation case (PR #51 workstream)
+
+A second expected-failure browser test now isolates graph-switch invalidation from the asynchronous race: it completes a forward request with a unique sentinel, builds a replacement graph, and asserts the prior inspection sentinel is removed. The test is marked as an expected failure until a runtime fix is separately authorized. A green workflow means Playwright observed the known failure as expected, not that graph-switch state invalidation passed.
