@@ -93,3 +93,10 @@ An optimizer fallback defect was found and corrected in merged PR #28: unknown o
 - **PR #52 open:** the OpenAlex/Crossref export script's offline tests passed in [38583891003](https://github.com/RayAKaan/Neurofluxion/actions/runs/38583891003). A live export has not yet been produced; the review remains incomplete pending live exports, manual duplicate adjudication, screening, full-text review, and citation snowballing.
 
 All claims above are scoped to the stated fixed tests. They do not establish general operator correctness, model convergence, or UI provenance integrity. Runtime/application source remains read-only.
+
+
+## Graph-family training checks completed (2026-10-14)
+
+- PR #53's Conv2D→BatchNorm→Flatten→Dense one-batch training contract passed dedicated workflow [38584049859](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584049859), research [38584049658](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584049658), frozen-main [38584049840](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584049840), and full-stack [38584049641](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584049641).
+- PR #54's Embedding→Attention→RNN→Dense one-batch training contract passed dedicated workflow [38584232382](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584232382), research [38584232409](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584232409), frozen-main [38584232291](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584232291), and full-stack [38584232288](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584232288).
+- Both are one-batch parameter-update contracts. Neither establishes gradient correctness or convergence; the finite-difference tests are separate evidence.
