@@ -86,7 +86,7 @@ The principal interaction is \emph{construct or select} $\rightarrow$ \emph{exec
 \draw[->,thick] (graph) -- (engine);
 \draw[->,thick] (engine) -- (srecords);
 \draw[->,thick] (srecords) -- (sinspect);
-\node[note,below=6mm of graph] (synthetic) {Separate \texttt{/stream} endpoint: synthetic demonstration topology and generated metrics, not live execution of either path. The two paths do not share weights or numerical state automatically.};
+\node[note,below=6mm of engine] (synthetic) {Separate \texttt{/stream} endpoint: synthetic demonstration topology and generated metrics, not live execution of either path. The two paths do not share weights or numerical state automatically.};
 \end{tikzpicture}
 \caption{Source-grounded system boundary. The Keras trace and NumPy simulator are independent paths with different trace semantics; the synthetic \texttt{/stream} endpoint is not a model-execution trace.}
 \label{fig:workflow}
