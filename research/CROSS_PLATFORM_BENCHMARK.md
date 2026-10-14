@@ -66,3 +66,18 @@ Second-run artifacts: [Linux report](https://github.com/RayAKaan/Neurofluxion/ac
 The benchmark matrix now includes `macos-14` alongside Ubuntu and Windows. The same script records `platform.system()`, `platform.release()`, `platform.machine()`, `platform.processor()`, Python, NumPy, the checked-out source SHA, raw samples, and output parity. Interpret architecture from the artifact itself; do not assume the runner is a different CPU architecture based only on its OS label.
 
 This adds another OS/runner environment, but it should only be described as hardware-diverse if the recorded machine/processor metadata supports that conclusion. Await the workflow artifact before adding numerical results to the paper.
+
+## Three-environment run (2026-10-14)
+
+Workflow [38575778406](https://github.com/RayAKaan/Neurofluxion/actions/runs/38575778406) passed output parity on Ubuntu x86_64, Windows AMD64, and macOS 14 arm64. All three artifacts record the same tested source revision `0b7a3e12ae37732a3870fdd2b22f480f4e2845c9`, NumPy 2.4.6, five warmups, and 40 raw samples per path/case. Maximum absolute output error was 0.0 for every case.
+
+| Widths (input-hidden-output) | Linux x86_64 ratio | Windows AMD64 ratio | macOS arm64 ratio |
+|---|---:|---:|---:|
+| [4, 8, 2] | 2.28× | 2.13× | 2.46× |
+| [16, 32, 8] | 4.39× | 3.97× | 5.56× |
+| [32, 64, 16] | 9.51× | 8.13× | 13.27× |
+| [64, 128, 32] | 26.87× | 15.93× | 39.62× |
+
+The macOS artifact reports `Darwin`, `arm64`, processor `arm`, macOS 14.8.9, and Python 3.11.9. This is the first run in this workstream with a recorded ARM64 runner, so it provides a distinct architecture class. However, this is only one run per OS in this workflow; the Windows largest-case ratio in particular differs from earlier runs, underscoring runner and timing variability. Do not pool absolute times or claim universal overhead. The broad pattern that the trace path's ratio increases with width appears in this run across all three environments, but additional independent runs and raw-distribution inspection are still required.
+
+Artifacts: [Linux x86_64](https://github.com/RayAKaan/Neurofluxion/actions/runs/38575778406/artifacts/11900340478), [Windows AMD64](https://github.com/RayAKaan/Neurofluxion/actions/runs/38575778406/artifacts/11899657873), [macOS ARM64](https://github.com/RayAKaan/Neurofluxion/actions/runs/38575778406/artifacts/11900720150).
