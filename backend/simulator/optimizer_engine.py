@@ -77,5 +77,8 @@ def apply_update(
         new_b = [b - lr * m / (np.sqrt(v) + eps) for b, m, v in zip(biases, m_b_hat, v_b_hat)]
         return new_w, new_b, state
 
-    return weights, biases, state
+    raise ValueError(
+        f"Unsupported optimizer '{optimizer}'. "
+        "Choose from sgd, sgd_momentum, momentum, rmsprop, or adam."
+    )
 
