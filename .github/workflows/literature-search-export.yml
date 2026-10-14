@@ -1,0 +1,58 @@
+name: Neurofluxion reproducible literature search export
+
+on:
+  pull_request:
+    paths:
+      - "research/experiments/literature_search_export.py"
+      - "research/experiments/test_literature_search_export.py"
+      - ".github/workflows/literature-search-export.yml"
+  workflow_dispatch:
+    inputs:
+      max_pages:
+        description: "Maximum pages per query per source (1-10)"
+        required: false
+        default: "2"
+      page_size:
+        description: "Records per page (1-200)"
+        required: false
+        default: "100"
+
+permissions:
+  contents: read
+
+jobs:
+  offline-tests:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Test normalization, deduplication, and export format
+        working-directory: research/experiments
+        run: python -m unittest test_literature_search_export.py -v
+
+  live-export:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run OpenAlex and Crossref searches
+        run: |
+          python research/experiments/literature_search_export.py \
+            --out /tmp/literature-search-export \
+            --page-size "${{ inputs.page_size || '100' }}" \
+            --max-pages "${{ inputs.max_pages || '2' }}"
+      - name: Upload raw, deduplicated, and screening exports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: neurofluxion-literature-search-export
+          path: /tmp/literature-search-export
+          if-no-files-found: warn
+          retention-days: 90
