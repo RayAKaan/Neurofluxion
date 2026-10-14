@@ -15,7 +15,7 @@ Status vocabulary: **Source-confirmed** = directly visible in audited source/doc
 | C-09 | Training telemetry is streamed over WebSockets. | README; `backend/training/manager.py`; `backend/api/train_ws.py` | Source-confirmed by README/tree | Verify emitted metrics and state transitions; distinguish simulator vs framework training. |
 | C-10 | `/stream` represents actual neural-network execution. | README; `backend/api/stream_ws.py` | Explicitly not assumed | Audit; README describes topology + metrics stream. Label synthetic/animated if confirmed. |
 | C-11 | Simulator explanations implement canonical IG/LIME/DeepSHAP/LRP. | `backend/simulator/interpretability/` | Not established | Do not claim canonical fidelity without equation-level audit and reference tests. |
-| C-12 | System is numerically correct across supported operations. | `backend/tests/` | Pending | Run focused numerical tests; report operation-specific results and tolerances. |
+| C-12 | System is numerically correct across supported operations. | `backend/tests/`; research graph-gradient and training-contract workflows | Bounded, partial evidence | Fixed graph-level finite-difference oracles now cover Dense, RNN, LSTM, GRU, Embedding→Attention→RNN→Dense, and Conv2D→BatchNorm→Flatten→Dense. Training-update contracts cover fixed LSTM/GRU, Conv2D/BatchNorm, and Embedding/Attention/RNN/Dense batches. Do not generalize these checks to all shapes, losses, optimizer settings, or convergence; retain the claim as operation/configuration-specific. |
 | C-13 | Frontend build and backend test suite pass at paper baseline. | README test/build instructions | Test-reported only | Run and preserve exact commands, environment, SHA, output. |
 | C-14 | System improves learning outcomes or usability. | No user study identified | Unsupported currently | Do not claim; requires a separately designed human-subject evaluation. |
 | C-15 | Neurofluxion is novel/first/superior to existing tools. | No comparative study | Unsupported | Avoid priority and superiority claims; frame as an implementation/integration contribution. |
@@ -28,3 +28,16 @@ For every verified claim, record:
 - Verification command and environment
 - Outcome, logs/artifact path, limitations
 - Manuscript section/table/figure where used
+
+
+## Research validation added after initial paper baseline (2026-10-14)
+
+The original rows above were drafted before the recent research PR series. They remain a source-claim checklist and are not evidence that the full paper audit is complete.
+
+- Graph-level central finite-difference checks now cover fixed Dense/Conv2D, RNN, LSTM, GRU, Embedding→single-head Attention→RNN→Dense, and Conv2D→BatchNorm→Flatten→Dense configurations. These are independent numerical checks only for their stated graph, input, objective, dtype, seed and tolerances.
+- One-batch optimizer-path checks cover LSTM/GRU, Conv2D/BatchNorm, and Embedding/Attention/RNN/Dense parameter updates. These do not prove gradient correctness or convergence.
+- Adversarial browser tests expose stale inspection state after graph replacement and out-of-order responses. They remain expected failures until the runtime invariants are fixed and the tests pass as ordinary assertions.
+- The related-work list now includes a targeted 2026 execution-trace visualization source. The literature review is still not systematic/comprehensive; no “first,” superiority, or priority claim is supported.
+- The literature export pipeline has offline unit coverage. Live exports, duplicate adjudication, screening, full-text review and citation snowballing remain pending.
+
+Before publication, perform the remaining source audit (including details, model registry, training, stream semantics and frontend wiring), select a venue, resolve all citations/placeholders, generate real or explicitly schematic figures, freeze a source revision, and run the full integrated validation against that exact revision.

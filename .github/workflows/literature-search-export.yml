@@ -1,6 +1,13 @@
 name: Neurofluxion reproducible literature search export
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "research/experiments/literature_search_export.py"
+      - "research/experiments/test_literature_search_export.py"
+      - ".github/workflows/literature-search-export.yml"
   pull_request:
     paths:
       - "research/experiments/literature_search_export.py"
@@ -34,7 +41,7 @@ jobs:
         run: python -m unittest test_literature_search_export.py -v
 
   live-export:
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
