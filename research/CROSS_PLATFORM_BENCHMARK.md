@@ -45,3 +45,18 @@ Environment metadata:
 The ratio increases with graph width in both environments, while the absolute timing differs by OS and runner. This is evidence that the qualitative pattern reproduces across these two hosted runner environments, not evidence of universal overhead: there is one run per OS, both are CI runners, and full trace creation performs more work than returning the final output. Re-run independent workflow instances and add a local/hardware-diverse environment before drawing stronger conclusions.
 
 Artifacts: [Linux report](https://github.com/RayAKaan/Neurofluxion/actions/runs/38571861118/artifacts/11897078940) and [Windows report](https://github.com/RayAKaan/Neurofluxion/actions/runs/38571861118/artifacts/11898462192). Each contains raw samples and environment/source metadata.
+
+## Repeat run
+
+A second workflow execution, [run 38572234533](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572234533), also passed output parity for all cases on both systems. It tested checkout revision `d4925bc050be88265bf0dddc489864663910f038`; each report contains 40 raw samples per path/case.
+
+| Widths | Linux forward median (ms) | Linux trace median (ms) | Linux ratio | Windows forward median (ms) | Windows trace median (ms) | Windows ratio |
+|---|---:|---:|---:|---:|---:|---:|
+| [4, 8, 2] | 0.004036 | 0.009434 | 2.34× | 0.008800 | 0.018750 | 2.13× |
+| [16, 32, 8] | 0.004101 | 0.018608 | 4.54× | 0.009000 | 0.033800 | 3.76× |
+| [32, 64, 16] | 0.004212 | 0.042104 | 10.00× | 0.009300 | 0.070350 | 7.56× |
+| [64, 128, 32] | 0.004532 | 0.123637 | 27.28× | 0.010000 | 0.212850 | 21.29× |
+
+Across the two runs per OS, the median ratios fell in these ranges by increasing graph width: Linux 2.27–2.34×, 4.54–4.69×, 10.00–10.46×, and 27.28–30.39×; Windows 2.13–2.14×, 3.76–4.21×, 7.56–8.36×, and 21.29–24.08×. The qualitative scaling pattern is consistent across these two hosted runner families and two executions, but these runs are not independent hardware replications and absolute timing varies by runner. Continue to label this diagnostic evidence, not a general performance claim.
+
+Second-run artifacts: [Linux report](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572234533/artifacts/11897159186) and [Windows report](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572234533/artifacts/11897638630).
