@@ -1,0 +1,50 @@
+name: BatchNorm gradient contract
+
+on:
+  pull_request:
+    paths:
+      - "backend/simulator/layers/batchnorm.py"
+      - "backend/tests/test_batchnorm_gradient_contract.py"
+      - ".github/workflows/batchnorm-gradient-contract.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  batchnorm-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install numerical test dependencies
+        run: python -m pip install --disable-pip-version-check numpy pytest
+      - name: Run BatchNorm gradient contracts and simulator smoke tests
+        env:
+          PYTHONPATH: backend
+        run: >-
+          python -m pytest
+          backend/tests/test_batchnorm_gradient_contract.py
+          backend/tests/test_simulator_smoke.py
+          -q
+
+  full-backend-suite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+      - name: Install backend dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r backend/requirements.txt pytest httpx2
+      - name: Run backend suite
+        env:
+          PYTHONPATH: backend
+        run: python -m pytest backend/tests -q

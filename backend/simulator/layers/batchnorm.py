@@ -69,14 +69,31 @@ class BatchNormLayer:
             dx = dx_hat / np.sqrt(self.var[:, None, None] + self.eps) + dvar[:, None, None] * 2 * (x - self.mean[:, None, None]) / N + dmean[:, None, None] / N
             return dx.astype(np.float32)
 
-        N = x.shape[0]
         x_hat = self.x_hat
-        self.dgamma = np.sum(d_out * x_hat)
-        self.dbeta = np.sum(d_out)
+        if x.ndim == 1:
+            # A single observation has zero centered activation under the
+            # layer's current single-sample statistics.
+            self.dgamma = np.zeros_like(self.gamma)
+            self.dbeta = np.asarray(d_out, dtype=np.float32).copy()
+            return np.zeros_like(x, dtype=np.float32)
+
+        N = x.shape[0]
+        self.dgamma = np.sum(d_out * x_hat, axis=0)
+        self.dbeta = np.sum(d_out, axis=0)
         dx_hat = d_out * self.gamma
-        dvar = np.sum(dx_hat * (x - self.mean) * -0.5 * (self.var + self.eps) ** -1.5)
-        dmean = np.sum(dx_hat * -1 / np.sqrt(self.var + self.eps)) + dvar * np.mean(-2 * (x - self.mean))
-        dx = dx_hat / np.sqrt(self.var + self.eps) + dvar * 2 * (x - self.mean) / N + dmean / N
+        dvar = np.sum(
+            dx_hat * (x - self.mean) * -0.5 * (self.var + self.eps) ** -1.5,
+            axis=0,
+        )
+        dmean = (
+            np.sum(dx_hat * -1 / np.sqrt(self.var + self.eps), axis=0)
+            + dvar * np.mean(-2 * (x - self.mean), axis=0)
+        )
+        dx = (
+            dx_hat / np.sqrt(self.var + self.eps)
+            + dvar * 2 * (x - self.mean) / N
+            + dmean / N
+        )
         return dx.astype(np.float32)
 
     def params(self) -> tuple[np.ndarray, np.ndarray]:
