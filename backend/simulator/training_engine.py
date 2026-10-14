@@ -118,7 +118,7 @@ class TrainingEngine:
                 activation = get_activation(act_name)
                 if idx == num_layers - 1:
                     if self.config.loss_function == "mse":
-                        delta = (y_hat - y) * activation.derivative(z)
+                        delta = ((y_hat - y) / max(1, y.size)) * activation.derivative(z)
                     else:
                         delta = y_hat - y
                 else:
@@ -132,8 +132,6 @@ class TrainingEngine:
                 if self.config.l2_lambda > 0.0:
                     grads_w[idx] += self.config.l2_lambda * self.graph.weights[idx]
                 grads_b[idx] = delta.copy()
-            grads_w = list(reversed(grads_w))
-            grads_b = list(reversed(grads_b))
             return grads_w, grads_b
 
         grads_by_layer: Dict[int, Dict[str, np.ndarray]] = {}
@@ -142,7 +140,7 @@ class TrainingEngine:
         if hasattr(last_layer, "activation_name"):
             act = get_activation(last_layer.activation_name)
             if self.config.loss_function == "mse" and hasattr(last_layer, "Z") and last_layer.Z is not None:
-                d_out = (y_hat - y) * act.derivative(last_layer.Z)
+                d_out = (y_hat - y) / max(1, y.size)
             else:
                 d_out = y_hat - y
         else:
