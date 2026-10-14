@@ -137,3 +137,10 @@ Five independent CI runs were inspected: [38492813970](https://github.com/RayAKa
 - The graph-family audit artifact reported **8/8** fixed cases with finite gradient tensors: dense, Conv2D→MaxPool→Flatten, BatchNorm, RNN, LSTM, GRU, Embedding→Attention→RNN, and residual.
 - Full-stack workflow [38574104816](https://github.com/RayAKaan/Neurofluxion/actions/runs/38574104816) passed backend tests, frontend build, and the existing browser E2E on the PR head.
 - Scope: finite-gradient smoke results are not proof of gradient correctness. Independent finite differences/analytic oracles, non-dense parameter-update tests, and training trajectories for other families remain open.
+
+
+## Graph-integrated finite-difference oracles (PR #43, 2026-10-14)
+
+- Workflow [38575599616](https://github.com/RayAKaan/Neurofluxion/actions/runs/38575599616) passed central finite-difference checks for Conv2D→Flatten→Dense and short tanh RNN→Dense graph backward paths.
+- Protocol: epsilon 1e-3, rtol 2e-2, atol 2e-3, fixed seeds, MSE.
+- This is independent numerical evidence for two specific mixed-layer graphs. It does not generalize to all operator families, losses, shapes, or integrated training configurations.
