@@ -12,7 +12,12 @@ test("Simulator displays the exact backend trace returned for its current run", 
   });
 
   await page.goto("/");
-  await expect(page.getByText("Backend ready", { exact: true })).toBeVisible({ timeout: 30_000 });
+  // The app also mirrors this status in an aria-live region; scope to the visible
+  // navigation status to avoid Playwright strict-mode ambiguity.
+  await expect(
+    page.getByRole("complementary", { name: "Primary navigation" }).getByText("Backend ready", { exact: true })
+  ).toBeVisible({ timeout: 30_000 });
+
   await page.getByRole("button", { name: /Simulator/ }).click();
   await expect(page).toHaveTitle("Simulator · Neurofluxion");
   await expect(page.getByRole("note")).toContainText("ran one random forward pass");
