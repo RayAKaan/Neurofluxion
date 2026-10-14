@@ -62,38 +62,33 @@ The principal interaction is \emph{construct or select} $\rightarrow$ \emph{exec
 \centering
 \begin{tikzpicture}[
   >=Latex,
-  node distance=5mm and 6mm,
-  pathbox/.style={draw,rounded corners=2pt,thick,align=center,text width=28mm,minimum height=10mm,inner sep=3pt},
+  node distance=4mm and 5mm,
+  pathbox/.style={draw,rounded corners=2pt,thick,align=center,text width=25mm,minimum height=10mm,inner sep=2.5pt,font=\scriptsize},
   ui/.style={pathbox,fill=gray!10,draw=gray!65},
   keras/.style={pathbox,fill=blue!7,draw=blue!55!black},
   sim/.style={pathbox,fill=green!8,draw=green!45!black},
-  note/.style={draw,dashed,rounded corners=2pt,align=center,text width=33mm,inner sep=3pt,font=\scriptsize}
+  note/.style={draw,dashed,rounded corners=2pt,align=center,text width=145mm,inner sep=3pt,font=\scriptsize}
 ]
-\node[ui] (client) {React client\\Lab / Simulator};
-\node[ui,right=of client] (api) {FastAPI\\separate routes};
-\node[keras,right=12mm of api,yshift=10mm] (model) {TensorFlow/Keras\\selected model};
+\node[ui] (front) {React client\\+ FastAPI routes};
+\node[keras,right=of front] (model) {TensorFlow/Keras\\selected model};
 \node[keras,right=of model] (ktrace) {Activation model\\layer outputs};
 \node[keras,right=of ktrace] (krecords) {Keras trace records\\some outputs bounded};
-\node[sim,below=14mm of model] (graph) {NumPy simulator\\configured graph};
-\node[sim,right=of graph] (engine) {Forward/backward\\and training paths};
-\node[sim,right=of engine] (srecords) {Simulator steps\\dense substeps;\\other layers often coarse};
 \node[ui,right=of krecords] (kinspect) {Lab inspection};
+\node[sim,right=of front,yshift=-13mm] (graph) {NumPy simulator\\configured graph};
+\node[sim,right=of graph] (engine) {Forward/backward\\and training paths};
+\node[sim,right=of engine] (srecords) {Simulator steps\\dense substeps; other layers often coarse};
 \node[ui,right=of srecords] (sinspect) {Simulator inspection};
-\draw[->,thick] (client) -- (api);
-\draw[->,thick] (api.east) -- ++(3mm,0) |- (model.west);
+\draw[->,thick] (front.east) -- ++(2mm,0) |- (model.west);
 \draw[->,thick] (model) -- (ktrace);
 \draw[->,thick] (ktrace) -- (krecords);
 \draw[->,thick] (krecords) -- (kinspect);
-\draw[->,thick] (api.east) -- ++(3mm,0) |- (graph.west);
+\draw[->,thick] (front.east) -- ++(2mm,0) |- (graph.west);
 \draw[->,thick] (graph) -- (engine);
 \draw[->,thick] (engine) -- (srecords);
 \draw[->,thick] (srecords) -- (sinspect);
-\node[note,below=7mm of engine] (synthetic) {Synthetic \,/stream demo: fixed illustrative topology and generated metrics; not a trace of either execution path};
-\draw[->,dashed,gray] (api.south) |- (synthetic.west);
-\node[draw=orange!65!black,fill=orange!8,rounded corners=2pt,align=center,text width=42mm,below=7mm of srecords,font=\scriptsize] (boundary) {No shared model weights or automatic numerical equivalence between the Keras and NumPy paths};
-\draw[->,dashed,orange!65!black] (boundary.north) -- (srecords.south);
+\node[note,below=6mm of graph] (synthetic) {Separate \texttt{/stream} endpoint: synthetic demonstration topology and generated metrics, not live execution of either path. The two paths do not share weights or numerical state automatically.};
 \end{tikzpicture}
-\caption{Source-grounded system boundary. The Keras trace and NumPy simulator are independent paths with different trace semantics. The synthetic \\texttt{/stream} endpoint is shown separately and must not be interpreted as live model execution.}
+\caption{Source-grounded system boundary. The Keras trace and NumPy simulator are independent paths with different trace semantics; the synthetic \texttt{/stream} endpoint is not a model-execution trace.}
 \label{fig:workflow}
 \end{figure*}
 
