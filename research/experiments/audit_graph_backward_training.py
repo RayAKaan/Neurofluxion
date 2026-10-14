@@ -89,7 +89,7 @@ def audit(root: Path) -> dict:
                 graph = build_graph(configs)
                 yhat = np.asarray(graph.forward(x.copy()), dtype=np.float32).reshape(-1)
                 target = np.linspace(-0.2, 0.2, yhat.size, dtype=np.float32)
-                backward = backward_full(graph, x.reshape(-1).tolist(), target.tolist(), "mse")
+                backward = backward_full(graph, x.tolist(), target.tolist(), "mse")
                 tensors = []
                 for key in ("gradients_W", "gradients_b"):
                     tensors.extend(np.asarray(value, dtype=np.float64) for value in backward.get(key, []))
