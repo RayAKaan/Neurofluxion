@@ -181,6 +181,9 @@ def run(root: Path) -> dict:
             "max_abs_error": max_abs(analytic, numeric),
             "analytic_norm": float(np.linalg.norm(analytic)),
             "finite_difference_norm": float(np.linalg.norm(numeric)),
+            "analytic_gradient": analytic.tolist(),
+            "finite_difference_gradient": numeric.tolist(),
+            "gradient_error": (analytic - numeric).tolist(),
         })
 
     # Re-run with the exact same fixed parameters and input.
