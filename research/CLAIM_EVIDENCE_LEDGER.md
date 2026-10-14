@@ -1,6 +1,13 @@
 # Claim-to-Evidence Ledger
 
-This ledger separates source inspection, executed tests, independent verification, and claims that remain unestablished. The evidence summarized here is a small deterministic dense-path diagnostic plus focused operator workflows, not an exhaustive operator audit.\n\n## Current main reconciliation (2026-10-14)\n\n- Latest recorded `main` commit: `d85aca48e7993c3b48c951c97480aaa6e0c2934a`, merge commit for PR #30.\n- PRs #24–#30 are merged. The PR #30 research-validation run [38506053406](https://github.com/RayAKaan/Neurofluxion/actions/runs/38506053406) passed on the PR head, but it is a dense audit workflow, not a complete full-stack run.\n- PR #24 full-stack validation [38505557136](https://github.com/RayAKaan/Neurofluxion/actions/runs/38505557136) passed backend tests, frontend build, and browser E2E on its recorded head; it predates the later operator PRs.\n- These separate successful workflows do not establish that all checks ran together on the final merge SHA.
+This ledger separates source inspection, executed tests, independent verification, and claims that remain unestablished. The evidence summarized here is a small deterministic dense-path diagnostic plus focused operator workflows, not an exhaustive operator audit.
+
+## Current main reconciliation (2026-10-14)
+
+- Latest recorded `main` commit: `d85aca48e7993c3b48c951c97480aaa6e0c2934a`, merge commit for PR #30.
+- PRs #24–#30 are merged. The PR #30 research-validation run [38506053406](https://github.com/RayAKaan/Neurofluxion/actions/runs/38506053406) passed on the PR head, but it is a dense audit workflow, not a complete full-stack run.
+- PR #24 full-stack validation [38505557136](https://github.com/RayAKaan/Neurofluxion/actions/runs/38505557136) passed backend tests, frontend build, and browser E2E on its recorded head; it predates the later operator PRs.
+- These separate successful workflows do not establish that all checks ran together on the final merge SHA.
 
 ## Executed evidence
 
