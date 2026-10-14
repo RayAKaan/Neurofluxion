@@ -150,7 +150,6 @@ def backward_full(
     step_index = 0
     grads_by_layer: Dict[int, Dict[str, np.ndarray]] = {}
 
-    last_layer = graph.layer_instances[-1]
     if loss_fn == "mse":
         # DenseLayer.backward applies the output activation derivative itself.
         # Seed it with dL/da, not dL/dz, to avoid applying phi'(z) twice.
