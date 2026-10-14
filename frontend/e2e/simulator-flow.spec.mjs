@@ -21,19 +21,17 @@ test("Simulator displays the exact backend trace returned for its current run", 
   await page.getByRole("button", { name: /Simulator/ }).click();
   await expect(page).toHaveTitle("Simulator · Neurofluxion");
   await expect(page.getByRole("note")).toContainText("ran one random forward pass");
-
-  const responsesBeforeRunTab = forwardResponses.length;
-  await page.getByRole("tab", { name: "Run" }).click();
-  await expect.poll(() => forwardResponses.length, { timeout: 15_000 }).toBeGreaterThan(responsesBeforeRunTab);
+  await expect.poll(() => forwardResponses.length, { timeout: 15_000 }).toBeGreaterThan(0);
   await page.waitForLoadState("networkidle");
-  await page.waitForTimeout(250);
 
-  // Run tab can trigger a second forward pass with a fresh random input. Compare
-  // the visible trace to the latest response, not the earlier demo initialization.
+  // The demo bootstrap performs the forward request and stores its trace. Opening
+  // Run reveals that existing trace; it does not itself issue another request.
   const payloads = await Promise.all(forwardResponses.map((response) => response.json()));
   const payload = payloads[payloads.length - 1];
   expect(Array.isArray(payload.steps)).toBeTruthy();
   expect(payload.steps.length).toBeGreaterThan(0);
+
+  await page.getByRole("tab", { name: "Run" }).click();
   await expect(page.locator(".pass-step")).toHaveCount(payload.steps.length);
   await expect(page.locator(".pass-step-title").first()).toHaveText(payload.steps[0].description);
   const firstOutput = payload.steps[0].output_values.slice(0, 6).map((value) => value.toFixed(3)).join(", ");
