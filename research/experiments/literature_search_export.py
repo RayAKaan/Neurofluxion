@@ -190,14 +190,19 @@ def search_openalex(query: str, page_size: int, max_pages: int) -> tuple[list[di
         try:
             payload = fetch_json(request_url)
         except Exception as exc:
+            error_text = f"{type(exc).__name__}: {exc}"
+            if api_key:
+                error_text = error_text.replace(api_key, "[REDACTED]")
             requests.append({
                 "page": page + 1, "url": manifest_url, "records_returned": 0,
-                "status": "failed", "error": f"{type(exc).__name__}: {exc}",
+                "status": "failed", "error": error_text,
             })
+            # Do not chain the original exception: fetch_json's error message
+            # includes its request URL, which may contain the API key.
             raise SearchPartialFailure(
-                f"OpenAlex page {page + 1} failed: {type(exc).__name__}: {exc}",
+                f"OpenAlex page {page + 1} failed: {error_text}",
                 records, requests,
-            ) from exc
+            ) from None
         results = payload.get("results") or []
         records.extend(normalize_openalex(item, query) for item in results)
         requests.append({
