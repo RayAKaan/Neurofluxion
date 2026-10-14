@@ -9,8 +9,8 @@ This matrix deliberately distinguishes implemented support from independently de
 | Dense forward | Independent fixed-parameter oracle passed for one small graph | Multiple widths/depths, activations, and seeds | Agreement for the named fixed case only |
 | Dense MSE gradients | Central finite differences passed for simulator and TrainingEngine test cases | More activation and output-width combinations | Tested MSE configurations only |
 | Dense sigmoid + BCE gradients | Central finite differences passed in simulator and TrainingEngine test cases | Extreme logits, clipping behavior, alternate output activations | Tested sigmoid/BCE configurations only |
-| Training behavior | Tiny deterministic separable BCE task added in PR #23; CI result pending | Confirm loss reduction and repeatability on exact merged revision; add regression tests for other optimizers | No convergence claim until result is recorded |
-| SGD / Adam | Exact SGD arithmetic and finite Adam update tests added in PR #23; CI result pending | Momentum, RMSProp, Adam multi-step reference, unknown optimizer behavior | No all-optimizer correctness claim |
+| Training behavior | Tiny deterministic separable BCE task passed in PR #23 research-branch CI: loss decreased under fixed SGD setup; general convergence untested | Confirm loss reduction and repeatability on exact merged revision; add regression tests for other optimizers | No convergence claim until result is recorded |
+| SGD / Adam | Exact SGD arithmetic and finite first Adam update tests passed in PR #23 CI; momentum, RMSProp, multi-step Adam reference, and other optimizer branches remain untested | Momentum, RMSProp, Adam multi-step reference, unknown optimizer behavior | No all-optimizer correctness claim |
 | Trace arithmetic | Matmul, bias-add, activation reconstruction passed in one dense case | Layer families and shape regimes; validate event input/output snapshots | Dense event types and tested case only |
 | `run_forward_step` | Source inspection shows it calls `run_forward_full` and selects a step afterward | Measure cost of repeated step requests; consider cached trace only if design and correctness warrant it | Do not claim incremental execution |
 | Convolution / pooling / flatten | Classes and graph construction exist | Independent forward oracles, shape edge cases, gradient checks where differentiable, trace semantics | Implemented components, not validated end-to-end |
@@ -18,11 +18,11 @@ This matrix deliberately distinguishes implemented support from independently de
 | RNN / LSTM / GRU | Layer implementations and graph integration exist | Sequence shapes, hidden-state semantics, finite differences, training updates | Not validated end-to-end |
 | Embedding / attention / residual | Layer implementations and graph integration exist | Shape contracts, gradients, masking/residual dimensions, training path | Not validated end-to-end |
 | API/UI | Separate routes exist for simulator and lab/execution paths | Route-by-route tests; verify whether values are computed, approximated, or synthetic; connect visible UI to source-of-truth route | No end-to-end user-facing correctness claim |
-| Runtime cost | Reproducible benchmark script added in PR #23; CI result pending | Inspect raw samples, repeat across clean runs and another environment before generalizing | No universal overhead claim |
+| Runtime cost | Single-run diagnostic completed in PR #23 CI: 4 graph sizes × 40 samples/path; output parity passed; see CLAIM_EVIDENCE_LEDGER.md | Inspect raw samples, repeat across clean runs and another environment before generalizing | No universal overhead claim |
 | Usability/learning outcomes | No controlled study | Requires study protocol, participants, consent/ethics as applicable, and analysis | No user-benefit claim |
 | Related work / novelty | Initial targeted comparison in `RELATED_WORK.md` | Broader literature search and precise gap formulation | No “first,” “novel,” or superiority claim |
 
-The source-level route map and provenance findings are recorded in [API_UI_PATH_AUDIT.md](API_UI_PATH_AUDIT.md).
+The source-level route map and provenance findings are recorded in [API_UI_PATH_AUDIT.md](API_UI_PATH_AUDIT.md). PR #25's proposed legacy execution-engine fix also passed full-stack CI on its branch: 67 backend tests passed, 12 opt-in heavy-inference tests skipped, and frontend build passed; rerun after merge.
 
 ## Recommended experiment order
 
