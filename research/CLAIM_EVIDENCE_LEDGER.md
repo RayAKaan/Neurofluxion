@@ -4,11 +4,36 @@ This ledger separates source inspection, executed tests, independent verificatio
 
 ## Current main reconciliation (2026-10-14)
 
-- Latest recorded `main` commit at this reconciliation: `7c35cc131ad732972a3bdcde400548a02863193b`, merge commit for PR #32.
-- PRs #24–#32 are merged. PR #32 added a research-only frozen-revision validation workflow; it did not modify runtime application code.
-- Integrated workflow run [38566683696](https://github.com/RayAKaan/Neurofluxion/actions/runs/38566683696) completed successfully. All four jobs passed: backend test suite, frontend build, browser E2E, and deterministic dense research audit.
-- All four jobs checked out the frozen base revision `30ff803cb342c494310ff35832df43a092d3d74d` (PR #31 merge commit). This is a single-revision integration result, not evidence that the later PR #32 merge commit was tested by that run.
-- Historical focused operator workflows remain scoped to their respective PR heads and test cases; they are not an exhaustive all-layer correctness result.
+- Latest recorded main commit at this reconciliation: `203407474ca11232eb32e85e044e6e52e189e18c`, merge commit for PR #33.
+- PRs #24–#33 are merged. PR #32 added a research-only frozen-revision validation workflow; it did not modify runtime application code.
+- Integrated workflow run [38566683696](https://github.com/RayAKaan/Neurofluxion/actions/runs/38566683696) passed backend tests, frontend build, browser E2E, and deterministic dense research audit on frozen application revision `30ff803cb342c494310ff35832df43a092d3d74d`.
+- PRs #34–#37 are active research workstreams and their results are scoped to the exact tested PR revisions. They do not imply that their changes have merged to main or that the latest merge commit has been tested by the frozen-revision workflow.
+
+## Next-round evidence (2026-10-14; PR heads, not merged-main claims)
+
+### Graph-integrated forward/trace consistency
+
+- PR [#34](https://github.com/RayAKaan/Neurofluxion/pull/34) added nine fixed graph cases: dense; Conv2D→MaxPool2D→Flatten; Conv2D→AvgPool2D→Flatten; BatchNorm; RNN; LSTM; GRU; Embedding→Attention→RNN; and residual.
+- Full-stack run [38571326279](https://github.com/RayAKaan/Neurofluxion/actions/runs/38571326279) passed the backend suite: **98 passed, 12 skipped**. The added tests compare NetworkGraph.forward to run_forward_full for finite output, shape, and trace consistency.
+- Evidence boundary: these are integration consistency checks, not independent numerical references for all operators, and they do not establish graph-integrated backward, parameter-update, or training correctness for every family.
+
+### UI provenance source audit
+
+- PR [#35](https://github.com/RayAKaan/Neurofluxion/pull/35) adds a source-pattern audit and retained JSON artifact.
+- Initial runs [38571759236](https://github.com/RayAKaan/Neurofluxion/actions/runs/38571759236) and [38572250704](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572250704) reported 5 GAP findings and 1 PASS. After correcting the detector to inspect the shared layout's global Demo note, [run 38573016303](https://github.com/RayAKaan/Neurofluxion/actions/runs/38573016303) reports **4 GAP, 1 PARTIAL, 1 PASS**. The partial item means a global note exists but per-value/per-panel provenance is not established.
+- These are source-level findings, not reproduced browser failures. Browser race scenarios and visible-label assertions remain open. A green audit workflow means the report was generated, not that provenance safety passed.
+
+### Cross-platform trace benchmark
+
+- PR [#36](https://github.com/RayAKaan/Neurofluxion/pull/36) runs a fixed dense benchmark on Ubuntu and Windows, Python 3.11, NumPy 2.4.6, four widths, five warmups, and 40 raw samples per path/case.
+- Both [run 38571861118](https://github.com/RayAKaan/Neurofluxion/actions/runs/38571861118) and repeat [run 38572234533](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572234533) passed output parity for all cases on both OS runners with maximum absolute error 0.0.
+- Across the two runs per OS, trace/forward median-ratio ranges by increasing width were Linux: 2.27–2.34×, 4.54–4.69×, 10.00–10.46×, 27.28–30.39×; Windows: 2.13–2.14×, 3.76–4.21×, 7.56–8.36×, 21.29–24.08×.
+- Interpretation: the qualitative scaling pattern reproduced on these hosted runners, but timing is runner-specific and trace construction does additional work. This is not hardware-independent performance evidence.
+
+### Related-work review
+
+- PR [#37](https://github.com/RayAKaan/Neurofluxion/pull/37) expands the comparison set and records search queries, inclusion/exclusion rules, extraction fields, and review limitations in research/LITERATURE_REVIEW_PROTOCOL.md.
+- This is a structured rapid-review phase, not a completed systematic review. The search did not produce exportable/deduplicated database results or a complete screening-count flow; do not use it to support “first,” novelty-priority, or superiority claims.
 
 ## Executed evidence
 

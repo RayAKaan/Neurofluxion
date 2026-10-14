@@ -87,3 +87,16 @@ The trace path constructs and serializes operation records while the baseline re
 ## Final interpretation
 
 The paper is a consolidated, reproducible-format implementation manuscript with explicit evidence boundaries and improved diagrams. It is not scientifically honest to call all research gates complete while the one-revision full-stack rerun, comprehensive graph-integrated operator matrix, second-environment benchmark, systematic literature review, and any user study remain unperformed.
+
+
+## Addendum: next research round (2026-10-14)
+
+This document's frozen descriptive snapshot above remains PR #30 merge commit `d85aca48e7993c3b48c951c97480aaa6e0c2934a`. Subsequent main reconciliation is tracked in `research/VALIDATION_MATRIX.md` and `research/CLAIM_EVIDENCE_LEDGER.md`; do not reinterpret the historical snapshot as the current main SHA.
+
+Initial evidence on research PR heads:
+- Graph integration: PR #34 full-stack run [38571326279](https://github.com/RayAKaan/Neurofluxion/actions/runs/38571326279) passed 98 backend tests with 12 skips and added nine graph-forward/trace-consistency configurations.
+- UI provenance: PR #35 source audits [38571759236](https://github.com/RayAKaan/Neurofluxion/actions/runs/38571759236) and [38572250704](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572250704) both reported five source-level gaps and one route-identity pass. Browser reproduction remains outstanding.
+- Cross-platform timing: PR #36 runs [38571861118](https://github.com/RayAKaan/Neurofluxion/actions/runs/38571861118) and [38572234533](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572234533) passed output parity across four widths on Linux and Windows. Ratios are repeated hosted-CI diagnostics, not a universal or hardware-independent performance claim.
+- Related work: PR #37 records a structured rapid-review protocol and expanded comparison set. Exportable database records, deduplication, full-text screening, and a screening-count flow remain outstanding.
+
+These are PR-head findings and must not be represented as merged-main results until those PRs are merged. No runtime application code was changed in these research PRs.

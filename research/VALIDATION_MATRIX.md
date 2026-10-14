@@ -1,5 +1,6 @@
 # Validation Matrix and Remaining Evidence
 
+**Latest main at this reconciliation:** `203407474ca11232eb32e85e044e6e52e189e18c` (PR #33 merge commit, 2026-10-14).  
 **Frozen validation target:** `30ff803cb342c494310ff35832df43a092d3d74d` (PR #31 merge commit, 2026-10-14). The integrated workflow in PR #32 checked out this exact base SHA in all four jobs. PR #32's workflow run [38566683696](https://github.com/RayAKaan/Neurofluxion/actions/runs/38566683696) passed backend tests, frontend build, browser E2E, and the deterministic dense research audit. PR #32 itself merged as `7c35cc131ad732972a3bdcde400548a02863193b`; that merge commit adds the workflow, while the successful test run is evidence for the frozen target SHA `30ff803...`, not for the new workflow file or later merge commit.
 
 This matrix deliberately distinguishes implemented support from independently demonstrated correctness. A layer appearing in a registry or graph builder is not evidence that its forward, backward, optimizer, trace, API, and UI paths all work together.
@@ -28,14 +29,15 @@ PR #29's expanded suite passed 11 focused tests covering single-head attention g
 
 An optimizer fallback defect was found and corrected in merged PR #28: unknown optimizer names now raise a clear error rather than silently producing a no-op update. Reference-equation tests and the backend suite passed on the PR head; this is not a claim that every optimizer/scheduler combination is validated.
 
-## Post-merge reconciliation (2026-10-14)
+## Post-merge and next-round reconciliation (2026-10-14)
 
-- PRs #24–#32 are merged. PR #32 merge commit: `7c35cc131ad732972a3bdcde400548a02863193b`.
-- Integrated frozen-revision workflow: [run 38566683696](https://github.com/RayAKaan/Neurofluxion/actions/runs/38566683696), triggered for PR #32 and configured to check out its base SHA in every job.
-- Frozen application baseline tested: `30ff803cb342c494310ff35832df43a092d3d74d` (PR #31 merge commit). All four jobs passed: `backend-tests`, `frontend-build`, `browser-e2e`, and `research-audit`.
-- This closes the single-revision integration gate for that frozen SHA. It does not mean the newer PR #32 merge commit itself was tested by those jobs, and it does not establish all-layer numerical correctness, UI provenance integrity, cross-environment benchmark reproducibility, systematic novelty, or user benefit.
-- Focused workflows for BatchNorm, Conv2D/pooling/flatten, optimizer equations, and attention/recurrent/embedding/residual operators passed on their respective PR heads. Keep each result scoped to its tested revision and cases.
-- Next research gates: graph-integrated operator-family contracts; API/UI provenance and stale-state adversarial checks; a second benchmark environment; and a documented systematic literature search. Runtime application code remains out of scope for research-only PRs.
+- PRs #24–#33 are merged. Latest main at this update is `203407474ca11232eb32e85e044e6e52e189e18c`.
+- Frozen-revision integrated workflow [38566683696](https://github.com/RayAKaan/Neurofluxion/actions/runs/38566683696) passed backend tests, frontend build, browser E2E, and dense research audit on the frozen application SHA `30ff803cb342c494310ff35832df43a092d3d74d`. This is not evidence that every later merge SHA was tested.
+- PR #34 added graph-integrated forward/trace consistency cases for dense, Conv2D/pooling/flatten, BatchNorm, RNN/LSTM/GRU, embedding/attention, and residual paths. Full backend run [38571326279](https://github.com/RayAKaan/Neurofluxion/actions/runs/38571326279) passed **98 tests, 12 skipped**. These are fixed-case graph/trace consistency checks, not independent gradient or training oracles for every family.
+- PR #35's initial source audits [38571759236](https://github.com/RayAKaan/Neurofluxion/actions/runs/38571759236) and [38572250704](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572250704) reported five GAP findings and one PASS. After reviewing the shared layout, the detector was corrected to account for the global Demo note; run [38573016303](https://github.com/RayAKaan/Neurofluxion/actions/runs/38573016303) reports four GAP, one PARTIAL, and one PASS. None reproduces browser races; remaining gaps need adversarial runtime tests or a separately authorized runtime fix.
+- PR #36's cross-platform trace benchmark passed output parity for all four graph widths on both Ubuntu and Windows in [run 38571861118](https://github.com/RayAKaan/Neurofluxion/actions/runs/38571861118) and repeat [run 38572234533](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572234533). Across two runs per OS, median trace/forward ratios ranged by increasing width: Linux 2.27–2.34×, 4.54–4.69×, 10.00–10.46×, 27.28–30.39×; Windows 2.13–2.14×, 3.76–4.21×, 7.56–8.36×, 21.29–24.08×. This is repeatability across hosted runner families, not independent hardware or universal overhead evidence.
+- PR #37 expands the comparison set and logs the search protocol. Its review remains a structured rapid review, not a completed systematic review; no novelty-priority claim is supported.
+- Open gates: graph-integrated backward/parameter-update/training contracts beyond the existing narrow cases; browser-level stale-response and provenance tests; a local or hardware-diverse benchmark environment; exportable database searches, deduplication, screening counts, full-text review, and citation snowballing. Runtime application code remains out of scope for these research-only changes.
 
 ## Recommended experiment order
 
