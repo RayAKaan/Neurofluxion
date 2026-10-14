@@ -34,3 +34,20 @@ This repository workstream is research-only. It does not change React stores, UI
 ## Interpretation
 
 A source audit can identify risky patterns but cannot prove a race occurred in a particular browser schedule. Conversely, the absence of a matched string is not proof of a defect. The report therefore distinguishes source findings from browser reproduction, and each gap must be closed by an adversarial runtime test or kept as an explicit limitation.
+
+## First source-audit result (2026-10-14)
+
+The CI report from [workflow run 38571759236](https://github.com/RayAKaan/Neurofluxion/actions/runs/38571759236) inspected checkout `da3529586a31e8d0d3d838279a87d560b33e2fa2`. It recorded five source-level gaps and one route-identity check pass:
+
+| ID | Result | Finding |
+|---|---|---|
+| P1 | GAP | Full-forward async response writes shared state without an obvious request/graph identity guard. |
+| P2 | GAP | Graph selection does not visibly invalidate computation steps/inspection state in the simulator store action. |
+| P3 | GAP | Random demo inputs are generated; a persistent visible provenance label next to displayed values was not verified. |
+| P4 | GAP | The epoch-varying fixed-topology stream has no obvious graph/run/parameter-revision correlation. |
+| P5 | PASS | The frontend API wrapper includes the simulator forward route. |
+| P6 | GAP | The write-after-await pattern was detected without a recognized stale-request guard. |
+
+Artifact: [neurofluxion-ui-provenance-audit](https://github.com/RayAKaan/Neurofluxion/actions/runs/38571759236/artifacts/11896823883).
+
+These findings are source-inspection results, not browser-reproduced failures. P1/P2 need delayed-response and graph-switch browser/store tests; P3/P4 need a UI assertion or explicit documented contract. This research PR does not implement fixes in runtime code.
