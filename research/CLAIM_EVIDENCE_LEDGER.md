@@ -89,3 +89,7 @@ Follow-up fix PR: https://github.com/RayAKaan/Neurofluxion/pull/19
 ### Additional optimizer finding (2026-10-14)
 
 - Source inspection found that an unrecognized optimizer name silently returned unchanged parameters, allowing an invalid optimizer configuration to produce a no-op update. PR [#28](https://github.com/RayAKaan/Neurofluxion/pull/28) changes this to a clear `ValueError` and adds reference-equation tests for momentum, RMSProp, and two-step Adam. Eight focused tests passed in run [38494373808](https://github.com/RayAKaan/Neurofluxion/actions/runs/38494373808). The fix remains pending integration; do not claim invalid optimizer names fail safely on main until merged.
+
+### Additional operator contracts: attention, RNN, residual (2026-10-14)
+
+- PR [#29](https://github.com/RayAKaan/Neurofluxion/pull/29) adds central finite-difference checks for a tiny single-head attention block's four projection matrices and a three-step tanh RNN's input/recurrent weights, bias, and input gradient, plus residual identity checks. Eight focused tests passed in run [38494538826](https://github.com/RayAKaan/Neurofluxion/actions/runs/38494538826). This does not validate multi-head attention, masking, LSTM/GRU, embedding, or end-to-end graph training.
