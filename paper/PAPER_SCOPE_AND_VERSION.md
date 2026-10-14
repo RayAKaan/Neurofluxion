@@ -61,4 +61,8 @@ The source tree includes `backend/services/execution_trace.py`, `backend/tests/t
 - [ ] Freeze a final source SHA and run full backend tests, frontend build, browser E2E, and numerical research audits against that exact SHA.
 - [ ] Generate final LaTeX/PDF and submission package only after the evidence freeze; choose a venue and complete formatting/submission review.
 
+## Live literature export audit (2026-10-14)
+
+The first post-merge run is archived at [Actions run 38592362340](https://github.com/RayAKaan/Neurofluxion/actions/runs/38592362340), artifact ID `11907269115`. Its job was green but the manifest exposes six OpenAlex page-2 HTTP 401 failures; the output contains 1,200 raw Crossref records and 1,127 deduplicated candidates, with no human screening decisions. This is **not** a completed two-source search. The exporter is being hardened to retain partial-page results and mark any query failure as a failed workflow while preserving artifacts. Do not start final screening or report inclusion counts from this incomplete run as though it were comprehensive.
+
 The source baseline recorded above is historical, not the current paper baseline. Do not regenerate or label a final paper package until the final source revision is frozen and the remaining evidence gates are recorded.
