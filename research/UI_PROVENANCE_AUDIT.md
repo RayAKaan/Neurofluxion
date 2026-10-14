@@ -53,3 +53,7 @@ Artifact: [neurofluxion-ui-provenance-audit](https://github.com/RayAKaan/Neurofl
 These findings are source-inspection results, not browser-reproduced failures. P1/P2 need delayed-response and graph-switch browser/store tests; P3/P4 need a UI assertion or explicit documented contract. This research PR does not implement fixes in runtime code.
 
 A second source-audit execution, [run 38572250704](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572250704), on checkout `3d62726c236e762fe370e13ae6d11fa8803ea573` reproduced the same classification: 5 GAP entries and 1 PASS entry. Its artifact is [here](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572250704/artifacts/11897898614). This supports repeatability of the source-pattern detector, not proof of a browser-level race.
+
+## Detector refinement
+
+Source review found that the shared Simulator layout already displays a global Demo note stating that the app ran a random forward pass. The initial detector only inspected SimulatorPage, so its P3 classification was too strong. The detector now inspects UnifiedLayout as well and reports **PARTIAL** when a global note exists but per-value/per-panel provenance is not established. The earlier artifacts are retained as historical detector outputs; use the newest workflow artifact for the corrected classification.
