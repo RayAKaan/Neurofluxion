@@ -20,7 +20,7 @@ This ledger separates source inspection, executed tests, independent verificatio
 ### UI provenance source audit
 
 - PR [#35](https://github.com/RayAKaan/Neurofluxion/pull/35) adds a source-pattern audit and retained JSON artifact.
-- Runs [38571759236](https://github.com/RayAKaan/Neurofluxion/actions/runs/38571759236) and [38572250704](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572250704) each reported **5 GAP findings and 1 PASS**: stale async forward-response guard; graph-switch invalidation; visible demo-input provenance; stream-to-graph/run correlation; and simulator route identity.
+- Initial runs [38571759236](https://github.com/RayAKaan/Neurofluxion/actions/runs/38571759236) and [38572250704](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572250704) reported 5 GAP findings and 1 PASS. After correcting the detector to inspect the shared layout's global Demo note, [run 38573016303](https://github.com/RayAKaan/Neurofluxion/actions/runs/38573016303) reports **4 GAP, 1 PARTIAL, 1 PASS**. The partial item means a global note exists but per-value/per-panel provenance is not established.
 - These are source-level findings, not reproduced browser failures. Browser race scenarios and visible-label assertions remain open. A green audit workflow means the report was generated, not that provenance safety passed.
 
 ### Cross-platform trace benchmark
