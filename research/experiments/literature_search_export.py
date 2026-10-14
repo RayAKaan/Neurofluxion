@@ -11,6 +11,7 @@ import argparse
 import csv
 import hashlib
 import json
+import os
 import re
 import time
 import urllib.error
@@ -38,6 +39,15 @@ CROSSREF_SELECT = ",".join([
     "DOI", "title", "published", "author", "container-title", "type",
     "is-referenced-by-count", "URL", "abstract",
 ])
+class SearchPartialFailure(RuntimeError):
+    """A search page failed after zero or more earlier pages succeeded."""
+
+    def __init__(self, message: str, records: list[dict[str, Any]], requests: list[dict[str, Any]]):
+        super().__init__(message)
+        self.records = records
+        self.requests = requests
+
+
 CSV_FIELDS = [
     "record_key", "title", "doi", "year", "venue", "authors", "abstract",
     "source_databases", "matched_queries", "source_ids", "screening_decision",
@@ -169,15 +179,36 @@ def search_openalex(query: str, page_size: int, max_pages: int) -> tuple[list[di
     records: list[dict[str, Any]] = []
     requests: list[dict[str, Any]] = []
     cursor = "*"
+    api_key = os.environ.get("OPENALEX_API_KEY", "").strip()
     for page in range(max_pages):
         params = urllib.parse.urlencode({
             "search": query, "per-page": page_size, "cursor": cursor, "select": OPENALEX_SELECT,
         })
-        url = "https://api.openalex.org/works?" + params
-        payload = fetch_json(url)
+        manifest_url = "https://api.openalex.org/works?" + params
+        request_url = manifest_url
+        if api_key:
+            request_url += "&api_key=" + urllib.parse.quote(api_key, safe="")
+        try:
+            payload = fetch_json(request_url)
+        except Exception as exc:
+            error_text = f"{type(exc).__name__}: {exc}"
+            if api_key:
+                error_text = error_text.replace(api_key, "[REDACTED]")
+            requests.append({
+                "page": page + 1, "url": manifest_url, "records_returned": 0,
+                "status": "failed", "error": error_text,
+            })
+            # Do not chain the original exception: fetch_json's error message
+            # includes its request URL, which may contain the API key.
+            raise SearchPartialFailure(
+                f"OpenAlex page {page + 1} failed: {error_text}",
+                records, requests,
+            ) from None
         results = payload.get("results") or []
         records.extend(normalize_openalex(item, query) for item in results)
-        requests.append({"page": page + 1, "url": url, "records_returned": len(results)})
+        requests.append({
+            "page": page + 1, "url": manifest_url, "records_returned": len(results), "status": "success",
+        })
         cursor = (payload.get("meta") or {}).get("next_cursor")
         if not cursor or not results:
             break
@@ -194,11 +225,23 @@ def search_crossref(query: str, page_size: int, max_pages: int) -> tuple[list[di
             "select": CROSSREF_SELECT,
         })
         url = "https://api.crossref.org/works?" + params
-        payload = fetch_json(url)
+        try:
+            payload = fetch_json(url)
+        except Exception as exc:
+            requests.append({
+                "page": page + 1, "url": url, "records_returned": 0,
+                "status": "failed", "error": f"{type(exc).__name__}: {exc}",
+            })
+            raise SearchPartialFailure(
+                f"Crossref page {page + 1} failed: {type(exc).__name__}: {exc}",
+                records, requests,
+            ) from exc
         message = payload.get("message") or {}
         items = message.get("items") or []
         records.extend(normalize_crossref(item, query) for item in items)
-        requests.append({"page": page + 1, "url": url, "records_returned": len(items)})
+        requests.append({
+            "page": page + 1, "url": url, "records_returned": len(items), "status": "success",
+        })
         if len(items) < page_size or (page + 1) * page_size >= int(message.get("total-results") or 0):
             break
         time.sleep(0.15)
@@ -245,6 +288,21 @@ def run_search(output: Path, queries: list[str] = QUERIES, page_size: int = 100,
                     "query": query, "database": database,
                     "requests": requests, "records_returned": len(records), "status": "success",
                 })
+            except SearchPartialFailure as exc:
+                # Preserve completed-page records. The previous implementation
+                # discarded them when a later page raised.
+                raw.extend(exc.records)
+                cause = exc.__cause__ or exc
+                failure = {
+                    "query": query, "database": database,
+                    "error": f"{type(cause).__name__}: {cause}",
+                    "partial_records_preserved": len(exc.records),
+                }
+                failures.append(failure)
+                query_runs.append({
+                    **failure, "requests": exc.requests, "records_returned": len(exc.records),
+                    "status": "partial_failed" if exc.records else "failed",
+                })
             except Exception as exc:  # preserve failures in the manifest for reproducibility
                 failure = {"query": query, "database": database, "error": f"{type(exc).__name__}: {exc}"}
                 failures.append(failure)
@@ -262,6 +320,9 @@ def run_search(output: Path, queries: list[str] = QUERIES, page_size: int = 100,
         "deduplicated_record_count": len(unique),
         "deduplication_rule": "normalized DOI; otherwise normalized title + year; otherwise source-ID hash",
         "failures": failures,
+        "successful_query_count": sum(run.get("status") == "success" for run in query_runs),
+        "partial_failed_query_count": sum(run.get("status") == "partial_failed" for run in query_runs),
+        "failed_query_count": sum(run.get("status") == "failed" for run in query_runs),
         "screening_status": "not screened; CSV decision fields intentionally blank",
         "limitation": "API metadata discovery is not a complete systematic review; search coverage, full-text screening, duplicate adjudication, and independent review remain required.",
     }
@@ -288,8 +349,13 @@ def main() -> int:
         "raw_record_count": manifest["raw_record_count"],
         "deduplicated_record_count": manifest["deduplicated_record_count"],
         "query_failures": len(manifest["failures"]),
+        "successful_queries": manifest["successful_query_count"],
+        "partial_failed_queries": manifest["partial_failed_query_count"],
+        "failed_queries": manifest["failed_query_count"],
     }, indent=2))
-    return 0
+    # A non-empty artifact is not necessarily a complete search. Preserve/upload
+    # its files, but let CI fail when any source/query failed so it cannot look green.
+    return 2 if manifest["failures"] else 0
 
 
 if __name__ == "__main__":

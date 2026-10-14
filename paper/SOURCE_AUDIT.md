@@ -59,3 +59,22 @@ Paper implications / caveats:
 
 ## Audit discipline
 A file's presence, a test's existence, or a README statement is not equivalent to a passing test. This audit records source observations only; validation remains pending until commands are run and outputs retained.
+
+
+## Current source audit additions (main at `7758e4ebf402c0ccd5a8bb5d3bf6de002cb4c580`; 2026-10-14)
+
+These observations supersede any implication that the initial audit is a current, complete audit. They are static source findings unless explicitly paired with executed evidence.
+
+### WebSocket and training-path separation
+
+- `backend/api/stream_ws.py` defines `_build_snapshot(epoch)` with hard-coded input/hidden/output IDs, hand-authored base weights/biases, sinusoidal input/weight perturbations, and formula-generated loss/accuracy curves. The `/stream` WebSocket sends this generated snapshot every 0.5 seconds; it does not read the configured simulator graph or a trained model. Treat it as a synthetic demonstration stream, not live model execution or measured training telemetry.
+- `backend/api/train_ws.py` delegates to `training.manager.training_manager` and maps manager callbacks into status, batch, epoch, complete, and error messages. This is a distinct framework-training path; verify the manager's model/data/configuration semantics separately.
+- `backend/api/simulator_train_ws.py` is a separate graph/session-based training path using `simulator.session_manager`, `simulator.dataset_manager`, `simulator.training_engine`, and `training_sessions`. Its message schema and lifecycle are not interchangeable with `/train`.
+- The frontend has separate hooks `useTrainingSocket` and `useTrainingSimSocket`; the simulator API helper routes graph operations to `/api/simulator/...`. Do not describe the three channels as one unified model/training state.
+- `backend/services/execution_trace.py` builds intermediate outputs from a TensorFlow/Keras activation model and separately computes timing through cumulative-prefix submodels. The reported per-layer timing is labelled `cumulative_subgraph_diff`; it is not an isolated layer-kernel measurement. Output payloads may be bounded/sampled. Keep this trace separate from the NumPy simulator's forward-engine trace.
+- Existing claims around `/api/execute/backward` and `/api/execute` training remain subject to the previously documented placeholder/legacy-path audit; frontend simulator usage observed in `useSimulatorApi.ts` targets `/api/simulator/...`.
+
+### Remaining static audit work
+
+Still inspect the complete model registry/loading and weights provenance, the full inference/data preprocessing path, all trace-detail endpoints, session persistence and reset semantics, simulator optimizer/loss contracts outside the fixed tested graphs, and frontend provenance at every inspection panel. Browser tests for graph-switch invalidation and out-of-order responses remain expected failures; no runtime fix is claimed here.
+
