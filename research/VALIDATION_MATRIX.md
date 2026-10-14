@@ -64,3 +64,11 @@ An optimizer fallback defect was found and corrected in merged PR #28: unknown o
 - Benchmarks compare paths with different work: the trace path constructs and serializes per-operation records, while the baseline returns a final output. The ratio is a diagnostic of those two concrete paths, not a causal estimate for all tracing implementations.
 - A small synthetic task proves only that one configuration reduced its loss; it does not establish general convergence.
 - A finite-difference pass is scoped to the tested graph, loss, activation, dtype, and tolerance.
+
+
+## Graph-integrated finite-difference evidence (PR #43 workstream)
+
+- Dedicated workflow [38575599616](https://github.com/RayAKaan/Neurofluxion/actions/runs/38575599616) passed central finite-difference comparisons for two mixed-layer graphs: Conv2D→Flatten→Dense and short tanh RNN→Dense.
+- Numerical protocol: epsilon 1e-3, rtol 2e-2, atol 2e-3, fixed seeds, MSE objective.
+- Scope remains narrow to these graph shapes, parameters, inputs, targets, dtype, and tolerances. It does not validate LSTM/GRU/attention/embedding/BatchNorm graph gradients, alternative losses, or integrated training beyond the separate dense task.
+- Runtime source unchanged; broader graph-family gradient oracles remain open.
