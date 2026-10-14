@@ -45,7 +45,7 @@ jobs:
           PYTHONPATH=backend python research/experiments/run_simulator_audit.py \
             --repo . --out research-artifacts/simulator-audit.json \
             2>&1 | tee research-artifacts/simulator-audit.log
-          audit_code=\${PIPESTATUS[0]}
+          audit_code=${PIPESTATUS[0]}
           set -e
 
           # Exit 2 means the harness could not produce a valid report.
