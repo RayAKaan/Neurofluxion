@@ -43,8 +43,8 @@ An optimizer fallback defect was found and corrected in merged PR #28: unknown o
 
 - PRs #34–#38 are now merged. Their results are recorded above and in the claim-evidence ledger.
 - The next dependency is to test backward and update behavior through NetworkGraph, not just compare forward and trace outputs.
-- New research PR adds deterministic dense BCE training contracts: finite nonzero gradients, actual parameter updates, loss reduction on a fixed one-sample task, and exact repeatability with fixed seed/no dropout.
-- A graph-family diagnostic invokes backward_full on dense, Conv2D→MaxPool→Flatten, BatchNorm, RNN/LSTM/GRU, Embedding→Attention→RNN, and residual fixed cases. It reports PASS/GAP plus exceptions in a JSON artifact. PASS means finite gradients for that case only, not gradient correctness.
+- PR #39's dedicated workflow [38574104561](https://github.com/RayAKaan/Neurofluxion/actions/runs/38574104561) passed deterministic dense BCE training contracts: finite nonzero gradients, parameter changes, fixed-sample loss reduction, and repeatability with fixed seed/no dropout.
+- The same workflow's graph-family diagnostic returned finite gradient tensors for **8/8** fixed cases: dense, Conv2D→MaxPool→Flatten, BatchNorm, RNN, LSTM, GRU, Embedding→Attention→RNN, and residual. It reports PASS/GAP plus exceptions in a JSON artifact. PASS means finite gradients for that case only, not gradient correctness; independent gradient oracles and graph-family training checks remain open.
 - Runtime code remains unchanged. Any defect exposed by the audit must be reproduced and fixed in a separately authorized runtime PR, or retained as an explicit limitation.
 - This PR's dedicated workflow tests the new gating dense-training contracts and uploads the graph-family diagnostic. A passing report-generation job is not equivalent to every family passing.
 
