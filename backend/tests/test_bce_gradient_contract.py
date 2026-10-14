@@ -1,7 +1,5 @@
 """Finite-difference contracts for mean-reduced BCE with sigmoid outputs."""
 import numpy as np
-import pytest
-
 from simulator.backward_engine import backward_full
 from simulator.graph_engine import build_graph
 from simulator.layers import LayerConfig
