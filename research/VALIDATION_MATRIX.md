@@ -1,6 +1,6 @@
 # Validation Matrix and Remaining Evidence
 
-**Latest main at this reconciliation:** `203407474ca11232eb32e85e044e6e52e189e18c` (PR #33 merge commit, 2026-10-14).  
+**Latest main at this reconciliation:** `35b30de7807cc0ce522ced93ee7f3b1ea8e8e8aa` (research-file cleanup after PR #38, 2026-10-14).  
 **Frozen validation target:** `30ff803cb342c494310ff35832df43a092d3d74d` (PR #31 merge commit, 2026-10-14). The integrated workflow in PR #32 checked out this exact base SHA in all four jobs. PR #32's workflow run [38566683696](https://github.com/RayAKaan/Neurofluxion/actions/runs/38566683696) passed backend tests, frontend build, browser E2E, and the deterministic dense research audit. PR #32 itself merged as `7c35cc131ad732972a3bdcde400548a02863193b`; that merge commit adds the workflow, while the successful test run is evidence for the frozen target SHA `30ff803...`, not for the new workflow file or later merge commit.
 
 This matrix deliberately distinguishes implemented support from independently demonstrated correctness. A layer appearing in a registry or graph builder is not evidence that its forward, backward, optimizer, trace, API, and UI paths all work together.
@@ -38,6 +38,15 @@ An optimizer fallback defect was found and corrected in merged PR #28: unknown o
 - PR #36's cross-platform trace benchmark passed output parity for all four graph widths on both Ubuntu and Windows in [run 38571861118](https://github.com/RayAKaan/Neurofluxion/actions/runs/38571861118) and repeat [run 38572234533](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572234533). Across two runs per OS, median trace/forward ratios ranged by increasing width: Linux 2.27–2.34×, 4.54–4.69×, 10.00–10.46×, 27.28–30.39×; Windows 2.13–2.14×, 3.76–4.21×, 7.56–8.36×, 21.29–24.08×. This is repeatability across hosted runner families, not independent hardware or universal overhead evidence.
 - PR #37 expands the comparison set and logs the search protocol. Its review remains a structured rapid review, not a completed systematic review; no novelty-priority claim is supported.
 - Open gates: graph-integrated backward/parameter-update/training contracts beyond the existing narrow cases; browser-level stale-response and provenance tests; a local or hardware-diverse benchmark environment; exportable database searches, deduplication, screening counts, full-text review, and citation snowballing. Runtime application code remains out of scope for these research-only changes.
+
+## Next phase: graph-integrated backward and training (PR #39 workstream)
+
+- PRs #34–#38 are now merged. Their results are recorded above and in the claim-evidence ledger.
+- The next dependency is to test backward and update behavior through NetworkGraph, not just compare forward and trace outputs.
+- New research PR adds deterministic dense BCE training contracts: finite nonzero gradients, actual parameter updates, loss reduction on a fixed one-sample task, and exact repeatability with fixed seed/no dropout.
+- A graph-family diagnostic invokes backward_full on dense, Conv2D→MaxPool→Flatten, BatchNorm, RNN/LSTM/GRU, Embedding→Attention→RNN, and residual fixed cases. It reports PASS/GAP plus exceptions in a JSON artifact. PASS means finite gradients for that case only, not gradient correctness.
+- Runtime code remains unchanged. Any defect exposed by the audit must be reproduced and fixed in a separately authorized runtime PR, or retained as an explicit limitation.
+- This PR's dedicated workflow tests the new gating dense-training contracts and uploads the graph-family diagnostic. A passing report-generation job is not equivalent to every family passing.
 
 ## Recommended experiment order
 
