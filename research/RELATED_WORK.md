@@ -38,3 +38,18 @@ These sources establish that neural-network visualization, operation-level expla
 ## References
 
 See the full query log, eligibility rules, screening limitations, and provisional synthesis in [LITERATURE_REVIEW_PROTOCOL.md](LITERATURE_REVIEW_PROTOCOL.md).
+
+
+## Supplementary related work added 2026-10-14
+
+The second targeted search round added five sources that materially sharpen the claim boundaries:
+
+- **Interactive explainability in data-driven modeling: A neural-network-centric survey** (Neurocomputing, 2026; [DOI](https://doi.org/10.1016/j.neucom.2026.133535)) reviews interactive write-in mechanisms across data/knowledge, problem, model, and post-hoc levels. It is broad interactive-explainability prior art, not a direct test of operation-trace arithmetic.
+- **ChannelExplorer** (IEEE TVCG, 2026; [DOI](https://doi.org/10.1109/TVCG.2026.3669148)) explores activations across layers and channels, from dataset overview to individual examples, and reports expert evaluation. This is close activation-visualization prior art; its goal is class separability, not operation-level simulator trace fidelity.
+- **yProv4ML** (SoftwareX, 2025; [DOI](https://doi.org/10.1016/j.softx.2025.102298)) captures ML execution provenance in PROV-JSON with minimal code modification.
+- **MLflow2PROV** (Information Systems, 2025; [DOI](https://doi.org/10.1016/j.is.2024.102495)) captures PROV-compliant provenance relationships across MLflow artifacts and Git history.
+- **Machine learning experiment management tools: a mixed-methods empirical study** (Empirical Software Engineering, 2024; [DOI](https://doi.org/10.1007/s10664-024-10444-w)) reports a survey of 81 practitioners and a controlled experiment with 15 student developers on asset tracking/retrieval performance.
+
+This round further narrows the candidate research gap to an empirical **fidelity and state-association question**: can each visible simulator value be tied to the selected graph/execution and independently reconstructed from its operation record, especially after asynchronous state changes? It does not support a claim that interactive visualization, provenance, or traceability is novel in general.
+
+The search remains a structured rapid review, not a completed systematic review. Search exports, deduplication, screening counts, full-text extraction, and independent screening remain open.

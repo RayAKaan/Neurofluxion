@@ -95,3 +95,42 @@ For each included work, extract:
 - DLProv: https://pmc.ncbi.nlm.nih.gov/articles/PMC12453841/
 - TensorFlow Playground: https://github.com/tensorflow/playground
 - W3C PROV primer: https://www.w3.org/TR/prov-primer/
+
+
+## Supplementary search round (2026-10-14)
+
+This supplementary round adds queries aimed at newer interactive-explainability and provenance work. It is still a targeted search using web-indexed publisher and repository records, not a database-export systematic review.
+
+| ID | Query | Added scope |
+|---|---|---|
+| Q13 | neural-network-centric survey interactive explainability data-driven modeling 2026 | Recent interactive-explainability frameworks and write-in mechanisms |
+| Q14 | neural network activation visualization ChannelExplorer IEEE TVCG 2026 | Recent layer/channel activation visual analytics |
+| Q15 | machine learning provenance PROV-JSON yProv4ML 2025 | Fine-grained provenance capture in ML execution |
+| Q16 | end-to-end provenance MLflow Git MLflow2PROV Information Systems 2025 | Pipeline/run/code evolution provenance |
+| Q17 | machine learning experiment management tools controlled experiment practitioner survey 2024 | Empirical evidence about experiment traceability and user performance |
+
+### Additional eligible candidates
+
+| Work | Venue/year | Focus | Relevance and claim boundary |
+|---|---|---|---|
+| Interactive explainability in data-driven modeling: A neural-network-centric survey | Neurocomputing, 2026; DOI: 10.1016/j.neucom.2026.133535 | Neural-network-centric survey covering interactive explainability across data/knowledge, problem, model, and post-hoc levels; discusses executable write-ins and traceable updates. | Recent broad review. It further weakens any claim that interaction and traceable adjustment are unaddressed. It is not a direct test of Neurofluxion's arithmetic trace fidelity. |
+| ChannelExplorer: Exploring Class Separability Through Activation Channel Visualization | IEEE TVCG, 2026; DOI: 10.1109/TVCG.2026.3669148 | Dataset-to-example drilldown with coordinated activation-channel, similarity, and heatmap views; supports CNNs, GANs, ResNet, and Stable Diffusion; reports expert evaluation. | Recent, close activation-visualization prior art. It focuses on class separability and image-model activation analysis, not a simulator's operation-by-operation numerical reconstruction. |
+| yProv4ML: Effortless provenance tracking for machine learning systems | SoftwareX, 2025; DOI: 10.1016/j.softx.2025.102298 | Captures ML execution provenance in PROV-JSON with minimal code changes. | Directly rules out a broad claim that machine-learning execution provenance is absent. Distinguish any Neurofluxion claim by its exact graph/operation/value granularity and guarantees, if those are actually demonstrated. |
+| Capturing end-to-end provenance for machine learning pipelines (MLflow2PROV) | Information Systems, 2025; DOI: 10.1016/j.is.2024.102495 | PROV-compliant lineage from MLflow artifacts and Git activity, including pipeline, experiment, and artifact relationships. | Direct prior art for end-to-end ML pipeline provenance and evolution. It is complementary to per-operation runtime trace validation. |
+| Machine learning experiment management tools: a mixed-methods empirical study | Empirical Software Engineering, 2024; DOI: 10.1007/s10664-024-10444-w | Survey of 81 practitioners and controlled experiment with 15 student developers; evaluates tool support for tracking/retrieving ML assets and task performance. | Shows that user-benefit questions around traceability tools have empirical precedents. Neurofluxion cannot claim usability or learning benefit without its own appropriate evaluation. |
+
+### Revised synthesis after supplementary search
+
+1. Architecture visualization, activation exploration, interactive explainability, recurrent-state inspection, training-time visual analytics, and ML provenance all have established and continuing prior art.
+2. Provenance is not a new general problem: yProv4ML addresses execution provenance; MLflow2PROV addresses end-to-end pipeline/code lineage; DLProv addresses workflow provenance. Neurofluxion's research question must be narrowed to whether specific operation-level records faithfully correspond to the selected graph execution and whether the UI preserves that association under state changes.
+3. The candidate gap is an **evaluation question**, not a novelty assertion: which displayed simulator values can be independently reconstructed from operation records, which are layer summaries or synthetic/demo values, and what happens under graph replacement or delayed responses?
+4. A browser test now reproduces a stale-response UI state defect on the tested branch (PR #40). This is evidence of a concrete provenance risk in the current implementation, not evidence of a novel technique or of user benefit.
+5. The review remains incomplete. The search interface did not provide exportable, deduplicated database results; there is no PRISMA-style screening flow, dual-reviewer process, or full-text extraction table. These additional candidates are provisional and must be verified against full texts before the manuscript is submitted.
+
+### Primary source links for supplementary candidates
+
+- Interactive explainability survey (2026): https://doi.org/10.1016/j.neucom.2026.133535
+- ChannelExplorer (2026): https://doi.org/10.1109/TVCG.2026.3669148
+- yProv4ML (2025): https://doi.org/10.1016/j.softx.2025.102298
+- MLflow2PROV (2025): https://doi.org/10.1016/j.is.2024.102495
+- ML experiment management study (2024): https://doi.org/10.1007/s10664-024-10444-w
