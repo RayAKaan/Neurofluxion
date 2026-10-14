@@ -33,6 +33,7 @@ def audit(root: Path) -> dict:
         "computation_store": root / "frontend/src/store/computationStore.ts",
         "simulator_store": root / "frontend/src/store/simulatorStore.ts",
         "simulator_page": root / "frontend/src/pages/SimulatorPage.tsx",
+        "unified_layout": root / "frontend/src/components/layout/UnifiedLayout.tsx",
         "stream": root / "backend/api/stream_ws.py",
         "simulator_api": root / "frontend/src/hooks/useSimulatorApi.ts",
     }
@@ -44,6 +45,7 @@ def audit(root: Path) -> dict:
     comp = source["computation_store"]
     sim_store = source["simulator_store"]
     page = source["simulator_page"]
+    layout = source["unified_layout"]
     stream = source["stream"]
     api = source["simulator_api"]
 
@@ -60,9 +62,10 @@ def audit(root: Path) -> dict:
         and ("useComputationStore" in sim_store or "steps: []" in sim_store or "reset()" in sim_store)
     )
     randomized_demo_input = "Math.random() * 2 - 1" in page
-    explicit_demo_provenance_label = any(token in page for token in (
+    explicit_demo_provenance_label = any(token in page or token in layout for token in (
         "Demo-generated input", "Demo input — synthetic", "provenanceBadge", "data-provenance",
     ))
+    global_demo_note = "simulator-demo-note" in layout and "random forward pass" in layout
     stream_is_synthesized = "_build_snapshot(epoch)" in stream and "math.sin(epoch" in stream
     stream_has_graph_correlation = any(token in stream for token in (
         "graph_id", "graphId", "execution_id", "run_id", "parameter_revision",
@@ -88,11 +91,14 @@ def audit(root: Path) -> dict:
         },
         {
             "id": "P3_DEMO_INPUT_PROVENANCE",
-            "status": "PASS" if not randomized_demo_input or explicit_demo_provenance_label else "GAP",
+            "status": "PASS" if not randomized_demo_input or explicit_demo_provenance_label else ("PARTIAL" if global_demo_note else "GAP"),
             "finding": "Random demo inputs have an explicit UI provenance label."
-            if explicit_demo_provenance_label else
-            "SimulatorPage generates random demo inputs. A dataset metadata name alone is not verified here as a persistent, visible provenance label beside displayed values.",
-            "source": "frontend/src/pages/SimulatorPage.tsx",
+            if explicit_demo_provenance_label else (
+                "A global Demo note states that the page ran a random forward pass, but per-value/per-panel provenance labeling is not established."
+                if global_demo_note else
+                "SimulatorPage generates random demo inputs. A dataset metadata name alone is not verified here as a persistent, visible provenance label beside displayed values."
+            ),
+            "source": "frontend/src/pages/SimulatorPage.tsx; frontend/src/components/layout/UnifiedLayout.tsx",
         },
         {
             "id": "P4_STREAM_GRAPH_RUN_CORRELATION",
@@ -130,6 +136,7 @@ def audit(root: Path) -> dict:
         "summary": {
             "checks": len(checks),
             "gaps": sum(item["status"] == "GAP" for item in checks),
+            "partial": sum(item["status"] == "PARTIAL" for item in checks),
             "review_required": sum(item["status"] == "REVIEW" for item in checks),
             "pass": sum(item["status"] == "PASS" for item in checks),
         },
