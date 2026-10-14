@@ -1,0 +1,32 @@
+name: Attention and residual numerical contracts
+
+on:
+  pull_request:
+    paths:
+      - "backend/simulator/layers/attention.py"
+      - "backend/simulator/layers/residual.py"
+      - "backend/tests/test_attention_residual_contract.py"
+      - ".github/workflows/attention-residual-contract.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  attention-residual-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install numerical test dependencies
+        run: python -m pip install --disable-pip-version-check numpy pytest
+      - name: Run attention/residual and simulator smoke contracts
+        env:
+          PYTHONPATH: backend
+        run: >-
+          python -m pytest
+          backend/tests/test_attention_residual_contract.py
+          backend/tests/test_simulator_smoke.py
+          -q
