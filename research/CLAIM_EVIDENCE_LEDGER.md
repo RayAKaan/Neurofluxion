@@ -130,3 +130,10 @@ Follow-up fix PR: https://github.com/RayAKaan/Neurofluxion/pull/19
 ### Repeated trace benchmark runs
 
 Five independent CI runs were inspected: [38492813970](https://github.com/RayAKaan/Neurofluxion/actions/runs/38492813970), [38492888157](https://github.com/RayAKaan/Neurofluxion/actions/runs/38492888157), [38493816167](https://github.com/RayAKaan/Neurofluxion/actions/runs/38493816167), [38493984213](https://github.com/RayAKaan/Neurofluxion/actions/runs/38493984213), and [38494414914](https://github.com/RayAKaan/Neurofluxion/actions/runs/38494414914). Each passed output parity for all four widths and retained 40 timing samples per path per width. Trace/forward median-ratio ranges across runs were 2.36–2.46×, 4.43–4.86×, 9.65–11.13×, and 26.43–32.34×. This supports repeatability within this CI runner class only; it is not a second-hardware validation or a general performance claim.
+
+## Graph-integrated backward and training diagnostic (PR #39, 2026-10-14)
+
+- Dedicated workflow [38574104561](https://github.com/RayAKaan/Neurofluxion/actions/runs/38574104561) passed deterministic dense BCE training contracts: finite nonzero gradients, parameter changes, fixed-sample loss reduction, and repeatability with fixed seed and dropout disabled.
+- The graph-family audit artifact reported **8/8** fixed cases with finite gradient tensors: dense, Conv2D→MaxPool→Flatten, BatchNorm, RNN, LSTM, GRU, Embedding→Attention→RNN, and residual.
+- Full-stack workflow [38574104816](https://github.com/RayAKaan/Neurofluxion/actions/runs/38574104816) passed backend tests, frontend build, and the existing browser E2E on the PR head.
+- Scope: finite-gradient smoke results are not proof of gradient correctness. Independent finite differences/analytic oracles, non-dense parameter-update tests, and training trajectories for other families remain open.
