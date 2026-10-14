@@ -1,0 +1,40 @@
+# Validation Matrix and Remaining Evidence
+
+**Source baseline:** Neurofluxion `main` after PR #22 merge, commit `b3e0990da61d54b71b27963f3a664b30ccd47378` at the time this matrix was started. Re-pin the SHA whenever the baseline changes.
+
+This matrix deliberately distinguishes implemented support from independently demonstrated correctness. A layer appearing in a registry or graph builder is not evidence that its forward, backward, optimizer, trace, API, and UI paths all work together.
+
+| Area | Current evidence | Remaining validation | Paper wording allowed now |
+|---|---|---|---|
+| Dense forward | Independent fixed-parameter oracle passed for one small graph | Multiple widths/depths, activations, and seeds | Agreement for the named fixed case only |
+| Dense MSE gradients | Central finite differences passed for simulator and TrainingEngine test cases | More activation and output-width combinations | Tested MSE configurations only |
+| Dense sigmoid + BCE gradients | Central finite differences passed in simulator and TrainingEngine test cases | Extreme logits, clipping behavior, alternate output activations | Tested sigmoid/BCE configurations only |
+| Training behavior | Tiny deterministic separable BCE task added in PR #23; CI result pending | Confirm loss reduction and repeatability on exact merged revision; add regression tests for other optimizers | No convergence claim until result is recorded |
+| SGD / Adam | Exact SGD arithmetic and finite Adam update tests added in PR #23; CI result pending | Momentum, RMSProp, Adam multi-step reference, unknown optimizer behavior | No all-optimizer correctness claim |
+| Trace arithmetic | Matmul, bias-add, activation reconstruction passed in one dense case | Layer families and shape regimes; validate event input/output snapshots | Dense event types and tested case only |
+| `run_forward_step` | Source inspection shows it calls `run_forward_full` and selects a step afterward | Measure cost of repeated step requests; consider cached trace only if design and correctness warrant it | Do not claim incremental execution |
+| Convolution / pooling / flatten | Classes and graph construction exist | Independent forward oracles, shape edge cases, gradient checks where differentiable, trace semantics | Implemented components, not validated end-to-end |
+| Batch normalization | Layer implementation and graph integration exist | Train/eval semantics, running statistics, gradient finite differences, tiny-batch behavior | Not validated end-to-end |
+| RNN / LSTM / GRU | Layer implementations and graph integration exist | Sequence shapes, hidden-state semantics, finite differences, training updates | Not validated end-to-end |
+| Embedding / attention / residual | Layer implementations and graph integration exist | Shape contracts, gradients, masking/residual dimensions, training path | Not validated end-to-end |
+| API/UI | Separate routes exist for simulator and lab/execution paths | Route-by-route tests; verify whether values are computed, approximated, or synthetic; connect visible UI to source-of-truth route | No end-to-end user-facing correctness claim |
+| Runtime cost | Reproducible benchmark script added in PR #23; CI result pending | Inspect raw samples, repeat across clean runs and another environment before generalizing | No universal overhead claim |
+| Usability/learning outcomes | No controlled study | Requires study protocol, participants, consent/ethics as applicable, and analysis | No user-benefit claim |
+| Related work / novelty | Initial targeted comparison in `RELATED_WORK.md` | Broader literature search and precise gap formulation | No “first,” “novel,” or superiority claim |
+
+## Recommended experiment order
+
+1. Freeze exact source SHA and run smoke + MSE/BCE finite-difference contracts.
+2. Verify the tiny-task training trajectory and SGD/Adam contracts.
+3. Run and archive the trace-overhead benchmark; report raw sample distributions and environment.
+4. Add operator-family contracts in dependency order: shape-only layers, convolution/pooling, batch normalization, recurrent layers, attention/residual.
+5. Audit each API route and frontend call site to identify the actual computation source and any illustrative/synthetic output.
+6. Update the paper only from checked artifacts; regenerate the PDF from versioned LaTeX and retain the source/command.
+7. Select a venue only after its current scope, deadline, formatting, page limit, and anonymization rules are rechecked.
+
+## Interpretation safeguards
+
+- A green workflow may mean that the test harness completed, not that every numerical check passed. Inspect both exit status and the report's declared checks.
+- Benchmarks compare paths with different work: the trace path constructs and serializes per-operation records, while the baseline returns a final output. The ratio is a diagnostic of those two concrete paths, not a causal estimate for all tracing implementations.
+- A small synthetic task proves only that one configuration reduced its loss; it does not establish general convergence.
+- A finite-difference pass is scoped to the tested graph, loss, activation, dtype, and tolerance.
