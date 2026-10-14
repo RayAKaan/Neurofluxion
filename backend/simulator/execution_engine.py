@@ -371,10 +371,8 @@ class ExecutionEngine:
             forward = self.forward(x_dev)
             backward = self.backward(y_dev, loss_function=loss_function)
             train_loss = backward.loss_value
-            for idx in range(len(self._graph["weights"])):
-                self._graph["weights"][idx] = self._graph["weights"][idx] - learning_rate * self._last_gradient_weights[idx] if hasattr(self, "_last_gradient_weights") else self._graph["weights"][idx]
-            # Recompute the gradients here from the backward result's cached arrays.
-            # Keep updates explicit so training never substitutes generated metrics.
+            # Recompute gradients from the cached forward pass before updating
+            # parameters. This keeps the update tied to the scalar loss contract.
             gradients = self._compute_gradients(y_dev, loss_function)
             for idx in range(len(self._graph["weights"])):
                 self._graph["weights"][idx] = self._graph["weights"][idx] - learning_rate * gradients[0][idx]
