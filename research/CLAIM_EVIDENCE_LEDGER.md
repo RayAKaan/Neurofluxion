@@ -144,3 +144,10 @@ Five independent CI runs were inspected: [38492813970](https://github.com/RayAKa
 - Workflow [38575599616](https://github.com/RayAKaan/Neurofluxion/actions/runs/38575599616) passed central finite-difference checks for Conv2D→Flatten→Dense and short tanh RNN→Dense graph backward paths.
 - Protocol: epsilon 1e-3, rtol 2e-2, atol 2e-3, fixed seeds, MSE.
 - This is independent numerical evidence for two specific mixed-layer graphs. It does not generalize to all operator families, losses, shapes, or integrated training configurations.
+
+
+## Post-PR #46 evidence reconciliation (2026-10-14)
+
+PR #46 merged as `0ef95cf472b5492140d836d475d4b4528e6648c6`. Its four PR-head workflows all passed: graph-integrated gradient oracles [38580463218](https://github.com/RayAKaan/Neurofluxion/actions/runs/38580463218), research validation [38580463113](https://github.com/RayAKaan/Neurofluxion/actions/runs/38580463113), frozen-main integrated validation [38580463272](https://github.com/RayAKaan/Neurofluxion/actions/runs/38580463272), and full-stack validation [38580463094](https://github.com/RayAKaan/Neurofluxion/actions/runs/38580463094). The two new graph-level finite-difference cases—LSTM→Dense and GRU→Dense—passed on the PR head. This does not establish universal recurrent correctness or graph-integrated training.
+
+The next proposed oracle combines Embedding→single-head Attention→RNN→Dense with fixed repeated token indices. Its outcome must be reported only after the dedicated workflow completes. Remaining independent gates include graph-integrated BatchNorm gradients, non-dense parameter-update/training contracts, browser stale-response/provenance scenarios, a complete reproducible literature review, and a frozen-source manuscript audit. Runtime application source remains read-only under the current scope.

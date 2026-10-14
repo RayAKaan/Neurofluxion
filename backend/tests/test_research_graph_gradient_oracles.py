@@ -100,3 +100,20 @@ def test_gru_dense_graph_backward_matches_finite_differences():
     target = np.asarray([-0.2], dtype=np.float32)
     _assert_graph_gradients_match_finite_difference(graph, x, target)
 
+
+
+def test_embedding_attention_rnn_dense_graph_backward_matches_finite_differences():
+    """Check packed parameter gradients across embedding, attention, and RNN in one graph."""
+    np.random.seed(435)
+    graph = build_graph([
+        LayerConfig("input", neurons=3, input_shape=[3]),
+        LayerConfig("embedding", neurons=2, embedding_dim=2, vocab_size=5),
+        LayerConfig("attention", neurons=2, num_heads=1),
+        LayerConfig("rnn", neurons=2, hidden_size=2, return_sequences=False),
+        LayerConfig("output", neurons=1, activation="linear"),
+    ])
+    # Repeated indices exercise shared embedding-row use while keeping the
+    # discrete input fixed during parameter finite differences.
+    x = np.asarray([1, 2, 1], dtype=np.float32)
+    target = np.asarray([0.15], dtype=np.float32)
+    _assert_graph_gradients_match_finite_difference(graph, x, target)

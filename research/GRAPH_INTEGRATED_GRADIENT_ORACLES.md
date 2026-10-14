@@ -33,4 +33,9 @@ The full-stack workflow [38575599333](https://github.com/RayAKaan/Neurofluxion/a
 
 Two additional fixed graph cases extend the same central finite-difference protocol to LSTM → Dense and GRU → Dense. Both use short three-step sequences, two-dimensional inputs, hidden size two, one linear output, fixed seeds, and the same MSE/tolerance settings.
 
-These are new checks, not pre-confirmed passes. CI results must be inspected before this document or the paper describes them as successful. A failure may indicate a graph-level backward defect or an oracle/parameter-synchronization mismatch and must be triaged without silently weakening tolerances. Runtime simulator source remains out of scope.
+PR #46 was merged as `0ef95cf472b5492140d836d475d4b4528e6648c6`. Its graph-oracle workflow [38580463218](https://github.com/RayAKaan/Neurofluxion/actions/runs/38580463218), research validation [38580463113](https://github.com/RayAKaan/Neurofluxion/actions/runs/38580463113), frozen-main integrated validation [38580463272](https://github.com/RayAKaan/Neurofluxion/actions/runs/38580463272), and full-stack validation [38580463094](https://github.com/RayAKaan/Neurofluxion/actions/runs/38580463094) all completed successfully. LSTM → Dense and GRU → Dense therefore passed the same fixed-case central finite-difference protocol on PR #46's tested head. The evidence remains limited to those graphs and the stated numerical setup; runtime simulator source was unchanged.
+
+
+## Next gate: composite embedding-attention-recurrent graph (PR #47 workstream)
+
+A further graph-level oracle is being added for Embedding → single-head Attention → RNN → Dense, with repeated discrete input indices. The finite-difference comparison perturbs graph parameters while holding token indices fixed. This is a proposed check until its dedicated CI and full validation results are inspected. A pass would establish only this small graph, fixed sequence, MSE objective, dtype, seed, and tolerance—not masked/multi-head attention, arbitrary sequence lengths, or training convergence.
