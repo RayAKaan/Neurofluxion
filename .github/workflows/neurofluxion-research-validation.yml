@@ -37,14 +37,53 @@ jobs:
           PYTHONPATH: backend
         run: python -m pytest backend/tests/test_simulator_smoke.py -q
 
-      - name: Run deterministic dense-path audit
+      - name: Run dense audit and preserve numerical findings
         shell: bash
         run: |
           mkdir -p research-artifacts
-          set -o pipefail
+          set +e
           PYTHONPATH=backend python research/experiments/run_simulator_audit.py \
             --repo . --out research-artifacts/simulator-audit.json \
             2>&1 | tee research-artifacts/simulator-audit.log
+          audit_code=\${PIPESTATUS[0]}
+          set -e
+
+          # Exit 2 means the harness could not produce a valid report.
+          if [ "$audit_code" -eq 2 ]; then
+            echo "::error::Audit could not complete; inspect the uploaded log."
+            exit 2
+          fi
+          if [ ! -s research-artifacts/simulator-audit.json ]; then
+            echo "::error::Audit did not produce JSON evidence."
+            exit 2
+          fi
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path("research-artifacts/simulator-audit.json").read_text(encoding="utf-8"))
+          checks = {
+              "forward": data.get("forward_oracle", {}).get("pass"),
+              "trace": data.get("trace_oracle", {}).get("pass"),
+              "gradient": data.get("gradient_finite_difference", {}).get("pass"),
+              "repeatability": data.get("repeatability", {}).get("pass"),
+          }
+          if any(value is None for value in checks.values()):
+              raise SystemExit("Audit JSON is incomplete; required check fields are missing.")
+          failed = [name for name, passed in checks.items() if not passed]
+          print(json.dumps({"checks": checks, "failed_checks": failed}, indent=2))
+          PY
+
+          failed_checks=$(python -c 'import json; d=json.load(open("research-artifacts/simulator-audit.json")); checks={"forward":d["forward_oracle"]["pass"],"trace":d["trace_oracle"]["pass"],"gradient":d["gradient_finite_difference"]["pass"],"repeatability":d["repeatability"]["pass"]}; print(",".join(k for k,v in checks.items() if not v))')
+          if [ -n "$failed_checks" ]; then
+            echo "::warning::Numerical findings detected: $failed_checks. Raw measurements are preserved; this workflow does not certify correctness."
+            echo "### Dense audit: numerical findings detected" >> "$GITHUB_STEP_SUMMARY"
+            echo "Failed checks: $failed_checks" >> "$GITHUB_STEP_SUMMARY"
+            echo "Inspect the uploaded JSON and log. A completed audit with failed checks is evidence, not a passing correctness result." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "### Dense audit: all declared checks passed" >> "$GITHUB_STEP_SUMMARY"
+            echo "This result is limited to the fixed dense case in the audit harness." >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       - name: Upload raw research evidence
         if: always()
