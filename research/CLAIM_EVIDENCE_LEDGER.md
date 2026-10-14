@@ -17,7 +17,7 @@ Research audit run: https://github.com/RayAKaan/Neurofluxion/actions/runs/384897
 Follow-up fix PR: https://github.com/RayAKaan/Neurofluxion/pull/19
 - Adds a correction for mean-reduced MSE scaling and gradient array ordering.
 - Adds regression tests comparing returned gradient tensors to central finite differences.
-- Its branch CI has passed the new regression test and existing simulator smoke tests. The fix is not yet part of main; rerun the research audit against the merged main revision before changing the paper's final correctness claims.
+- The fix was merged into `main` in PR #19 (merge commit `90957f5e7b80d52eef4692799399a9c36bfba8b5`). The research audit is being rerun against the integrated revision; do not upgrade the claim until that post-merge run is inspected.
 
 ## Claim table
 
@@ -25,7 +25,7 @@ Follow-up fix PR: https://github.com/RayAKaan/Neurofluxion/pull/19
 |---|---|---|---|---|
 | C-01 | Neurofluxion contains distinct NumPy simulator and framework-backed model paths. | Source audit at pinned commit and path boundaries. | SOURCE-INSPECTED | Describe paths separately; do not imply parameter or numerical equivalence. |
 | C-02 | Dense forward computation agrees with an independent reference. | E1 fixed-parameter oracle. | EXECUTED, passed for one two-layer dense case | State the tested case and exact tolerance; do not generalize to all layers. |
-| C-03 | Backward gradients agree with numerical derivatives. | E2 finite differences for each claimed loss/activation pair. | FAILED on pre-fix baseline; proposed fix branch tests pass; main must be re-audited after merge | Do not claim the baseline is correct. |
+| C-03 | Backward gradients agree with numerical derivatives. | E2 finite differences for each claimed loss/activation pair. | PRE-FIX BASELINE FAILED; fix merged; post-merge audit pending | Do not claim the baseline is correct. |
 | C-04 | Dense trace events represent the recorded arithmetic. | E3 per-event reconstruction. | EXECUTED, passed for six dense events in one case | Restrict to the tested dense event types and fixed case. |
 | C-05 | Repeated fixed-parameter execution is repeatable. | E4 repeated runs with trace normalization policy. | EXECUTED, passed for one graph/input | State fixed graph and input scope; no cross-machine determinism claim. |
 | C-06 | Inspection has a characterized runtime cost. | E5 multi-size, repeated-process benchmark with raw samples. | NOT ESTABLISHED | Do not report the tiny-graph microtiming as a performance claim. |
@@ -34,7 +34,7 @@ Follow-up fix PR: https://github.com/RayAKaan/Neurofluxion/pull/19
 | C-09 | Neurofluxion improves learning or usability. | Controlled user study and analysis. | NOT TESTED / OUT OF SCOPE | Make no improvement claim. |
 | C-10 | Existing simulator smoke tests pass. | Test command and logs. | EXECUTED, 5 passed on the research audit run | State test file and run; do not imply full repository suite passed. |
 | C-11 | The /api/execute backward and training endpoints implement real numerical learning. | Route-to-implementation audit and numerical tests. | SOURCE-INSPECTED finding F-02 shows placeholder behavior in ExecutionEngine; targeted frontend inspection shows SimulatorPage/useSimulatorApi call /api/simulator routes, while a full frontend-wide usage audit remains open. | Do not claim those execute endpoints are correct; keep main simulator path separate. |
-| C-12 | TrainingEngine computes correct MSE gradients. | Independent finite differences against the exact mean-reduced loss, plus shape/order checks. | SOURCE-INSPECTED finding F-06 indicates scaling and duplicate-activation-derivative risks; fix PR #20 adds a correction and its branch CI passed 7 tests, but main must be re-audited after merge. | Do not claim training correctness until tests pass on the intended source revision. |
+| C-12 | TrainingEngine computes correct MSE gradients. | Independent finite differences against the exact mean-reduced loss, plus shape/order checks. | SOURCE-INSPECTED finding F-06 indicated scaling and duplicate-activation-derivative risks; correction merged via PR #20 (merge commit `d49d73967bfffab5aea3b962c46a865328f38f2b`); post-merge regression and broader training checks pending. | Do not claim training correctness until tests pass on the intended source revision. |
 
 ## Rules
 
