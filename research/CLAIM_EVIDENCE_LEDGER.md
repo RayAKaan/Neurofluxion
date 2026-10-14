@@ -14,6 +14,7 @@ This ledger is deliberately conservative. The existence of code or a test is not
 | C-08 | The paper contributes something not already established by prior systems. | Verified literature review, closest-work comparison, evidence-backed difference. | UNRESOLVED | Do not claim “first,” “novel,” or “state of the art.” |
 | C-09 | The tool improves learning or usability. | Appropriate controlled human-subject evaluation and analysis. | OUT OF SCOPE / NOT TESTED | Make no improvement claim. |
 | C-10 | Repository tests pass. | Test command run against exact pinned checkout; logs and exit code. | NOT EXECUTED in current sandbox | Do not report pass status. |
+| C-11 | The entire execution/training API performs real numerical backpropagation and training. | Route-to-implementation audit and independent checks of each reachable path. | SOURCE-INSPECTED finding F-02 contradicts this claim for /api/execute/backward and /api/execute/train; frontend usage still unresolved. | Do not make this claim for the execution-engine route family. |
 
 ## Rules
 
