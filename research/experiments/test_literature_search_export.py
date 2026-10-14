@@ -122,6 +122,14 @@ class LiteratureSearchExportTests(unittest.TestCase):
         self.assertIn("api_key=test-secret", fetch.call_args.args[0])
         self.assertNotIn("test-secret", requests[0]["url"])
 
+        from literature_search_export import SearchPartialFailure
+        with patch.dict("os.environ", {"OPENALEX_API_KEY": "test-secret"}):
+            with patch("literature_search_export.fetch_json", side_effect=RuntimeError("request failed api_key=test-secret")):
+                with self.assertRaises(SearchPartialFailure) as caught:
+                    search_openalex("test query", page_size=1, max_pages=1)
+        self.assertNotIn("test-secret", str(caught.exception))
+        self.assertNotIn("test-secret", caught.exception.requests[0]["error"])
+
     def test_run_search_records_partial_failures_and_keeps_partial_records(self):
         from literature_search_export import SearchPartialFailure, run_search
         partial_record = normalize_openalex({
