@@ -4,9 +4,9 @@ This directory contains the research protocol and evidence ledger for the Neurof
 
 ## Status
 
-- Research status: protocol established; experiments are not yet certified as executed.
+- Research status: protocol established; a first dense-path CI audit has executed. Forward and dense trace checks passed, repeatability passed, and the baseline MSE gradient check failed. See CLAIM_EVIDENCE_LEDGER.md.
 - Source baseline: record the exact commit SHA before every experimental run.
-- If a local checkout is unavailable, source inspection through repository tools is not a substitute for executed experiments.
+- If a local checkout is unavailable, the GitHub Actions workflow can run against the checked-out PR revision; record that revision separately from the intended frozen application baseline.
 - This branch adds research documentation and audit tooling only. It does not change simulator behavior.
 
 ## Workflow
@@ -23,7 +23,7 @@ This directory contains the research protocol and evidence ledger for the Neurof
 
     PYTHONPATH=backend python research/experiments/run_simulator_audit.py --repo . --out research/artifacts/simulator-audit.json
 
-The first harness targets a small deterministic dense network. It is a diagnostic gate, not a complete validation of every layer family or a publication-grade performance benchmark. A successful run supports only the checks explicitly reported in its output.
+The harness targets a small deterministic dense network. The first run found a gradient failure and therefore exited non-zero after preserving JSON/log artifacts. A separate fix PR addresses gradient scaling and result ordering; the audit must be rerun against main after that fix is merged. This remains a diagnostic gate, not a complete validation of every layer family or a publication-grade performance benchmark.
 
 ## Evidence labels
 
