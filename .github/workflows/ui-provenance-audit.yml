@@ -1,0 +1,38 @@
+name: Neurofluxion UI provenance source audit
+
+on:
+  pull_request:
+    paths:
+      - "research/experiments/audit_ui_provenance.py"
+      - "research/UI_PROVENANCE_AUDIT.md"
+      - ".github/workflows/ui-provenance-audit.yml"
+      - "frontend/src/store/**"
+      - "frontend/src/pages/SimulatorPage.tsx"
+      - "frontend/src/components/layout/UnifiedLayout.tsx"
+      - "backend/api/stream_ws.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Generate provenance findings
+        run: |
+          mkdir -p research/artifacts
+          python research/experiments/audit_ui_provenance.py --repo . --out research/artifacts/ui-provenance-audit.json
+      - name: Upload findings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: neurofluxion-ui-provenance-audit
+          path: research/artifacts/ui-provenance-audit.json
+          if-no-files-found: error
+          retention-days: 30
