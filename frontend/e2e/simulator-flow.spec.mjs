@@ -17,8 +17,9 @@ test("Simulator displays the exact backend trace returned for its current run", 
   await expect(page).toHaveTitle("Simulator · Neurofluxion");
   await expect(page.getByRole("note")).toContainText("ran one random forward pass");
 
+  const responsesBeforeRunTab = forwardResponses.length;
   await page.getByRole("tab", { name: "Run" }).click();
-  await expect.poll(() => forwardResponses.length, { timeout: 15_000 }).toBeGreaterThan(0);
+  await expect.poll(() => forwardResponses.length, { timeout: 15_000 }).toBeGreaterThan(responsesBeforeRunTab);
   await page.waitForLoadState("networkidle");
   await page.waitForTimeout(250);
 
