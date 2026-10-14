@@ -134,3 +134,22 @@ This supplementary round adds queries aimed at newer interactive-explainability 
 - yProv4ML (2025): https://doi.org/10.1016/j.softx.2025.102298
 - MLflow2PROV (2025): https://doi.org/10.1016/j.is.2024.102495
 - ML experiment management study (2024): https://doi.org/10.1007/s10664-024-10444-w
+
+
+## Additional adjacent trace-visualization search (2026-10-14)
+
+| ID | Query | Search intent |
+|---|---|---|
+| Q18 | execution trace visualization agent workflows scientific agent 2026 ACL demo | Identify recent event-trace visualization systems adjacent to, but not necessarily specific to, neural-network simulators |
+
+### Additional candidate from primary venue record
+
+| Work | Venue/year | Focus | Relevance and claim boundary |
+|---|---|---|---|
+| Graph of Trace: Visualizing Execution Traces of Scientific Agents (Gao et al.) | ACL System Demonstrations, 2026, pp. 297–306; DOI: 10.18653/v1/2026.acl-demo.29 | Records fine-grained scientific-agent workflow events and visualizes them as a directed trace graph updated during execution; the venue record reports evaluation with domain experts. | Adjacent trace-visualization prior art, not a neural-network simulator or numerical gradient/operation oracle. It cautions against broad claims that execution-trace visualization is new, but does not answer whether Neurofluxion's individual operation records faithfully reconstruct numerical computation. |
+
+Primary source: https://aclanthology.org/2026.acl-demo.29/
+
+### Review-status note
+
+This addition is source-verified against the official ACL Anthology record and abstract. It is an additional targeted search result, not a completed citation-snowballing pass or a substitute for exportable database searches, deduplication, screening counts, and full-text extraction. The review must continue to be described as a structured rapid review.
