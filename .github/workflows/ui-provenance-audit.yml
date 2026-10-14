@@ -8,6 +8,7 @@ on:
       - ".github/workflows/ui-provenance-audit.yml"
       - "frontend/src/store/**"
       - "frontend/src/pages/SimulatorPage.tsx"
+      - "frontend/src/components/layout/UnifiedLayout.tsx"
       - "backend/api/stream_ws.py"
   workflow_dispatch:
 
