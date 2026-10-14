@@ -371,12 +371,12 @@ class ExecutionEngine:
             forward = self.forward(x_dev)
             backward = self.backward(y_dev, loss_function=loss_function)
             train_loss = backward.loss_value
-            # Recompute gradients from the cached forward pass before updating
-            # parameters. This keeps the update tied to the scalar loss contract.
-            gradients = self._compute_gradients(y_dev, loss_function)
+            # Apply the gradients produced by this exact forward/backward pass.
+            gradients_w = [layer.gradient_weights for layer in backward.layers]
+            gradients_b = [layer.gradient_bias for layer in backward.layers]
             for idx in range(len(self._graph["weights"])):
-                self._graph["weights"][idx] = self._graph["weights"][idx] - learning_rate * gradients[0][idx]
-                self._graph["biases"][idx] = self._graph["biases"][idx] - learning_rate * gradients[1][idx]
+                self._graph["weights"][idx] = self._graph["weights"][idx] - learning_rate * gradients_w[idx]
+                self._graph["biases"][idx] = self._graph["biases"][idx] - learning_rate * gradients_b[idx]
             loss_history.append(float(train_loss))
             post_update = self.forward(x_dev)
             predictions = xp.asarray(post_update.final_output, dtype=xp.float32)
