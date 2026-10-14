@@ -84,7 +84,7 @@ Follow-up fix PR: https://github.com/RayAKaan/Neurofluxion/pull/19
 
 ### Additional operator contracts: convolution and pooling (2026-10-14)
 
-- PR [#27](https://github.com/RayAKaan/Neurofluxion/pull/27) adds a fixed single-channel Conv2D kernel/bias finite-difference check plus MaxPool2D and AvgPool2D forward/backward contracts. Eight focused tests passed in run [38494152856](https://github.com/RayAKaan/Neurofluxion/actions/runs/38494152856). This is narrow operator-level evidence, not graph-level or end-to-end training validation.
+- PR [#27](https://github.com/RayAKaan/Neurofluxion/pull/27) adds a fixed single-channel Conv2D kernel/bias finite-difference check plus MaxPool2D and AvgPool2D forward/backward contracts. Nine focused tests passed in run [38495772620](https://github.com/RayAKaan/Neurofluxion/actions/runs/38495772620), adding a Flatten element-order and backward shape contract. This is narrow operator-level evidence, not graph-level or end-to-end training validation.
 
 ### Additional optimizer finding (2026-10-14)
 
