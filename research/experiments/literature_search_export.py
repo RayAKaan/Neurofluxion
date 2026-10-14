@@ -64,6 +64,7 @@ def normalize_doi(value: str | None) -> str:
         return ""
     doi = value.strip().lower()
     doi = re.sub(r"^https?://(dx\.)?doi\.org/", "", doi)
+    doi = re.sub(r"^doi:\s*", "", doi)
     return doi.rstrip(" .;,)")
 
 
