@@ -41,3 +41,13 @@ The original rows above were drafted before the recent research PR series. They 
 - The literature export pipeline has offline unit coverage. Live exports, duplicate adjudication, screening, full-text review and citation snowballing remain pending.
 
 Before publication, perform the remaining source audit (including details, model registry, training, stream semantics and frontend wiring), select a venue, resolve all citations/placeholders, generate real or explicitly schematic figures, freeze a source revision, and run the full integrated validation against that exact revision.
+
+
+## Live literature export after PR #57 (2026-10-14)
+
+- Main revision: `c715d5d5e5a8838b7aa2c56e625dcd26c1dc4419`.
+- Run: [38593723201](https://github.com/RayAKaan/Neurofluxion/actions/runs/38593723201); artifact: `neurofluxion-literature-search-export`, ID `11908119812`, SHA-256 `ba8119fd488ed50f7364b5f47bbf9dc1a923fafc78cd2910f25fb3538c3fb36a`.
+- Export summary: 1,800 raw records, 1,568 deduplicated candidates, six successful queries, six partial-failed queries, zero fully failed queries. The six partial failures were OpenAlex page-2 HTTP 401 responses; `OPENALEX_API_KEY` was empty in the workflow environment. Crossref records and records retained from successful OpenAlex pages were preserved.
+- The workflow failed with exit code 2 as intended. This is an improvement in failure visibility, not a successful literature-search gate.
+- No candidate has a human inclusion/exclusion decision from this export. The deterministic deduplication removed 232 records, but that is not human duplicate adjudication.
+- Required next action: configure a valid OpenAlex API key in repository Actions secrets (or revise the search protocol transparently), rerun the export, inspect all query/page statuses, then conduct human screening and full-text review. Never report raw/deduplicated candidate counts as screened or included studies.
