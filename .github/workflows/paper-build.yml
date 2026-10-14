@@ -1,0 +1,57 @@
+name: IEEE paper build and page-count audit
+
+on:
+  pull_request:
+    paths:
+      - "paper/**"
+      - ".github/workflows/paper-build.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-paper:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Install LaTeX toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y latexmk texlive-publishers texlive-latex-extra texlive-pictures texlive-fonts-recommended poppler-utils
+      - name: Compile IEEEtran manuscript
+        working-directory: paper
+        run: latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error neurofluxion.tex
+      - name: Report page count and unresolved placeholders
+        id: audit
+        working-directory: paper
+        shell: bash
+        run: |
+          set -euo pipefail
+          pdfinfo neurofluxion.pdf | tee pdfinfo.txt
+          pages="$(pdfinfo neurofluxion.pdf | awk '/^Pages:/ {print $2}')"
+          echo "pages=$pages" >> "$GITHUB_OUTPUT"
+          todos="$(grep -Eic 'TODO|placeholder|\\[\\?\\]' neurofluxion.tex || true)"
+          echo "todo_lines=$todos" >> "$GITHUB_OUTPUT"
+          echo "Compiled pages: $pages"
+          echo "Potential TODO/placeholder lines: $todos"
+          if [ "$pages" -gt 8 ]; then
+            echo "::warning::The manuscript is $pages pages; the eight-page target is not met."
+          fi
+          if [ "$todos" -gt 0 ]; then
+            echo "::warning::The manuscript still contains TODO/placeholder markers."
+          fi
+      - name: Upload compiled manuscript and build logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: neurofluxion-ieee-paper-build
+          path: |
+            paper/neurofluxion.pdf
+            paper/neurofluxion.log
+            paper/neurofluxion.fls
+            paper/pdfinfo.txt
+          if-no-files-found: warn
+          retention-days: 30
