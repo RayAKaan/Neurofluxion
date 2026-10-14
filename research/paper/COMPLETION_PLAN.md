@@ -1,7 +1,8 @@
 # Neurofluxion Implementation Paper — Research Completion Plan
 
 Working title: Neurofluxion: An Inspectable Simulator for Neural-Network Computation  
-Baseline: main after PR #22, merge commit b3e0990da61d54b71b27963f3a664b30ccd47378  
+Historical audit baseline: main after PR #22, commit `b3e0990da61d54b71b27963f3a664b30ccd47378`  
+Current-main reference at reconciliation: `0866972ea5a9e9f2d1864681402e3e3659bdaf8a` (after PR #29). 
 Status: manuscript revision in progress; not submission-ready.
 
 ## 1. Research framing
@@ -26,7 +27,8 @@ The current manuscript has useful source-grounded observations and a narrow nume
 - PR #22 corrected the mean-reduced BCE/sigmoid gradient contract and added finite-difference tests for both backward_full and TrainingEngine.
 - PR #22 merge-preview CI run 38491607499 completed successfully: 11 tests passed across simulator smoke, simulator MSE, TrainingEngine MSE, and BCE gradient-contract tests.
 - Research audit run 38491607397 completed successfully on merge-preview tree d2e64487b9c7ab495a2be9d7c22d22dd32150349, Python 3.11.17 and NumPy 2.4.6. The fixed dense case reported forward maximum absolute error 0.0, trace final-output error 0.0, passing selected MSE finite differences, and identical output/trace hashes on repeated runs.
-- PR #22 was subsequently merged as b3e0990da61d54b71b27963f3a664b30ccd47378. CI evidence was collected on the PR merge-preview tree, not a fresh test run after the merge commit was created.
+- PR #22 was subsequently merged as `b3e0990da61d54b71b27963f3a664b30ccd47378`. CI evidence was collected on the PR merge-preview tree, not a fresh test run after the merge commit was created.
+- `main` has since advanced through PR #29 to `0866972ea5a9e9f2d1864681402e3e3659bdaf8a`. Treat all historical source findings and evidence as scoped to their recorded revisions; rerun relevant tests and recheck source claims against the current baseline before manuscript use.
 
 Not established: full repository test-suite status; numerical correctness for every registered operator, activation, loss, or optimizer; convergence; replay and cross-view consistency; complete asynchronous UI provenance; performance/scalability overhead; user benefit; or novelty against the whole literature.
 
@@ -129,8 +131,8 @@ A top-tier visualization venue is likely to require a sharper task-centered cont
 
 ## 6. Immediate next actions
 
-1. Update the evidence ledger to record PR #22 as merged and describe merge-preview evidence accurately.
-2. Freeze current main and rerun targeted tests against that exact checkout.
+1. Freeze current `main` at `0866972ea5a9e9f2d1864681402e3e3659bdaf8a` (or a newer explicitly recorded commit) and rerun targeted tests against that exact checkout.
+2. Recheck the historical source-audit findings against the frozen baseline, marking each as confirmed, fixed, or unresolved.
 3. Expand dense activation/loss tests, including BCE stability and output-width semantics.
 4. Add deterministic parameter-update and training-convergence tests.
 5. Audit API/frontend/WebSocket provenance and fallback paths.

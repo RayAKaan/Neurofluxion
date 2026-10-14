@@ -1,7 +1,8 @@
 # Neurofluxion Simulator: Source-Level System Audit
 
-**Audit target:** `RayAKaan/Neurofluxion`, default branch `main`, commit `b3e0990da61d54b71b27963f3a664b30ccd47378` (PR #22 merge commit at the time of inspection).  
-**Status:** architecture inventory and initial source findings; **not yet a completed line-by-line audit or a full execution validation**. This document deliberately separates observed source structure from tested behavior.
+**Historical audit target:** `RayAKaan/Neurofluxion`, `main` at commit `b3e0990da61d54b71b27963f3a664b30ccd47378` (PR #22 merge commit at the time of inspection).  
+**Current-main reference when this document was reconciled:** `0866972ea5a9e9f2d1864681402e3e3659bdaf8a` (after PR #29).  
+**Status:** architecture inventory and initial source findings; **not yet a completed line-by-line audit or a full execution validation**. Findings below are pinned to the historical audit target unless explicitly rechecked. Do not assume source-level observations still describe current `main` without validating them against the current commit.
 
 ## 1. Why the simulator must be the paper's technical center
 

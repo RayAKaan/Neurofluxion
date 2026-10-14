@@ -35,7 +35,7 @@ jobs:
       - name: Run existing simulator smoke tests
         env:
           PYTHONPATH: backend
-        run: python -m pytest backend/tests/test_simulator_smoke.py -q
+        run: python -m pytest backend/tests/test_simulator_smoke.py backend/tests/test_trace_step_contract.py -q
 
       - name: Run merged gradient-contract regression tests
         env:
