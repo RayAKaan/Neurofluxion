@@ -1,0 +1,37 @@
+name: BCE gradient contract
+
+on:
+  pull_request:
+    paths:
+      - "backend/simulator/backward_engine.py"
+      - "backend/simulator/training_engine.py"
+      - "backend/tests/test_bce_gradient_contract.py"
+      - "backend/tests/test_simulator_mse_gradient_contract.py"
+      - "backend/tests/test_training_mse_gradient_contract.py"
+      - "backend/tests/test_simulator_smoke.py"
+      - ".github/workflows/bce-gradient-contract.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  bce-gradient-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install minimal numerical test dependencies
+        run: python -m pip install --disable-pip-version-check numpy pytest
+      - name: Run simulator and gradient contracts
+        env:
+          PYTHONPATH: backend
+        run: >-
+          python -m pytest
+          backend/tests/test_simulator_smoke.py
+          backend/tests/test_simulator_mse_gradient_contract.py
+          backend/tests/test_training_mse_gradient_contract.py
+          backend/tests/test_bce_gradient_contract.py
+          -q

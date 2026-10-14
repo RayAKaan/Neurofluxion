@@ -117,8 +117,11 @@ class TrainingEngine:
                 act_name = (self.graph.layers[idx + 1].activation or "linear").lower()
                 activation = get_activation(act_name)
                 if idx == num_layers - 1:
-                    if self.config.loss_function == "mse":
+                    if (self.config.loss_function or "bce").lower() == "mse":
                         delta = ((y_hat - y) / max(1, y.size)) * activation.derivative(z)
+                    elif (self.config.loss_function or "bce").lower() == "bce" and act_name == "sigmoid":
+                        # Mean BCE with sigmoid output uses the fused dL/dz = (y_hat-y)/N.
+                        delta = (y_hat - y) / max(1, y.size)
                     else:
                         delta = y_hat - y
                 else:
@@ -139,8 +142,12 @@ class TrainingEngine:
         last_layer = self.graph.layer_instances[-1]
         if hasattr(last_layer, "activation_name"):
             act = get_activation(last_layer.activation_name)
-            if self.config.loss_function == "mse" and hasattr(last_layer, "Z") and last_layer.Z is not None:
+            if (self.config.loss_function or "bce").lower() == "mse" and hasattr(last_layer, "Z") and last_layer.Z is not None:
                 d_out = (y_hat - y) / max(1, y.size)
+            elif (self.config.loss_function or "bce").lower() == "bce" and last_layer.activation_name == "sigmoid" and getattr(last_layer, "Z", None) is not None:
+                # DenseLayer.backward multiplies sigmoid'; compensate so the fused BCE/sigmoid dL/dz is retained.
+                derivative = act.derivative(last_layer.Z)
+                d_out = ((y_hat - y) / max(1, y.size)) / np.maximum(derivative, np.finfo(np.float32).eps)
             else:
                 d_out = y_hat - y
         else:
