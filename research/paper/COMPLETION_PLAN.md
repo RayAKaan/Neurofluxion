@@ -2,7 +2,7 @@
 
 Working title: Neurofluxion: An Inspectable Simulator for Neural-Network Computation  
 Historical audit baseline: main after PR #22, commit `b3e0990da61d54b71b27963f3a664b30ccd47378`  
-Current-main reference at reconciliation: `203407474ca11232eb32e85e044e6e52e189e18c` (PR #33 merge, 2026-10-14). 
+Current-main reference at reconciliation: `35b30de7807cc0ce522ced93ee7f3b1ea8e8e8aa` (post-PR #38 research-file cleanup, 2026-10-14). 
 Status: manuscript revision in progress; not submission-ready.
 
 ## 1. Research framing
@@ -159,3 +159,9 @@ The following research PRs are in progress and have successful initial evidence;
 5. Complete the literature review using exportable bibliographic database searches, deduplication, title/abstract and full-text screening, screening counts, and backward/forward citation chasing.
 6. Regenerate the manuscript and figures from the updated evidence only after the relevant results are merged and frozen. Do not claim submission readiness until all stated claims have matched evidence.
 
+
+## Next phase started: graph-integrated backward and training
+
+PR #39 workstream adds (a) a deterministic dense BCE training regression contract and (b) a machine-readable graph-family backward diagnostic spanning dense, convolution/pooling/flatten, BatchNorm, RNN/LSTM/GRU, embedding/attention, and residual cases. The diagnostic preserves exceptions and non-finite/empty-gradient findings rather than treating report generation as a correctness pass. The dense training test requires finite nonzero gradients, parameter changes, fixed-sample loss reduction, and repeatability with a fixed seed and dropout disabled.
+
+The current phase remains research-only. It does not alter runtime simulator code. A finite-gradient result is not an independent correctness oracle; next steps are to inspect the first artifact, add finite-difference/analytic references where paths pass, and request a separate runtime-fix PR only if the user authorizes code changes.
