@@ -4,7 +4,7 @@ This directory contains the research protocol and evidence ledger for the Neurof
 
 ## Status
 
-- Research status: protocol established; a first dense-path CI audit has executed. Forward and dense trace checks passed, repeatability passed, and the baseline MSE gradient check failed. See CLAIM_EVIDENCE_LEDGER.md.
+- Research status: post-merge fixed dense-path audit passes the forward oracle, trace oracle, finite-difference gradient check, and repeatability check; 5 simulator smoke tests and 4 gradient-contract regression tests passed in GitHub Actions run [38491189247](https://github.com/RayAKaan/Neurofluxion/actions/runs/38491189247). Broader layer-family and repository-wide validation remain open. See CLAIM_EVIDENCE_LEDGER.md.
 - Source baseline: record the exact commit SHA before every experimental run.
 - If a local checkout is unavailable, the GitHub Actions workflow can run against the checked-out PR revision; record that revision separately from the intended frozen application baseline.
 - This branch adds research documentation and audit tooling only. It does not change simulator behavior.
@@ -23,7 +23,7 @@ This directory contains the research protocol and evidence ledger for the Neurof
 
     PYTHONPATH=backend python research/experiments/run_simulator_audit.py --repo . --out research/artifacts/simulator-audit.json
 
-The harness targets a small deterministic dense network. The first run found a gradient failure and therefore exited non-zero after preserving JSON/log artifacts. A separate fix PR addresses gradient scaling and result ordering; the audit must be rerun against main after that fix is merged. This remains a diagnostic gate, not a complete validation of every layer family or a publication-grade performance benchmark.
+The harness targets a small deterministic dense network. The pre-fix run found a gradient failure and preserved JSON/log artifacts. PRs #19 and #20 have since merged corrections. The post-merge audit passes for the fixed dense case only; this does not validate every layer family or the full repository test suite. This remains a diagnostic gate, not a complete validation of every layer family or a publication-grade performance benchmark.
 
 ## Evidence labels
 
