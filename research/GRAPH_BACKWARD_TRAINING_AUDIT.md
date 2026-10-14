@@ -29,3 +29,13 @@ A dense training pass does not establish training correctness for convolutional,
 - Add independent gradient oracles for each graph family that passes the smoke diagnostic.
 - Add deterministic training trajectories for additional architectures only after their backward contracts are independently validated.
 - Reconcile these findings into the validation matrix and manuscript without overstating coverage.
+
+## First CI result (2026-10-14)
+
+Dedicated workflow [38574104561](https://github.com/RayAKaan/Neurofluxion/actions/runs/38574104561) passed both jobs:
+- deterministic dense BCE training regression contracts: passed;
+- graph-family backward diagnostic: generated an artifact with **8/8 fixed cases returning finite gradient tensors** (dense, Conv2D→MaxPool→Flatten, BatchNorm, RNN, LSTM, GRU, Embedding→Attention→RNN, residual).
+
+The full-stack validation on this PR head also passed backend tests, frontend build, and the existing browser E2E: [run 38574104816](https://github.com/RayAKaan/Neurofluxion/actions/runs/38574104816).
+
+This result closes only the “backward call returns finite values” smoke gate for these fixed cases. It does not establish gradient correctness for those graph combinations, training convergence beyond the single dense task, or integrated parameter updates for all operator families. Independent finite-difference/analytic oracles remain required.
