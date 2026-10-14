@@ -50,6 +50,9 @@ jobs:
         with:
           python-version: "3.11"
       - name: Run OpenAlex and Crossref searches
+        env:
+          # Optional secret; never logged or written to the manifest.
+          OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
         run: |
           python research/experiments/literature_search_export.py \
             --out /tmp/literature-search-export \
