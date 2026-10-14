@@ -76,3 +76,8 @@ Follow-up fix PR: https://github.com/RayAKaan/Neurofluxion/pull/19
 - Tiny-task loss reduction and repeated fixed-order trajectory passed for one linearly separable binary task using sigmoid+BCE and SGD. This does not prove general convergence.
 - Exact one-step SGD arithmetic and a finite first Adam update passed. Momentum, RMSProp, multi-step Adam reference behavior, scheduler combinations, and unknown optimizer handling remain untested.
 - Remaining family/API/UI validation is tracked in [VALIDATION_MATRIX.md](VALIDATION_MATRIX.md).
+
+### Additional operator finding: BatchNorm (2026-10-14)
+
+- Source inspection of main revision `b3e0990da61d54b71b27963f3a664b30ccd47378` found that the 2D BatchNorm backward path reduces gamma/beta and variance/mean gradients across all elements instead of per feature. This is inconsistent with the forward path's per-feature statistics.
+- PR [#26](https://github.com/RayAKaan/Neurofluxion/pull/26) corrects the axis reductions and adds central finite-difference tests for input, gamma, and beta. The focused contract passed 7 tests with simulator smoke tests in run [38493885673](https://github.com/RayAKaan/Neurofluxion/actions/runs/38493885673). A full backend rerun is pending on the updated PR head; do not claim the fix is integrated until merged and revalidated.
