@@ -403,45 +403,6 @@ class ExecutionEngine:
             execution_time_ms=(time.perf_counter() - start) * 1000.0,
         )
 
-    def _compute_gradients(self, target, loss_function="mse"):
-        """Return current gradients without mutating graph parameters."""
-        if self._last_forward is None:
-            raise ValueError("Run forward before requesting gradients.")
-        xp = self._xp()
-        cache = self._last_forward
-        activations, pre_activations = cache["activations"], cache["pre_activations"]
-        y_hat = activations[-1]
-        y = xp.asarray(target, dtype=xp.float32)
-        if y.ndim == 1:
-            y = y.reshape(1, -1)
-        if y.shape != y_hat.shape:
-            raise ValueError(f"Target shape {tuple(y.shape)} must match output shape {tuple(y_hat.shape)}.")
-        loss_name = (loss_function or "mse").lower()
-        output_activation = self._graph["layers"][-1]["activation"]
-        if loss_name == "mse":
-            delta = ((y_hat - y) / y.size) * self._activation_derivative(output_activation, pre_activations[-1], y_hat, xp)
-        elif loss_name == "bce" and output_activation == "sigmoid":
-            delta = (y_hat - y) / y.size
-        elif loss_name == "bce":
-            clipped = xp.clip(y_hat, 1e-7, 1.0 - 1e-7)
-            d_loss_da = -(y / clipped - (1.0 - y) / (1.0 - clipped)) / y.size
-            delta = d_loss_da * self._activation_derivative(output_activation, pre_activations[-1], y_hat, xp)
-        else:
-            raise ValueError(f"Unsupported loss '{loss_function}'.")
-        grad_w = [None] * len(self._graph["weights"])
-        grad_b = [None] * len(self._graph["biases"])
-        for idx in reversed(range(len(grad_w))):
-            grad_w[idx] = activations[idx].T @ delta
-            grad_b[idx] = xp.sum(delta, axis=0)
-            if idx > 0:
-                delta = (delta @ self._graph["weights"][idx].T) * self._activation_derivative(
-                    self._graph["layers"][idx]["activation"],
-                    pre_activations[idx - 1],
-                    activations[idx],
-                    xp,
-                )
-        return grad_w, grad_b
-
     def get_device_info(self) -> Dict:
         return {
             "backend": self._backend,
