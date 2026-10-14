@@ -34,6 +34,7 @@ Follow-up fix PR: https://github.com/RayAKaan/Neurofluxion/pull/19
 | C-09 | Neurofluxion improves learning or usability. | Controlled user study and analysis. | NOT TESTED / OUT OF SCOPE | Make no improvement claim. |
 | C-10 | Existing simulator smoke tests pass. | Test command and logs. | EXECUTED, 5 passed on the research audit run | State test file and run; do not imply full repository suite passed. |
 | C-11 | The /api/execute backward and training endpoints implement real numerical learning. | Route-to-implementation audit and numerical tests. | SOURCE-INSPECTED finding F-02 shows placeholder behavior in ExecutionEngine; targeted frontend inspection shows SimulatorPage/useSimulatorApi call /api/simulator routes, while a full frontend-wide usage audit remains open. | Do not claim those execute endpoints are correct; keep main simulator path separate. |
+| C-12 | TrainingEngine computes correct MSE gradients. | Independent finite differences against the exact mean-reduced loss, plus shape/order checks. | SOURCE-INSPECTED finding F-06 indicates scaling and duplicate-activation-derivative risks; fix PR #20 and its CI are pending. | Do not claim training correctness until tests pass on the intended source revision. |
 
 ## Rules
 
