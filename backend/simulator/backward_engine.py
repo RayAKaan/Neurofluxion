@@ -44,8 +44,11 @@ def backward_full(
             activation = get_activation(act_name)
 
             if layer_idx == num_layers - 1:
-                if loss_fn == "mse":
+                if (loss_fn or "bce").lower() == "mse":
                     delta = ((y_hat - y) / max(1, y.size)) * activation.derivative(z)
+                elif (loss_fn or "bce").lower() == "bce" and act_name == "sigmoid":
+                    # Mean BCE with sigmoid output: fused dL/dz is (y_hat-y)/N.
+                    delta = (y_hat - y) / max(1, y.size)
                 else:
                     delta = y_hat - y
             else:
@@ -150,10 +153,15 @@ def backward_full(
     step_index = 0
     grads_by_layer: Dict[int, Dict[str, np.ndarray]] = {}
 
-    if loss_fn == "mse":
+    last_layer = graph.layer_instances[-1]
+    if (loss_fn or "bce").lower() == "mse":
         # DenseLayer.backward applies the output activation derivative itself.
         # Seed it with dL/da, not dL/dz, to avoid applying phi'(z) twice.
         d_out = (y_hat - y) / max(1, y.size)
+    elif (loss_fn or "bce").lower() == "bce" and hasattr(last_layer, "activation_name") and last_layer.activation_name == "sigmoid" and getattr(last_layer, "Z", None) is not None:
+        # Compensate for DenseLayer.backward applying sigmoid' so fused BCE/sigmoid dL/dz is preserved.
+        derivative = get_activation("sigmoid").derivative(last_layer.Z)
+        d_out = ((y_hat - y) / max(1, y.size)) / np.maximum(derivative, np.finfo(np.float32).eps)
     else:
         d_out = y_hat - y
 
