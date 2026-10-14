@@ -64,7 +64,7 @@ def run(root: Path) -> dict:
         baseline = np.asarray(graph.forward(x.copy()), dtype=np.float64)
         trace_steps, trace_output, _ = run_forward_full(graph, x.tolist())
         traced = np.asarray(trace_output, dtype=np.float64)
-        max_abs = float(np.max(np.abs(baseline - traced))) if baseline.size else 0.0
+        max_abs = (float(np.max(np.abs(baseline - traced))) if baseline.size else 0.0) if baseline.shape == traced.shape else float("inf")
         parity = baseline.shape == traced.shape and np.allclose(baseline, traced, atol=ATOL, rtol=RTOL)
         if not parity:
             results.append({
