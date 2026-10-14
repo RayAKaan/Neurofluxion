@@ -51,3 +51,5 @@ The CI report from [workflow run 38571759236](https://github.com/RayAKaan/Neurof
 Artifact: [neurofluxion-ui-provenance-audit](https://github.com/RayAKaan/Neurofluxion/actions/runs/38571759236/artifacts/11896823883).
 
 These findings are source-inspection results, not browser-reproduced failures. P1/P2 need delayed-response and graph-switch browser/store tests; P3/P4 need a UI assertion or explicit documented contract. This research PR does not implement fixes in runtime code.
+
+A second source-audit execution, [run 38572250704](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572250704), on checkout `3d62726c236e762fe370e13ae6d11fa8803ea573` reproduced the same classification: 5 GAP entries and 1 PASS entry. Its artifact is [here](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572250704/artifacts/11897898614). This supports repeatability of the source-pattern detector, not proof of a browser-level race.
