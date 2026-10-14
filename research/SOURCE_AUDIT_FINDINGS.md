@@ -48,3 +48,9 @@ run_forward_step calls run_forward_full and selects the requested event after th
 - [ ] Run the main simulator forward/backward path against independent references.
 - [ ] Add a separate test demonstrating the /api/execute/* placeholder behavior if the finding is to be included as an empirical result; otherwise keep it clearly source-inspected.
 - [ ] Reconcile these findings with the frozen commit and final manuscript scope.
+
+## F-06 — TrainingEngine is a separate backward implementation
+
+Static inspection of backend/simulator/training_engine.py shows a separate gradient path from backward_engine.py. In the layer-instance path, the MSE output derivative is pre-multiplied by the activation derivative before the output layer's backward method is called; DenseLayer.backward also applies that derivative. The MSE reduction factor is also absent. The dense-array fallback path additionally reverses gradient arrays after writing them by layer index.
+
+**Paper consequence:** do not infer training-engine correctness from a passing /api/simulator/backward/full test. The training path needs its own finite-difference tests and should be evaluated separately. A focused fix and regression-test PR is open at https://github.com/RayAKaan/Neurofluxion/pull/20; its CI result must be checked before reporting it as validated.
