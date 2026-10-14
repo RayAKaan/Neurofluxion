@@ -1,0 +1,32 @@
+name: Optimizer reference contracts
+
+on:
+  pull_request:
+    paths:
+      - "backend/simulator/optimizer_engine.py"
+      - "backend/tests/test_optimizer_reference_contract.py"
+      - "backend/tests/test_training_convergence_contract.py"
+      - ".github/workflows/optimizer-reference-contract.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  optimizer-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install numerical test dependencies
+        run: python -m pip install --disable-pip-version-check numpy pytest
+      - name: Run optimizer and training contracts
+        env:
+          PYTHONPATH: backend
+        run: >-
+          python -m pytest
+          backend/tests/test_optimizer_reference_contract.py
+          backend/tests/test_training_convergence_contract.py
+          -q
