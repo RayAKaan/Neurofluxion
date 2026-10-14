@@ -10,10 +10,10 @@ This matrix deliberately distinguishes implemented support from independently de
 | Dense MSE gradients | Central finite differences passed for simulator and TrainingEngine test cases | More activation and output-width combinations | Tested MSE configurations only |
 | Dense sigmoid + BCE gradients | Central finite differences passed in simulator and TrainingEngine test cases | Extreme logits, clipping behavior, alternate output activations | Tested sigmoid/BCE configurations only |
 | Training behavior | Tiny deterministic separable BCE task passed in PR #23 research-branch CI: loss decreased under fixed SGD setup; general convergence untested | Confirm loss reduction and repeatability on exact merged revision; add regression tests for other optimizers | No convergence claim until result is recorded |
-| SGD / Adam | Exact SGD arithmetic and finite first Adam update tests passed in PR #23 CI; momentum, RMSProp, multi-step Adam reference, and other optimizer branches remain untested | Momentum, RMSProp, Adam multi-step reference, unknown optimizer behavior | No all-optimizer correctness claim |
+| SGD / Adam | Exact SGD arithmetic and finite first Adam update tests passed in PR #23 CI; PR #28 adds momentum/RMSProp/two-step Adam references and rejects unknown optimizer names | Momentum, RMSProp, Adam multi-step reference, unknown optimizer behavior | No all-optimizer correctness claim |
 | Trace arithmetic | Matmul, bias-add, activation reconstruction passed in one dense case | Layer families and shape regimes; validate event input/output snapshots | Dense event types and tested case only |
 | `run_forward_step` | Source inspection shows it calls `run_forward_full` and selects a step afterward | Measure cost of repeated step requests; consider cached trace only if design and correctness warrant it | Do not claim incremental execution |
-| Convolution / pooling / flatten | Classes and graph construction exist | Independent forward oracles, shape edge cases, gradient checks where differentiable, trace semantics | Implemented components, not validated end-to-end |
+| Convolution / pooling / flatten | Classes and graph construction exist; PR #27 added Conv2D finite differences plus MaxPool2D/AvgPool2D forward/backward contracts | Broader channels, strides, padding, activations, graph integration, and trace semantics | One small Conv2D case and one 2×2 case per pooling type passed 8 focused tests; not end-to-end coverage |
 | Batch normalization | Layer implementation and graph integration exist; source audit found 2D backward reductions collapsed per-feature gradients to scalars | PR #26 proposes per-feature gradient correction with central finite-difference tests; full backend suite pending | Main baseline has a source-inspected gradient defect; do not claim BatchNorm backward correctness until PR #26's full suite passes and fix is integrated |
 | RNN / LSTM / GRU | Layer implementations and graph integration exist | Sequence shapes, hidden-state semantics, finite differences, training updates | Not validated end-to-end |
 | Embedding / attention / residual | Layer implementations and graph integration exist | Shape contracts, gradients, masking/residual dimensions, training path | Not validated end-to-end |
@@ -23,6 +23,8 @@ This matrix deliberately distinguishes implemented support from independently de
 | Related work / novelty | Initial targeted comparison in `RELATED_WORK.md` | Broader literature search and precise gap formulation | No “first,” “novel,” or superiority claim |
 
 The source-level route map and provenance findings are recorded in [API_UI_PATH_AUDIT.md](API_UI_PATH_AUDIT.md). PR #25's proposed legacy execution-engine fix also passed full-stack CI on its branch: 67 backend tests passed, 12 opt-in heavy-inference tests skipped, and frontend build passed; rerun after merge.
+
+An optimizer fallback defect was also found: unknown optimizer names silently returned unchanged parameters. PR #28 proposes raising a clear error and adds reference-equation tests; its focused CI is pending.
 
 ## Recommended experiment order
 
