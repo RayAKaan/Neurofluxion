@@ -39,6 +39,13 @@ An optimizer fallback defect was found and corrected in merged PR #28: unknown o
 - PR #37 expands the comparison set and logs the search protocol. Its review remains a structured rapid review, not a completed systematic review; no novelty-priority claim is supported.
 - Open gates: graph-integrated backward/parameter-update/training contracts beyond the existing narrow cases; browser-level stale-response and provenance tests; a local or hardware-diverse benchmark environment; exportable database searches, deduplication, screening counts, full-text review, and citation snowballing. Runtime application code remains out of scope for these research-only changes.
 
+## Graph-integrated finite-difference evidence (PR #43 workstream)
+
+- Dedicated workflow [38575599616](https://github.com/RayAKaan/Neurofluxion/actions/runs/38575599616) passed central finite-difference comparisons for two mixed-layer graphs: Conv2D→Flatten→Dense and short tanh RNN→Dense.
+- Numerical protocol: epsilon 1e-3, rtol 2e-2, atol 2e-3, fixed seeds, MSE objective.
+- Scope remains narrow to these graph shapes, parameters, inputs, targets, dtype, and tolerances. It does not validate LSTM/GRU/attention/embedding/BatchNorm graph gradients, alternative losses, or integrated training beyond the separate dense task.
+- Runtime source unchanged; broader graph-family gradient oracles remain open.
+
 ## Recommended experiment order
 
 1. Freeze exact source SHA and run smoke + MSE/BCE finite-difference contracts.
