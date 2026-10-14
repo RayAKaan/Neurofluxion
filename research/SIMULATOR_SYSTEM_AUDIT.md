@@ -161,3 +161,46 @@ The most defensible paper contribution is not “Neurofluxion visualizes neural 
 - `research/SOURCE_AUDIT_FINDINGS.md`, `research/EXPERIMENT_PROTOCOL.md`, `research/experiments/run_simulator_audit.py`
 
 **Next action:** complete the call-site inventory and per-layer/loss test matrix against the exact post-merge commit before rewriting paper claims or presenting broad simulator correctness.
+
+
+## 9. Frontend-to-backend contract findings from the next call-site pass
+
+These findings are still source-level and must be confirmed by focused integration tests. They are recorded because the implementation paper must distinguish active UI paths from dormant/legacy code.
+
+### 9.1 The main Run/Inspect training flow uses the WebSocket route
+
+`RunInspectTab.tsx` constructs training commands for `useTrainingSimSocket`, and that hook connects to `SIM_WS_URL`, which resolves to the `/backend/ws/simulator/train` proxy path in development. The backend route is registered as `/ws/simulator/train`. It accepts `start`, `pause`, `resume`, `stop`, and `update_config` actions and emits status/batch/epoch/warning/complete/error messages. This is the primary training flow to trace for the main Simulator page.
+
+However, the currently inspected `RunInspectTab` training-start handler sends a hard-coded config (5 epochs, batch size 16, learning rate 0.01, Adam, BCE, no L2) instead of the configuration held by `trainingSimStore`. Therefore the visible Hyperparameter panel and the actual WebSocket training configuration may diverge. Confirm this in an integration test and fix the UI-to-training contract before reporting that user-selected hyperparameters control the run.
+
+### 9.2 A second training helper has a stale REST endpoint and synthetic progress
+
+`frontend/src/hooks/useExecution.ts` contains a `train` method that posts to `/api/simulator/train/start`. The main `/api/simulator` router inventory contains no `/train/start` route; the registered simulator training entry point is the WebSocket. The helper then contains a comment and loop that simulate epoch progress locally rather than deriving progress from server messages.
+
+This is a source-level integration defect **if that helper is reachable**. Its actual call sites must be enumerated before attributing this behavior to the active UI. The primary `RunInspectTab` handler inspected above uses the WebSocket route, so do not assume the stale helper is the path used by the main screen.
+
+### 9.3 Device selection is split across API surfaces
+
+`useExecution.ts` selects devices through `POST /api/device/select`, while `RunInspectTab.tsx` contains a device-change call to `POST /api/execute/device`. The latter endpoint changes the separate `ExecutionEngine` device preference; it does not establish that the graph-session NumPy simulator is executing on that device. UI wording and paper claims must avoid implying GPU acceleration of the custom graph engine from this setting alone.
+
+### 9.4 Dataset UI state and server dataset state are distinct
+
+The browser store keeps separate `trainData`, `testData`, `standardData`, and `sequenceData` fields, while the server `DatasetManager` stores the canonical dataset dictionary by ID. Synthetic generation populates the browser train/test arrays; the standard-dataset action, as currently inspected, sets `standardData` and `datasetId` without setting `trainData`/ `testData`. Components such as `ForwardPassPanel` choose a sample from `trainData`. This creates a likely UX mismatch for standard datasets that needs a test: training may resolve the server-side dataset ID correctly while the “New Sample” UI has no local samples to choose from.
+
+### 9.5 WebSocket state needs protocol-level tests
+
+The client calls `connect()` and, when the socket is not yet open, schedules a send after a fixed 300 ms delay. The server may not be ready within that delay; the code should queue messages and flush them on `onopen`, as the separate general-training socket does. The simulator socket handler also parses incoming JSON without a local parse-error guard and does not currently show an explicit `onerror` handler in the inspected hook. Test connection races, immediate start, disconnect/reconnect, server errors, pause/resume/stop, and multiple starts before using its metrics as a reliable experimental interface.
+
+### 9.6 Main Simulator demo is not a valid softmax demonstration yet
+
+`SimulatorPage.tsx` auto-builds a 16→8→2 demo and configures its output activation as `softmax`. Until the custom activation registry actually implements softmax and a test verifies `sum(p)=1), the demo output must not be described as a probability distribution. The current forward fallback behavior needs either implementation plus tests or an explicit UI fallback/unsupported-state treatment.
+
+## 10. Concrete next validation batch
+
+1. Add a route contract test asserting all frontend-called paths exist and that deprecated/stale endpoints are either removed or implemented.
+2. Add a UI integration test proving that the exact hyperparameter values selected in the Build tab are transmitted in the WebSocket `start` payload and are reflected in the server's `TrainingConfig`.
+3. Add a standard-dataset test proving that sample selection, forward input shape and server-side training all use the same dataset/split.
+4. Add a WebSocket test for immediate send while CONNECTING, then stop/pause/resume and disconnect behavior.
+5. Add a softmax activation contract test, or change the demo to a currently supported activation and clearly label logits versus probabilities.
+6. Trace all uses of `useExecution` and all components that call `/api/execute/*` before deciding whether legacy placeholder behavior is reachable from a visible UI.
+7. Add source-linked assertions to the paper's evidence ledger; do not present these static findings as runtime outcomes until the corresponding tests have run.
