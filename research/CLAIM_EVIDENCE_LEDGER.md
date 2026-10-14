@@ -4,10 +4,11 @@ This ledger separates source inspection, executed tests, independent verificatio
 
 ## Current main reconciliation (2026-10-14)
 
-- Latest recorded `main` commit: `d85aca48e7993c3b48c951c97480aaa6e0c2934a`, merge commit for PR #30.
-- PRs #24–#30 are merged. The PR #30 research-validation run [38506053406](https://github.com/RayAKaan/Neurofluxion/actions/runs/38506053406) passed on the PR head, but it is a dense audit workflow, not a complete full-stack run.
-- PR #24 full-stack validation [38505557136](https://github.com/RayAKaan/Neurofluxion/actions/runs/38505557136) passed backend tests, frontend build, and browser E2E on its recorded head; it predates the later operator PRs.
-- These separate successful workflows do not establish that all checks ran together on the final merge SHA.
+- Latest recorded `main` commit at this reconciliation: `7c35cc131ad732972a3bdcde400548a02863193b`, merge commit for PR #32.
+- PRs #24–#32 are merged. PR #32 added a research-only frozen-revision validation workflow; it did not modify runtime application code.
+- Integrated workflow run [38566683696](https://github.com/RayAKaan/Neurofluxion/actions/runs/38566683696) completed successfully. All four jobs passed: backend test suite, frontend build, browser E2E, and deterministic dense research audit.
+- All four jobs checked out the frozen base revision `30ff803cb342c494310ff35832df43a092d3d74d` (PR #31 merge commit). This is a single-revision integration result, not evidence that the later PR #32 merge commit was tested by that run.
+- Historical focused operator workflows remain scoped to their respective PR heads and test cases; they are not an exhaustive all-layer correctness result.
 
 ## Executed evidence
 

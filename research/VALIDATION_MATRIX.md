@@ -1,6 +1,6 @@
 # Validation Matrix and Remaining Evidence
 
-**Current source baseline:** Neurofluxion `main` at `d85aca48e7993c3b48c951c97480aaa6e0c2934a` (PR #30 merge commit, 2026-10-14). Historical workflow results below remain scoped to their recorded PR heads; this update does not claim a single full-stack rerun on this merge SHA.
+**Frozen validation target:** `30ff803cb342c494310ff35832df43a092d3d74d` (PR #31 merge commit, 2026-10-14). The integrated workflow in PR #32 checked out this exact base SHA in all four jobs. PR #32's workflow run [38566683696](https://github.com/RayAKaan/Neurofluxion/actions/runs/38566683696) passed backend tests, frontend build, browser E2E, and the deterministic dense research audit. PR #32 itself merged as `7c35cc131ad732972a3bdcde400548a02863193b`; that merge commit adds the workflow, while the successful test run is evidence for the frozen target SHA `30ff803...`, not for the new workflow file or later merge commit.
 
 This matrix deliberately distinguishes implemented support from independently demonstrated correctness. A layer appearing in a registry or graph builder is not evidence that its forward, backward, optimizer, trace, API, and UI paths all work together.
 
@@ -28,7 +28,16 @@ PR #29's expanded suite passed 11 focused tests covering single-head attention g
 
 An optimizer fallback defect was found and corrected in merged PR #28: unknown optimizer names now raise a clear error rather than silently producing a no-op update. Reference-equation tests and the backend suite passed on the PR head; this is not a claim that every optimizer/scheduler combination is validated.
 
-## Post-merge reconciliation (2026-10-14)\n\n- PRs #24–#30 are merged; latest recorded main is `d85aca48e7993c3b48c951c97480aaa6e0c2934a`.\n- The PR #30 research-validation run [38506053406](https://github.com/RayAKaan/Neurofluxion/actions/runs/38506053406) passed on the PR head, but it is the dense audit workflow, not a full-stack suite.\n- Focused workflows for BatchNorm, Conv2D/pooling/flatten, optimizer equations, and attention/recurrent/embedding/residual operators passed on their respective PR heads. Do not aggregate these as one suite.\n- The full-stack run [38505557136](https://github.com/RayAKaan/Neurofluxion/actions/runs/38505557136) passed on PR #24's head. It predates later merged operator changes.\n- Remaining critical gate: run backend tests, frontend build, browser E2E, and research audit together on one frozen revision and retain all raw artifacts.\n\n## Recommended experiment order
+## Post-merge reconciliation (2026-10-14)
+
+- PRs #24–#32 are merged. PR #32 merge commit: `7c35cc131ad732972a3bdcde400548a02863193b`.
+- Integrated frozen-revision workflow: [run 38566683696](https://github.com/RayAKaan/Neurofluxion/actions/runs/38566683696), triggered for PR #32 and configured to check out its base SHA in every job.
+- Frozen application baseline tested: `30ff803cb342c494310ff35832df43a092d3d74d` (PR #31 merge commit). All four jobs passed: `backend-tests`, `frontend-build`, `browser-e2e`, and `research-audit`.
+- This closes the single-revision integration gate for that frozen SHA. It does not mean the newer PR #32 merge commit itself was tested by those jobs, and it does not establish all-layer numerical correctness, UI provenance integrity, cross-environment benchmark reproducibility, systematic novelty, or user benefit.
+- Focused workflows for BatchNorm, Conv2D/pooling/flatten, optimizer equations, and attention/recurrent/embedding/residual operators passed on their respective PR heads. Keep each result scoped to its tested revision and cases.
+- Next research gates: graph-integrated operator-family contracts; API/UI provenance and stale-state adversarial checks; a second benchmark environment; and a documented systematic literature search. Runtime application code remains out of scope for research-only PRs.
+
+## Recommended experiment order
 
 1. Freeze exact source SHA and run smoke + MSE/BCE finite-difference contracts.
 2. Verify the tiny-task training trajectory and SGD/Adam contracts.
