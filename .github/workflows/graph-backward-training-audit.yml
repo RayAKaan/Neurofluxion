@@ -1,0 +1,63 @@
+name: Neurofluxion graph backward and training audit
+
+on:
+  pull_request:
+    paths:
+      - "backend/simulator/**"
+      - "backend/tests/test_research_graph_training_contracts.py"
+      - "research/experiments/audit_graph_backward_training.py"
+      - "research/GRAPH_BACKWARD_TRAINING_AUDIT.md"
+      - ".github/workflows/graph-backward-training-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deterministic-dense-training:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+      - name: Install backend dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r backend/requirements.txt pytest
+      - name: Run deterministic dense graph training contracts
+        env:
+          PYTHONPATH: backend
+        run: python -m pytest backend/tests/test_research_graph_training_contracts.py -q
+
+  graph-backward-diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+      - name: Install backend dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r backend/requirements.txt numpy
+      - name: Record graph-integrated backward findings
+        env:
+          PYTHONPATH: backend
+        run: |
+          mkdir -p research/artifacts
+          python research/experiments/audit_graph_backward_training.py --repo . --out research/artifacts/graph-backward-audit.json
+      - name: Upload findings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: neurofluxion-graph-backward-audit
+          path: research/artifacts/graph-backward-audit.json
+          if-no-files-found: error
+          retention-days: 30
