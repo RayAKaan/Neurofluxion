@@ -88,4 +88,4 @@ Follow-up fix PR: https://github.com/RayAKaan/Neurofluxion/pull/19
 
 ### Additional optimizer finding (2026-10-14)
 
-- Source inspection found that an unrecognized optimizer name silently returned unchanged parameters, allowing an invalid optimizer configuration to produce a no-op update. PR [#28](https://github.com/RayAKaan/Neurofluxion/pull/28) changes this to a clear `ValueError` and adds reference-equation tests for momentum, RMSProp, and two-step Adam. CI is pending at the time of this update.
+- Source inspection found that an unrecognized optimizer name silently returned unchanged parameters, allowing an invalid optimizer configuration to produce a no-op update. PR [#28](https://github.com/RayAKaan/Neurofluxion/pull/28) changes this to a clear `ValueError` and adds reference-equation tests for momentum, RMSProp, and two-step Adam. Eight focused tests passed in run [38494373808](https://github.com/RayAKaan/Neurofluxion/actions/runs/38494373808). The fix remains pending integration; do not claim invalid optimizer names fail safely on main until merged.
