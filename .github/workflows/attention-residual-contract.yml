@@ -6,8 +6,12 @@ on:
       - "backend/simulator/layers/attention.py"
       - "backend/simulator/layers/residual.py"
       - "backend/simulator/layers/rnn.py"
+      - "backend/simulator/layers/lstm.py"
+      - "backend/simulator/layers/gru.py"
+      - "backend/simulator/layers/embedding.py"
       - "backend/tests/test_attention_residual_contract.py"
       - "backend/tests/test_rnn_gradient_contract.py"
+      - "backend/tests/test_lstm_gru_embedding_contract.py"
       - ".github/workflows/attention-residual-contract.yml"
 
 permissions:
@@ -31,5 +35,6 @@ jobs:
           python -m pytest
           backend/tests/test_attention_residual_contract.py
           backend/tests/test_rnn_gradient_contract.py
+          backend/tests/test_lstm_gru_embedding_contract.py
           backend/tests/test_simulator_smoke.py
           -q
