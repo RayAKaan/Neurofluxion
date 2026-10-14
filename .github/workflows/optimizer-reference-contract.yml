@@ -5,7 +5,8 @@ on:
     paths:
       - "backend/simulator/optimizer_engine.py"
       - "backend/tests/test_optimizer_reference_contract.py"
-      - "backend/tests/test_training_convergence_contract.py"
+      - "backend/tests/test_training_mse_gradient_contract.py"
+      - "backend/tests/test_bce_gradient_contract.py"
       - ".github/workflows/optimizer-reference-contract.yml"
 
 permissions:
@@ -28,5 +29,6 @@ jobs:
         run: >-
           python -m pytest
           backend/tests/test_optimizer_reference_contract.py
-          backend/tests/test_training_convergence_contract.py
+          backend/tests/test_training_mse_gradient_contract.py
+          backend/tests/test_bce_gradient_contract.py
           -q
