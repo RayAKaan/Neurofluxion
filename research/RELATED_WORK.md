@@ -19,6 +19,7 @@
 | Visual Analytics for Machine Learning: A Data Perspective Survey (Wang et al., IEEE TVCG 2024) | Systematic review of 143 papers organized around data types and data-centric tasks. DOI: [10.1109/TVCG.2024.3357065](https://doi.org/10.1109/TVCG.2024.3357065); [PubMed](https://pubmed.ncbi.nlm.nih.gov/38261496/). | Broad, recent map of visual analytics for ML. | Useful coverage check but not specific to operation-level trace correctness. |
 | DLProv (Pina et al., Software Impacts 2025) | Framework-independent workflow provenance services and W3C PROV-compatible provenance graphs for deep-learning workflows. DOI: [10.1016/j.simpa.2024.100730](https://doi.org/10.1016/j.simpa.2024.100730); [PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC12453841/). | Adjacent provenance/reproducibility work; requires narrowing any claim that ML provenance is missing. | Workflow lineage differs from per-operation UI trace fidelity, but provenance itself is established prior art. |
 | W3C PROV Primer | Standard primer for representing entities, activities, and relations describing digital-object origins. [W3C](https://www.w3.org/TR/prov-primer/). | Provides a vocabulary for describing provenance requirements. | Do not imply provenance concepts or standards are novel. |
+| Graph of Trace: Visualizing Execution Traces of Scientific Agents (Gao et al., ACL System Demonstrations 2026) | Records fine-grained agent workflow events and presents them as an evolving directed trace graph; reports expert evaluation. [ACL Anthology](https://aclanthology.org/2026.acl-demo.29/); DOI: [10.18653/v1/2026.acl-demo.29](https://doi.org/10.18653/v1/2026.acl-demo.29). | Adjacent trace-visualization work showing that fine-grained event capture and interactive execution traces are also being explored outside neural-network simulators. | It concerns scientific-agent workflows, not neural-network operation arithmetic. It still cautions against broad claims that execution-trace visualization itself is novel. |
 
 ## Evidence-backed positioning
 
@@ -53,3 +54,10 @@ The second targeted search round added five sources that materially sharpen the 
 This round further narrows the candidate research gap to an empirical **fidelity and state-association question**: can each visible simulator value be tied to the selected graph/execution and independently reconstructed from its operation record, especially after asynchronous state changes? It does not support a claim that interactive visualization, provenance, or traceability is novel in general.
 
 The search remains a structured rapid review, not a completed systematic review. Search exports, deduplication, screening counts, full-text extraction, and independent screening remain open.
+
+
+## Additional trace-visualization prior art verified 2026-10-14
+
+**Graph of Trace: Visualizing Execution Traces of Scientific Agents** (Gao et al., ACL System Demonstrations 2026, pp. 297–306, DOI 10.18653/v1/2026.acl-demo.29) records fine-grained scientific-agent workflow events and organizes them into an evolving directed graph. The official ACL Anthology record describes expert evaluation of trace visualization for workflow understanding. This is adjacent rather than direct prior art: the work traces agent actions and code/tool events, while Neurofluxion's proposed evaluation concerns neural-network operation records and numerical reconstruction. It reinforces the need to frame the contribution around verified arithmetic fidelity and graph/run association, not the existence of trace visualization.
+
+Source record: https://aclanthology.org/2026.acl-demo.29/
