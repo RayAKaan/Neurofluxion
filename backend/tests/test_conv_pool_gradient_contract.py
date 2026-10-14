@@ -71,3 +71,16 @@ def test_avgpool_forward_and_backward_match_expected_average():
     np.testing.assert_allclose(output, [[[4.0]]])
     dx = layer.backward(np.ones_like(output))
     np.testing.assert_allclose(dx, np.full((1, 2, 2), 0.25, dtype=np.float32))
+
+
+def test_flatten_forward_and_backward_preserve_element_order_and_shape():
+    from simulator.layers.flatten import FlattenLayer
+
+    layer = FlattenLayer()
+    x = np.arange(6, dtype=np.float32).reshape(1, 2, 3)
+    flattened = layer.forward(x)
+    np.testing.assert_array_equal(flattened, np.arange(6, dtype=np.float32))
+    upstream = np.array([0.2, -0.1, 0.3, 0.4, -0.5, 0.6], dtype=np.float32)
+    restored = layer.backward(upstream)
+    assert restored.shape == x.shape
+    np.testing.assert_array_equal(restored.reshape(-1), upstream)
