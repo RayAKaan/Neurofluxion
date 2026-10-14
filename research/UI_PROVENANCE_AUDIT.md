@@ -57,3 +57,9 @@ A second source-audit execution, [run 38572250704](https://github.com/RayAKaan/N
 ## Detector refinement
 
 Source review found that the shared Simulator layout already displays a global Demo note stating that the app ran a random forward pass. The initial detector only inspected SimulatorPage, so its P3 classification was too strong. The detector now inspects UnifiedLayout as well and reports **PARTIAL** when a global note exists but per-value/per-panel provenance is not established. The earlier artifacts are retained as historical detector outputs; use the newest workflow artifact for the corrected classification.
+
+## Corrected audit result (2026-10-14)
+
+The refined detector ran in [workflow 38573016303](https://github.com/RayAKaan/Neurofluxion/actions/runs/38573016303) against checkout `c92706239006ecbad212d601f369d6ceac484807`. It reports **4 GAP, 1 PARTIAL, 1 PASS**. The PARTIAL status accounts for the global Demo note in UnifiedLayout while leaving per-value/per-panel provenance unresolved. This corrected result supersedes the earlier P3 GAP classification; the older artifacts are retained as historical outputs from the earlier detector version.
+
+Corrected artifact: [ui-provenance audit JSON](https://github.com/RayAKaan/Neurofluxion/actions/runs/38573016303/artifacts/11898049372).
