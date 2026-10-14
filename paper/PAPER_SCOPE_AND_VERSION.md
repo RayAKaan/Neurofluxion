@@ -39,10 +39,26 @@ The source tree includes `backend/services/execution_trace.py`, `backend/tests/t
 5. No accuracy comparison unless the research question is explicitly changed (currently out of scope).
 6. All citations are complete and verified; no `[?]` placeholders at submission.
 
-## Current status (2026-09-24)
+## Initial status snapshot (2026-09-24; superseded by the current research status below)
 - [x] Scope and source-start commit recorded.
 - [ ] Full simulator, execution-trace, model-registry, training, and frontend audit.
 - [ ] Claim/evidence ledger populated from code and tests.
 - [ ] Reproducible validation run and report.
 - [ ] Figure capture and final LaTeX manuscript.
 - [ ] Venue selection, formatting, references, and submission review.
+
+
+## Current status after research PRs #47–#55 (2026-10-14)
+
+- [x] Research-only graph-level finite-difference oracles extended to fixed RNN/LSTM/GRU, Embedding→Attention→RNN→Dense, and Conv2D→BatchNorm→Flatten→Dense graphs.
+- [x] One-batch training-update contracts added for recurrent, Conv2D/BatchNorm, and Embedding/Attention/RNN/Dense paths.
+- [x] Claim/evidence ledger reconciled for these new bounded results.
+- [x] Reproducible OpenAlex/Crossref metadata-export script, manifest, deduplicated records, and reviewer screening CSV implemented with offline tests.
+- [ ] Execute and archive a live literature export; inspect source/query failures and adjudicate duplicates.
+- [ ] Complete screening, full-text extraction, and citation snowballing; update counts only from the actual review log.
+- [ ] Fix stale-response/graph-switch UI provenance defects only after explicit authorization to modify runtime/application code; current browser tests remain expected failures.
+- [ ] Complete remaining full source audit and verify paper claims, figures, and citations against the frozen revision.
+- [ ] Freeze a final source SHA and run full backend tests, frontend build, browser E2E, and numerical research audits against that exact SHA.
+- [ ] Generate final LaTeX/PDF and submission package only after the evidence freeze; choose a venue and complete formatting/submission review.
+
+The source baseline recorded above is historical, not the current paper baseline. Do not regenerate or label a final paper package until the final source revision is frozen and the remaining evidence gates are recorded.
