@@ -1,0 +1,49 @@
+name: Neurofluxion trace benchmark
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "backend/simulator/**"
+      - "research/experiments/benchmark_trace_overhead.py"
+      - ".github/workflows/trace-overhead-benchmark.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  trace-benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install numerical dependency
+        run: python -m pip install --disable-pip-version-check numpy
+      - name: Run benchmark and verify output
+        env:
+          PYTHONPATH: backend
+          GITHUB_SHA: ${{ github.sha }}
+        run: |
+          python research/experiments/benchmark_trace_overhead.py \
+            --out research-artifacts/trace-overhead.json \
+            --warmups 5 --repetitions 40
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("research-artifacts/trace-overhead.json").read_text())
+          assert len(report["cases"]) == 4
+          assert all(case["output_parity"] for case in report["cases"])
+          assert all(case["forward_only"]["n"] == 40 for case in report["cases"])
+          assert all(case["forward_with_trace"]["n"] == 40 for case in report["cases"])
+          print("Validated 4 cases, 40 raw samples per path per case, output parity passed.")
+          PY
+      - name: Upload raw benchmark samples
+        uses: actions/upload-artifact@v4
+        with:
+          name: neurofluxion-trace-overhead
+          path: research-artifacts/trace-overhead.json
+          if-no-files-found: error
+          retention-days: 30

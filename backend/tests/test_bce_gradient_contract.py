@@ -11,13 +11,20 @@ def _fixed_graph():
     graph = build_graph(
         [
             LayerConfig(layer_type="input", neurons=2, input_shape=[2]),
+            LayerConfig(layer_type="dense", neurons=3, activation="tanh"),
             LayerConfig(layer_type="output", neurons=2, activation="sigmoid"),
         ]
     )
-    weights = [np.array([[0.3, -0.2], [-0.1, 0.25]], dtype=np.float32)]
-    biases = [np.array([0.05, -0.03], dtype=np.float32)]
+    weights = [
+        np.array([[0.2, -0.1], [-0.3, 0.25], [0.15, 0.4]], dtype=np.float32),
+        np.array([[0.3, -0.2, 0.1], [-0.1, 0.25, 0.35]], dtype=np.float32),
+    ]
+    biases = [
+        np.array([0.02, -0.04, 0.03], dtype=np.float32),
+        np.array([0.05, -0.03], dtype=np.float32),
+    ]
     param_layers = [layer for layer in graph.layer_instances if getattr(layer, "has_params", False)]
-    assert len(param_layers) == 1
+    assert len(param_layers) == 2
     for layer, weight, bias in zip(param_layers, weights, biases):
         layer.set_params(weight.copy(), bias.copy())
     graph.weights = [layer.params()[0] for layer in param_layers]
