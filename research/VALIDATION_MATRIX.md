@@ -22,6 +22,8 @@ This matrix deliberately distinguishes implemented support from independently de
 | Usability/learning outcomes | No controlled study | Requires study protocol, participants, consent/ethics as applicable, and analysis | No user-benefit claim |
 | Related work / novelty | Initial targeted comparison in `RELATED_WORK.md` | Broader literature search and precise gap formulation | No “first,” “novel,” or superiority claim |
 
+The source-level route map and provenance findings are recorded in [API_UI_PATH_AUDIT.md](API_UI_PATH_AUDIT.md).
+
 ## Recommended experiment order
 
 1. Freeze exact source SHA and run smoke + MSE/BCE finite-difference contracts.
