@@ -1,0 +1,53 @@
+name: Neurofluxion research validation
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "backend/simulator/**"
+      - "backend/tests/test_simulator_smoke.py"
+      - "research/**"
+      - ".github/workflows/neurofluxion-research-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  dense-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact pull-request revision
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install minimal audit dependencies
+        run: python -m pip install --disable-pip-version-check numpy pytest
+
+      - name: Run existing simulator smoke tests
+        env:
+          PYTHONPATH: backend
+        run: python -m pytest backend/tests/test_simulator_smoke.py -q
+
+      - name: Run deterministic dense-path audit
+        shell: bash
+        run: |
+          mkdir -p research-artifacts
+          set -o pipefail
+          PYTHONPATH=backend python research/experiments/run_simulator_audit.py \
+            --repo . --out research-artifacts/simulator-audit.json \
+            2>&1 | tee research-artifacts/simulator-audit.log
+
+      - name: Upload raw research evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: neurofluxion-research-audit
+          path: research-artifacts/
+          if-no-files-found: warn
+          retention-days: 30
