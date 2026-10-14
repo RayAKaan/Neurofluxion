@@ -60,3 +60,9 @@ A second workflow execution, [run 38572234533](https://github.com/RayAKaan/Neuro
 Across the two runs per OS, the median ratios fell in these ranges by increasing graph width: Linux 2.27–2.34×, 4.54–4.69×, 10.00–10.46×, and 27.28–30.39×; Windows 2.13–2.14×, 3.76–4.21×, 7.56–8.36×, and 21.29–24.08×. The qualitative scaling pattern is consistent across these two hosted runner families and two executions, but these runs are not independent hardware replications and absolute timing varies by runner. Continue to label this diagnostic evidence, not a general performance claim.
 
 Second-run artifacts: [Linux report](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572234533/artifacts/11897159186) and [Windows report](https://github.com/RayAKaan/Neurofluxion/actions/runs/38572234533/artifacts/11897638630).
+
+## Third operating-system environment (planned)
+
+The benchmark matrix now includes `macos-14` alongside Ubuntu and Windows. The same script records `platform.system()`, `platform.release()`, `platform.machine()`, `platform.processor()`, Python, NumPy, the checked-out source SHA, raw samples, and output parity. Interpret architecture from the artifact itself; do not assume the runner is a different CPU architecture based only on its OS label.
+
+This adds another OS/runner environment, but it should only be described as hardware-diverse if the recorded machine/processor metadata supports that conclusion. Await the workflow artifact before adding numerical results to the paper.
