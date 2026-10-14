@@ -27,3 +27,10 @@ The dedicated oracle workflow [38575599616](https://github.com/RayAKaan/Neuroflu
 The test uses central differences with epsilon 1e-3 and comparison tolerances rtol 2e-2 / atol 2e-3. This supports the tested mixed-layer MSE-gradient cases only; it does not establish correctness for other operators, losses, shapes, or training configurations.
 
 The full-stack workflow [38575599333](https://github.com/RayAKaan/Neurofluxion/actions/runs/38575599333) also passed backend tests, frontend build, and the existing browser E2E on the PR head. This is integration-suite evidence for that revision; it does not extend the two finite-difference graph cases.
+
+
+## Recurrent-family extension (PR #46 workstream)
+
+Two additional fixed graph cases extend the same central finite-difference protocol to LSTM → Dense and GRU → Dense. Both use short three-step sequences, two-dimensional inputs, hidden size two, one linear output, fixed seeds, and the same MSE/tolerance settings.
+
+These are new checks, not pre-confirmed passes. CI results must be inspected before this document or the paper describes them as successful. A failure may indicate a graph-level backward defect or an oracle/parameter-synchronization mismatch and must be triaged without silently weakening tolerances. Runtime simulator source remains out of scope.
