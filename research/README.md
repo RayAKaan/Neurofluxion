@@ -4,7 +4,7 @@ This directory contains the research protocol and evidence ledger for the Neurof
 
 ## Status
 
-- Research status: post-merge fixed dense-path audit passes the forward oracle, trace oracle, finite-difference gradient check, and repeatability check; 5 simulator smoke tests and 4 gradient-contract regression tests passed in GitHub Actions run [38491189247](https://github.com/RayAKaan/Neurofluxion/actions/runs/38491189247). Broader layer-family and repository-wide validation remain open. See CLAIM_EVIDENCE_LEDGER.md.
+- Research status: PR #22 merged as `b3e0990da61d54b71b27963f3a664b30ccd47378`. Its merge-preview CI run [38491607499](https://github.com/RayAKaan/Neurofluxion/actions/runs/38491607499) passed 11 targeted simulator smoke and MSE/BCE gradient-contract tests. The dense audit run [38491607397](https://github.com/RayAKaan/Neurofluxion/actions/runs/38491607397) passed forward, trace, selected MSE finite-difference, and repeatability checks on merge-preview tree `d2e64487b9c7ab495a2be9d7c22d22dd32150349`. This is not a full repository test run or a fresh post-merge run; broader operator, provenance/replay, convergence, and performance validation remain open. See CLAIM_EVIDENCE_LEDGER.md and paper/COMPLETION_PLAN.md.
 - Source baseline: record the exact commit SHA before every experimental run.
 - If a local checkout is unavailable, the GitHub Actions workflow can run against the checked-out PR revision; record that revision separately from the intended frozen application baseline.
 - This branch adds research documentation and audit tooling only. It does not change simulator behavior.
