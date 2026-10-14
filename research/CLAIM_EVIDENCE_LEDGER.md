@@ -1,6 +1,6 @@
 # Claim-to-Evidence Ledger
 
-This ledger separates source inspection, executed tests, independent verification, and claims that remain unestablished. The evidence summarized here is a small deterministic dense-path diagnostic, not an exhaustive operator audit.
+This ledger separates source inspection, executed tests, independent verification, and claims that remain unestablished. The evidence summarized here is a small deterministic dense-path diagnostic plus focused operator workflows, not an exhaustive operator audit.\n\n## Current main reconciliation (2026-10-14)\n\n- Latest recorded `main` commit: `d85aca48e7993c3b48c951c97480aaa6e0c2934a`, merge commit for PR #30.\n- PRs #24–#30 are merged. The PR #30 research-validation run [38506053406](https://github.com/RayAKaan/Neurofluxion/actions/runs/38506053406) passed on the PR head, but it is a dense audit workflow, not a complete full-stack run.\n- PR #24 full-stack validation [38505557136](https://github.com/RayAKaan/Neurofluxion/actions/runs/38505557136) passed backend tests, frontend build, and browser E2E on its recorded head; it predates the later operator PRs.\n- These separate successful workflows do not establish that all checks ran together on the final merge SHA.
 
 ## Executed evidence
 
@@ -59,7 +59,7 @@ Follow-up fix PR: https://github.com/RayAKaan/Neurofluxion/pull/19
 | C-10 | Existing simulator smoke tests pass. | Test command and logs. | EXECUTED, 5 smoke tests and 4 targeted gradient-contract tests passed on the PR #21 validation revision | State test files and run; do not imply full repository suite passed. |
 | C-11 | The /api/execute backward and training endpoints implement real numerical learning. | Route-to-implementation audit and numerical tests. | SOURCE-INSPECTED finding F-02 shows placeholder behavior in ExecutionEngine; targeted frontend inspection shows SimulatorPage/useSimulatorApi call /api/simulator routes, while a full frontend-wide usage audit remains open. | Do not claim those execute endpoints are correct; keep main simulator path separate. |
 | C-12 | TrainingEngine computes correct MSE gradients. | Independent finite differences against the exact mean-reduced loss, plus shape/order checks. | SOURCE-INSPECTED finding F-06 indicated scaling and duplicate-activation-derivative risks; correction merged via PR #20 (merge commit `d49d73967bfffab5aea3b962c46a865328f38f2b`); targeted finite-difference regression passed on the PR #21 validation revision; convergence and other losses/activations remain untested. | Do not claim training correctness until tests pass on the intended source revision. |
-| C-13 | Mean-reduced BCE gradients are correct for sigmoid outputs. | Central finite differences for both simulator and TrainingEngine paths. | A separate defect was found after the MSE fixes: PR #22 adds scaling/activation-chain corrections and 2 BCE finite-difference tests; its focused CI reports 11 tests passed, but PR #22 is not merged, so main remains unverified for this contract. | Do not claim BCE or general training correctness until the fix is merged and revalidated on main. |
+| C-13 | Mean-reduced BCE gradients are correct for sigmoid outputs. | Central finite differences for both simulator and TrainingEngine paths. | PR #22 is merged; focused CI reported 11 tests passed on its recorded head, including sigmoid-output BCE finite-difference checks. Broader output activations, extreme values, and full post-merge suite remain unverified. | Claim only the tested sigmoid/BCE configurations; do not claim general training correctness. |
 
 ## Rules
 
@@ -80,7 +80,7 @@ Follow-up fix PR: https://github.com/RayAKaan/Neurofluxion/pull/19
 ### Additional operator finding: BatchNorm (2026-10-14)
 
 - Source inspection of main revision `b3e0990da61d54b71b27963f3a664b30ccd47378` found that the 2D BatchNorm backward path reduces gamma/beta and variance/mean gradients across all elements instead of per feature. This is inconsistent with the forward path's per-feature statistics.
-- PR [#26](https://github.com/RayAKaan/Neurofluxion/pull/26) corrects the axis reductions and adds central finite-difference tests for input, gamma, and beta. The focused contract passed 7 tests with simulator smoke tests in run [38493885673](https://github.com/RayAKaan/Neurofluxion/actions/runs/38493885673). A full backend rerun is pending on the updated PR head; do not claim the fix is integrated until merged and revalidated.
+- PR [#26](https://github.com/RayAKaan/Neurofluxion/pull/26) corrected the axis reductions and added central finite-difference tests for input, gamma, and beta. The final PR-head workflow [38493941513](https://github.com/RayAKaan/Neurofluxion/actions/runs/38493941513) passed both the BatchNorm contract and full backend suite; research validation [38493941567](https://github.com/RayAKaan/Neurofluxion/actions/runs/38493941567) also passed. This remains narrow layer-level evidence, not proof of all graph-integrated BatchNorm configurations.
 
 ### Additional operator contracts: convolution and pooling (2026-10-14)
 
@@ -88,7 +88,7 @@ Follow-up fix PR: https://github.com/RayAKaan/Neurofluxion/pull/19
 
 ### Additional optimizer finding (2026-10-14)
 
-- Source inspection found that an unrecognized optimizer name silently returned unchanged parameters, allowing an invalid optimizer configuration to produce a no-op update. PR [#28](https://github.com/RayAKaan/Neurofluxion/pull/28) changes this to a clear `ValueError` and adds reference-equation tests for momentum, RMSProp, and two-step Adam. Eight focused tests passed in run [38494373808](https://github.com/RayAKaan/Neurofluxion/actions/runs/38494373808), and the full backend suite passed 62 tests with 12 opt-in heavy-inference skips in run [38495430720](https://github.com/RayAKaan/Neurofluxion/actions/runs/38495430720). The fix remains pending integration; do not claim invalid optimizer names fail safely on main until merged.
+- Source inspection found that an unrecognized optimizer name silently returned unchanged parameters, allowing an invalid optimizer configuration to produce a no-op update. PR [#28](https://github.com/RayAKaan/Neurofluxion/pull/28) changed this to a clear `ValueError` and added reference-equation tests for momentum, RMSProp, and two-step Adam. Eight focused tests passed in run [38494373808](https://github.com/RayAKaan/Neurofluxion/actions/runs/38494373808), and the full backend suite passed 62 tests with 12 opt-in heavy-inference skips in run [38495430720](https://github.com/RayAKaan/Neurofluxion/actions/runs/38495430720). PR #28 is merged; broader optimizer/scheduler and graph-integrated training coverage remains open.
 
 ### Additional operator contracts: attention, RNN, residual (2026-10-14)
 
