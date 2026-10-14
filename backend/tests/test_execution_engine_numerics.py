@@ -105,3 +105,10 @@ def test_unsupported_layer_types_are_rejected_instead_of_simulated():
             {"type": "input", "neurons": 4},
             {"type": "conv2d", "neurons": 8},
         ])
+
+
+def test_bce_requires_sigmoid_output_activation():
+    engine = _engine()
+    engine.forward([0.4, -0.7])
+    with pytest.raises(ValueError, match="requires a sigmoid output"):
+        engine.backward([0.2, 0.8], loss_function="bce")
