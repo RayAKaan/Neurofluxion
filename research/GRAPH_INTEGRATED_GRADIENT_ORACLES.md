@@ -43,3 +43,10 @@ PR #47 merged after the dedicated graph-oracle workflow [38582499269](https://gi
 ## BatchNorm graph-integrated oracle (PR #49)
 
 PR #49 merged after the dedicated BatchNorm graph-gradient workflow [38583056241](https://github.com/RayAKaan/Neurofluxion/actions/runs/38583056241), research validation [38583055895](https://github.com/RayAKaan/Neurofluxion/actions/runs/38583055895), frozen-main integrated validation [38583055940](https://github.com/RayAKaan/Neurofluxion/actions/runs/38583055940), and full-stack validation [38583055526](https://github.com/RayAKaan/Neurofluxion/actions/runs/38583055526) passed. The tested graph is Conv2D → BatchNorm → Flatten → Dense on one fixed spatial input. It does not establish arbitrary BatchNorm dimensions or running-stat behavior.
+
+
+## Graph-family training checks completed (2026-10-14)
+
+- PR #53's Conv2D→BatchNorm→Flatten→Dense one-batch training contract passed dedicated workflow [38584049859](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584049859), research [38584049658](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584049658), frozen-main [38584049840](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584049840), and full-stack [38584049641](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584049641).
+- PR #54's Embedding→Attention→RNN→Dense one-batch training contract passed dedicated workflow [38584232382](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584232382), research [38584232409](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584232409), frozen-main [38584232291](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584232291), and full-stack [38584232288](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584232288).
+- Both are one-batch parameter-update contracts. Neither establishes gradient correctness or convergence; the finite-difference tests are separate evidence.
