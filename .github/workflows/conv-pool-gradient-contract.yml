@@ -6,6 +6,7 @@ on:
       - "backend/simulator/layers/conv2d.py"
       - "backend/simulator/layers/im2col.py"
       - "backend/simulator/layers/pooling.py"
+      - "backend/simulator/layers/flatten.py"
       - "backend/tests/test_conv_pool_gradient_contract.py"
       - ".github/workflows/conv-pool-gradient-contract.yml"
 
