@@ -4,6 +4,20 @@ This ledger separates source inspection, executed tests, independent verificatio
 
 ## Executed evidence
 
+### Training and trace-cost validation (2026-10-14)
+
+- Pull request: [#23](https://github.com/RayAKaan/Neurofluxion/pull/23), exact tested head `b473a2cd76af1dba57bf38eb34305eaac77bb683`.
+- Training-contract CI: [run 38492813949](https://github.com/RayAKaan/Neurofluxion/actions/runs/38492813949), **10 passed**. This includes the existing MSE and BCE finite-difference contracts plus four new tests: tiny separable BCE loss reduction, repeatable fixed-order training trajectory, exact SGD arithmetic, and finite Adam update with step counter.
+- Trace benchmark CI: [run 38492813970](https://github.com/RayAKaan/Neurofluxion/actions/runs/38492813970), **4 graph configurations × 40 raw samples per path**, warmups=5, output parity passed in all cases. Artifact `neurofluxion-trace-overhead` contains the JSON report and raw timing samples.
+- Runner-specific median results (milliseconds; forward-only vs full trace construction):
+  - widths `[4, 8, 2]`: 0.007349 ms vs 0.017313 ms; ratio 2.36×.
+  - widths `[16, 32, 8]`: 0.007569 ms vs 0.033833 ms; ratio 4.47×.
+  - widths `[32, 64, 16]`: 0.007805 ms vs 0.075351 ms; ratio 9.65×.
+  - widths `[64, 128, 32]`: 0.008596 ms vs 0.227191 ms; ratio 26.43×.
+- These are preliminary measurements from one GitHub Actions runner and one run. The compared paths do different work: the trace path emits operation records and serializes arrays to lists. Ratios are diagnostic for this implementation and environment, not a universal tracing-overhead estimate or a publishable performance conclusion.
+- Research validation on the same PR head: [run 38492813935](https://github.com/RayAKaan/Neurofluxion/actions/runs/38492813935), workflow completed successfully and preserved the numerical audit artifact.
+
+
 ### Post-merge validation (2026-10-14)
 
 - Pull request: [#21](https://github.com/RayAKaan/Neurofluxion/pull/21), tested by GitHub Actions run [38491189247](https://github.com/RayAKaan/Neurofluxion/actions/runs/38491189247).
@@ -38,8 +52,8 @@ Follow-up fix PR: https://github.com/RayAKaan/Neurofluxion/pull/19
 | C-03 | Backward gradients agree with numerical derivatives. | E2 finite differences for each claimed loss/activation pair. | PRE-FIX BASELINE FAILED; post-merge fixed-case audit PASSED; broader coverage pending | Do not claim the baseline is correct. |
 | C-04 | Dense trace events represent the recorded arithmetic. | E3 per-event reconstruction. | EXECUTED, passed for six dense events in one case | Restrict to the tested dense event types and fixed case. |
 | C-05 | Repeated fixed-parameter execution is repeatable. | E4 repeated runs with trace normalization policy. | EXECUTED, passed for one graph/input | State fixed graph and input scope; no cross-machine determinism claim. |
-| C-06 | Inspection has a characterized runtime cost. | E5 multi-size, repeated-process benchmark with raw samples. | NOT ESTABLISHED | Do not report the tiny-graph microtiming as a performance claim. |
-| C-07 | A layer family is supported end-to-end. | Construction, forward, backward, training, trace and UI evidence. | NOT ESTABLISHED beyond tested dense case | Name only the specific tested path. |
+| C-06 | Inspection has a characterized runtime cost. | E5 multi-size, repeated-process benchmark with raw samples and environment metadata. | PRELIMINARY DIAGNOSTIC EXECUTED: 4 sizes × 40 samples/path, one Actions runner; median trace/forward ratios 2.36×, 4.47×, 9.65×, 26.43× for the tested widths. | Report only as a single-run, environment-specific diagnostic; do not generalize or claim universal overhead. Repeat in clean runs and a second environment before paper use. |
+| C-07 | A layer family is supported end-to-end. | Construction, forward, backward, training, trace and UI evidence. | NOT ESTABLISHED beyond tested dense cases; other families are mapped in VALIDATION_MATRIX.md | Name only the specific tested path. |
 | C-08 | The paper makes a differentiated research contribution. | Verified closest-work comparison and evidence-backed gap. | UNRESOLVED | Avoid “first,” “novel,” and “state of the art.” |
 | C-09 | Neurofluxion improves learning or usability. | Controlled user study and analysis. | NOT TESTED / OUT OF SCOPE | Make no improvement claim. |
 | C-10 | Existing simulator smoke tests pass. | Test command and logs. | EXECUTED, 5 smoke tests and 4 targeted gradient-contract tests passed on the PR #21 validation revision | State test files and run; do not imply full repository suite passed. |
@@ -56,3 +70,9 @@ Follow-up fix PR: https://github.com/RayAKaan/Neurofluxion/pull/19
 5. A compiled PDF establishes typesetting, not scientific validity.
 6. Literature review status must distinguish initial search from a systematic review.
 7. A fix-branch pass does not establish that main contains the fix.
+
+### Training and optimizer contract status
+
+- Tiny-task loss reduction and repeated fixed-order trajectory passed for one linearly separable binary task using sigmoid+BCE and SGD. This does not prove general convergence.
+- Exact one-step SGD arithmetic and a finite first Adam update passed. Momentum, RMSProp, multi-step Adam reference behavior, scheduler combinations, and unknown optimizer handling remain untested.
+- Remaining family/API/UI validation is tracked in [VALIDATION_MATRIX.md](VALIDATION_MATRIX.md).
