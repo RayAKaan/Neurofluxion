@@ -1,3 +1,23 @@
+## Current status superseding historical snapshots (2026-10-14)
+
+PRs #47–#55 have merged. Earlier sections below are retained as historical audit records; statements that PRs #34–#37 or #47–#55 are still open are historical, not current status.
+
+- **Graph-integrated finite-difference checks merged:** PR #45 covered Conv2D→Flatten→Dense and short RNN→Dense; PR #46 covered LSTM→Dense and GRU→Dense; PR #47 covered Embedding→Attention→RNN→Dense; PR #49 covered Conv2D→BatchNorm→Flatten→Dense. The corresponding dedicated and integrated validation passed on the PR revisions, with each result limited to its fixed graph and numerical protocol.
+- **Training-update contracts merged:** PR #48 covered LSTM/GRU, PR #53 covered Conv2D/BatchNorm, and PR #54 covered Embedding/Attention/RNN/Dense. Dedicated and integrated workflows passed. These checks establish finite gradients and parameter updates in the stated one-batch configurations, not general correctness or convergence.
+- **Related work:** PR #50 adds the ACL 2026 *Graph of Trace* record and a targeted query. The review remains a structured rapid review, not a completed systematic review.
+- **Literature discovery:** PR #52 adds OpenAlex/Crossref API export, deduplication, manifest and screening CSV, with offline unit tests. A live export and human review are still required before reporting search counts or screening results.
+- **UI provenance:** PR #40 and PR #51 preserve adversarial expected-failure tests for stale response/graph-switch state. Green expected-failure handling does not mean the invariants pass. Runtime/application fixes remain outside the authorized research-only scope.
+- **Evidence reconciliation:** PR #55 updates this ledger and the graph validation docs. Continue to scope all results to the exact graph, input, loss, seed, dtype and tolerance; do not infer general operator correctness, convergence, user benefit, novelty priority or superiority.
+
+## Next actions
+
+1. Run and archive the live literature export, inspect query failures and deduplicate manually.
+2. Complete explicit inclusion/exclusion decisions, full-text review and citation snowballing; report actual counts and reasons.
+3. Continue source/read-only browser provenance triage. Obtain explicit authorization before changing runtime/application code.
+4. Once evidence collection is complete, update the paper claim ledger and manuscript; freeze a source SHA and run the final integrated validation on that exact revision before generating the final PDF.
+
+---
+
 # Claim-to-Evidence Ledger
 
 This ledger separates source inspection, executed tests, independent verification, and claims that remain unestablished. The evidence summarized here is a small deterministic dense-path diagnostic plus focused operator workflows, not an exhaustive operator audit.
