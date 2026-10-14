@@ -151,3 +151,17 @@ Five independent CI runs were inspected: [38492813970](https://github.com/RayAKa
 PR #46 merged as `0ef95cf472b5492140d836d475d4b4528e6648c6`. Its four PR-head workflows all passed: graph-integrated gradient oracles [38580463218](https://github.com/RayAKaan/Neurofluxion/actions/runs/38580463218), research validation [38580463113](https://github.com/RayAKaan/Neurofluxion/actions/runs/38580463113), frozen-main integrated validation [38580463272](https://github.com/RayAKaan/Neurofluxion/actions/runs/38580463272), and full-stack validation [38580463094](https://github.com/RayAKaan/Neurofluxion/actions/runs/38580463094). The two new graph-level finite-difference cases—LSTM→Dense and GRU→Dense—passed on the PR head. This does not establish universal recurrent correctness or graph-integrated training.
 
 The next proposed oracle combines Embedding→single-head Attention→RNN→Dense with fixed repeated token indices. Its outcome must be reported only after the dedicated workflow completes. Remaining independent gates include graph-integrated BatchNorm gradients, non-dense parameter-update/training contracts, browser stale-response/provenance scenarios, a complete reproducible literature review, and a frozen-source manuscript audit. Runtime application source remains read-only under the current scope.
+
+
+## Post-PR #47–#54 ledger update (2026-10-14)
+
+PR #47's composite Embedding→Attention→RNN→Dense finite-difference oracle and PR #49's Conv2D→BatchNorm→Flatten→Dense finite-difference oracle both passed dedicated and integrated validation before merge. PR #48's LSTM/GRU training-update contracts passed all four workflows before merge. PR #53's Conv2D/BatchNorm training-update contract passed its dedicated, research, frozen-main, and full-stack workflows. PR #54's Embedding/Attention/RNN/Dense training-update contract passed its dedicated and research workflows; full-stack and frozen-main browser E2E were still running at this revision.
+
+The evidence is fixed-case only and must not be generalized to all shapes, losses, or convergence. The two UI provenance scenarios in PR #51 are expected failures, which keeps CI green while the runtime defects remain open. The reproducible literature export in PR #52 has passing offline tests but still needs a live export and manual screening. Runtime/application source remains read-only under the current scope.
+
+
+## Graph-family training checks completed (2026-10-14)
+
+- PR #53's Conv2D→BatchNorm→Flatten→Dense one-batch training contract passed dedicated workflow [38584049859](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584049859), research [38584049658](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584049658), frozen-main [38584049840](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584049840), and full-stack [38584049641](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584049641).
+- PR #54's Embedding→Attention→RNN→Dense one-batch training contract passed dedicated workflow [38584232382](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584232382), research [38584232409](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584232409), frozen-main [38584232291](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584232291), and full-stack [38584232288](https://github.com/RayAKaan/Neurofluxion/actions/runs/38584232288).
+- Both are one-batch parameter-update contracts. Neither establishes gradient correctness or convergence; the finite-difference tests are separate evidence.
