@@ -1,0 +1,32 @@
+name: Neurofluxion recurrent graph training contracts
+
+on:
+  pull_request:
+    paths:
+      - "backend/tests/test_research_graph_training_family_contracts.py"
+      - "backend/simulator/training_engine.py"
+      - ".github/workflows/graph-family-training-contracts.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  recurrent-training-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+      - name: Install backend dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r backend/requirements.txt pytest
+      - name: Run recurrent graph training contracts
+        env:
+          PYTHONPATH: backend
+        run: python -m pytest backend/tests/test_research_graph_training_family_contracts.py -q
