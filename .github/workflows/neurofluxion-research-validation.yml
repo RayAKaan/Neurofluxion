@@ -37,6 +37,14 @@ jobs:
           PYTHONPATH: backend
         run: python -m pytest backend/tests/test_simulator_smoke.py -q
 
+      - name: Run merged gradient-contract regression tests
+        env:
+          PYTHONPATH: backend
+        run: >-
+          python -m pytest
+          backend/tests/test_simulator_mse_gradient_contract.py
+          backend/tests/test_training_mse_gradient_contract.py -q
+
       - name: Run dense audit and preserve numerical findings
         shell: bash
         run: |
