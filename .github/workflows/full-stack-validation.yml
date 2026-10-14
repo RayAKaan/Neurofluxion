@@ -96,3 +96,11 @@ jobs:
           done
           cd frontend
           npx playwright test --config=playwright.config.mjs
+      - name: Upload Playwright failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: neurofluxion-playwright-failures
+          path: frontend/test-results/
+          if-no-files-found: ignore
+          retention-days: 7
