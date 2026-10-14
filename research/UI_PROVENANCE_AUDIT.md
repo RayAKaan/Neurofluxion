@@ -63,3 +63,9 @@ Source review found that the shared Simulator layout already displays a global D
 The refined detector ran in [workflow 38573016303](https://github.com/RayAKaan/Neurofluxion/actions/runs/38573016303) against checkout `c92706239006ecbad212d601f369d6ceac484807`. It reports **4 GAP, 1 PARTIAL, 1 PASS**. The PARTIAL status accounts for the global Demo note in UnifiedLayout while leaving per-value/per-panel provenance unresolved. This corrected result supersedes the earlier P3 GAP classification; the older artifacts are retained as historical outputs from the earlier detector version.
 
 Corrected artifact: [ui-provenance audit JSON](https://github.com/RayAKaan/Neurofluxion/actions/runs/38573016303/artifacts/11898049372).
+
+## Browser reproduction addendum (2026-10-14)
+
+The source-level stale-response risk is now reproduced by the adversarial Playwright test in [PR #40](https://github.com/RayAKaan/Neurofluxion/pull/40). Workflow [38574488415](https://github.com/RayAKaan/Neurofluxion/actions/runs/38574488415) completed with the test marked as an expected failure because the stale sentinel was visible after the selected graph changed. This is a reproduced UI state defect, not merely a source-pattern suspicion.
+
+The test does not fix the defect. Runtime request/graph identity checks and stale inspection-state invalidation remain open pending explicit authorization to change application code.
