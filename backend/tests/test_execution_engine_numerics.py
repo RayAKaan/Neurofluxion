@@ -112,3 +112,34 @@ def test_bce_requires_sigmoid_output_activation():
     engine.forward([0.4, -0.7])
     with pytest.raises(ValueError, match="requires a sigmoid output"):
         engine.backward([0.2, 0.8], loss_function="bce")
+
+
+def test_execute_api_routes_use_real_engine_results():
+    from api.execute_routes import execute_backward, execute_build, execute_forward, execute_train
+
+    built = execute_build([
+        {"type": "input", "neurons": 2},
+        {"type": "dense", "neurons": 3, "activation": "tanh"},
+        {"type": "output", "neurons": 2, "activation": "linear"},
+    ])
+    assert built["status"] == "success"
+    assert built["data"]["total_params"] == 17
+
+    forward = execute_forward([0.4, -0.7])
+    assert forward["status"] == "success"
+    assert np.isfinite(forward["data"]["output"]).all()
+
+    backward = execute_backward([0.2, -0.1], loss_function="mse")
+    assert backward["status"] == "success"
+    assert np.isfinite(backward["data"]["loss_value"])
+    assert backward["data"]["total_gradient_norm"] > 0
+
+    trained = execute_train(
+        {"x_train": [[0.4, -0.7], [-0.1, 0.8]], "y_train": [[0.2, -0.1], [0.0, 0.4]]},
+        epochs=3,
+        learning_rate=0.01,
+        loss_function="mse",
+    )
+    assert trained["status"] == "success"
+    assert len(trained["data"]["loss_history"]) == 3
+    assert np.isfinite(trained["data"]["loss_history"]).all()
