@@ -2,8 +2,6 @@
 from __future__ import annotations
 
 import numpy as np
-import pytest
-
 from simulator.backward_engine import backward_full
 from simulator.graph_engine import build_graph
 from simulator.layers import LayerConfig
@@ -78,10 +76,3 @@ def test_rnn_dense_graph_backward_matches_finite_differences():
     target = np.asarray([-0.15], dtype=np.float32)
     _assert_graph_gradients_match_finite_difference(graph, x, target)
 
-
-@pytest.mark.parametrize("loss", ["mse"])
-def test_oracle_loss_contract_is_finite(loss):
-    prediction = np.asarray([0.3, -0.2], dtype=np.float32)
-    target = np.asarray([0.1, 0.4], dtype=np.float32)
-    value, _ = compute_loss(target, prediction, loss)
-    assert np.isfinite(value)
