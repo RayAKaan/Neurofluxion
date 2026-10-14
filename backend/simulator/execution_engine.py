@@ -1,23 +1,19 @@
 """
-Neurofluxion Execution Engine
-================================
+Neurofluxion's standalone NumPy execution engine.
 
-PRIMARY ENGINE: NumPy-based simulation
-OPTIONAL ACCELERATION: CuPy (GPU)
-
-This is the CORE of Neurofluxion - NOT to be replaced with PyTorch/TensorFlow.
+The /api/execute routes use this engine independently from the inspectable
+NetworkGraph simulator. This module deliberately implements a dense feed-forward
+subset; unsupported layer types are rejected rather than silently simulated.
 """
-
 from __future__ import annotations
 
+import time
 import uuid
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Tuple
-import time
+from typing import Any, Dict, List, Optional
 
 import numpy as np
 
-# Try to import CuPy for GPU acceleration
 try:
     import cupy as cp
     CUPY_AVAILABLE = True
@@ -28,24 +24,15 @@ except ImportError:
 
 @dataclass
 class LayerData:
-    """Data structure for a single layer's computation results."""
     layer_index: int
     layer_type: str
-    
-    # Activation data
     pre_activation: Optional[np.ndarray] = None
     post_activation: Optional[np.ndarray] = None
-    
-    # Gradient data
     gradient_weights: Optional[np.ndarray] = None
     gradient_bias: Optional[np.ndarray] = None
     deltas: Optional[np.ndarray] = None
-    
-    # Weight data
     weights: Optional[np.ndarray] = None
     biases: Optional[np.ndarray] = None
-    
-    # Statistics (for UI display)
     activation_stats: Dict[str, float] = field(default_factory=dict)
     gradient_stats: Dict[str, float] = field(default_factory=dict)
     weight_stats: Dict[str, float] = field(default_factory=dict)
@@ -53,7 +40,6 @@ class LayerData:
 
 @dataclass
 class ForwardResult:
-    """Result from forward pass execution."""
     layers: List[LayerData]
     final_output: np.ndarray
     total_params: int
@@ -61,9 +47,8 @@ class ForwardResult:
     device_used: str
 
 
-@dataclass  
+@dataclass
 class BackwardResult:
-    """Result from backward pass execution."""
     layers: List[LayerData]
     loss_value: float
     total_gradient_norm: float
@@ -72,7 +57,6 @@ class BackwardResult:
 
 @dataclass
 class TrainingResult:
-    """Result from training loop."""
     loss_history: List[float]
     metrics_history: List[Dict[str, float]]
     final_metrics: Dict[str, float]
@@ -81,350 +65,355 @@ class TrainingResult:
 
 
 class ExecutionEngine:
-    """
-    Core simulation engine using NumPy (with optional CuPy GPU acceleration).
-    
-    This is the PRIMARY engine - NOT to be replaced with PyTorch or TensorFlow.
-    """
-    
+    """Dense feed-forward execution with numerical forward/backward/training."""
+
+    SUPPORTED_LAYERS = {"input", "dense", "output"}
+    SUPPORTED_ACTIVATIONS = {"linear", "relu", "leaky_relu", "sigmoid", "tanh", "softmax"}
+    SUPPORTED_LOSSES = {"mse", "bce"}
+
     def __init__(self, device: str = "auto"):
         self._device_preference = device
-        self._backend: str = "cpu"
+        self._backend = "cpu"
         self._graph: Optional[Dict] = None
-        
+        self._last_forward: Optional[Dict[str, Any]] = None
+
     @property
     def backend(self) -> str:
         return self._backend
-    
+
     @property
     def is_gpu_available(self) -> bool:
         return CUPY_AVAILABLE
-    
+
     def _get_backend(self) -> str:
-        """Determine which backend to use."""
         if self._device_preference == "gpu" and CUPY_AVAILABLE:
             return "cupy"
-        elif self._device_preference == "gpu" and not CUPY_AVAILABLE:
-            return "numpy"
         return "numpy"
-    
+
+    def _xp(self):
+        return cp if self._backend == "cupy" and CUPY_AVAILABLE else np
+
     def _to_numpy(self, arr) -> np.ndarray:
-        """Convert any array to numpy (handles GPU arrays)."""
-        if self._backend == "cupy" and CUPY_AVAILABLE:
-            if isinstance(arr, cp.ndarray):
-                return cp.asnumpy(arr)
-        if isinstance(arr, np.ndarray):
-            return arr
-        return np.array(arr)
-    
+        if CUPY_AVAILABLE and isinstance(arr, cp.ndarray):
+            return cp.asnumpy(arr)
+        return np.asarray(arr)
+
     def _compute_stats(self, arr: np.ndarray) -> Dict[str, float]:
-        """Compute statistics for array (for UI display)."""
+        value = self._to_numpy(arr)
         return {
-            "shape": arr.shape,
-            "mean": float(np.mean(arr)),
-            "std": float(np.std(arr)),
-            "min": float(np.min(arr)),
-            "max": float(np.max(arr)),
-            "norm": float(np.linalg.norm(arr)),
+            "shape": list(value.shape),
+            "mean": float(np.mean(value)),
+            "std": float(np.std(value)),
+            "min": float(np.min(value)),
+            "max": float(np.max(value)),
+            "norm": float(np.linalg.norm(value)),
         }
-    
+
+    @staticmethod
+    def _activation(name: str, z, xp):
+        key = (name or "linear").lower()
+        if key == "relu":
+            return xp.maximum(z, 0)
+        if key == "leaky_relu":
+            return xp.where(z > 0, z, 0.01 * z)
+        if key == "sigmoid":
+            return 1.0 / (1.0 + xp.exp(-xp.clip(z, -80, 80)))
+        if key == "tanh":
+            return xp.tanh(z)
+        if key == "softmax":
+            shifted = z - xp.max(z, axis=-1, keepdims=True)
+            exps = xp.exp(shifted)
+            return exps / xp.sum(exps, axis=-1, keepdims=True)
+        if key == "linear":
+            return z
+        raise ValueError(f"Unsupported activation '{name}'.")
+
+    @staticmethod
+    def _activation_derivative(name: str, z, activated, xp):
+        key = (name or "linear").lower()
+        if key == "relu":
+            return (z > 0).astype(xp.float32)
+        if key == "leaky_relu":
+            return xp.where(z > 0, 1.0, 0.01).astype(xp.float32)
+        if key == "sigmoid":
+            return activated * (1.0 - activated)
+        if key == "tanh":
+            return 1.0 - activated * activated
+        if key == "linear":
+            return xp.ones_like(z)
+        if key == "softmax":
+            raise ValueError("Softmax backward is supported only with BCE-compatible fused loss semantics, not generic elementwise derivatives.")
+        raise ValueError(f"Unsupported activation '{name}'.")
+
     def build_graph(self, architecture: List[Dict]) -> Dict:
-        """
-        Build a computation graph from architecture definition.
-        
-        Args:
-            architecture: List of layer configs
-            
-        Returns:
-            Graph dictionary with weights and biases
-        """
+        if not isinstance(architecture, list) or len(architecture) < 2:
+            raise ValueError("Architecture must contain an input layer and at least one dense/output layer.")
+        if architecture[0].get("type") != "input":
+            raise ValueError("The first layer must have type 'input'.")
+
+        normalized = []
+        for index, layer in enumerate(architecture):
+            kind = str(layer.get("type", "dense")).lower()
+            if kind not in self.SUPPORTED_LAYERS:
+                raise ValueError(
+                    f"Unsupported layer type '{kind}' at index {index}; this execution engine supports dense feed-forward layers only."
+                )
+            neurons = layer.get("neurons")
+            if not isinstance(neurons, int) or isinstance(neurons, bool) or neurons < 1:
+                raise ValueError(f"Layer {index} must define a positive integer neuron count.")
+            activation = str(layer.get("activation", "linear" if index == 0 else "relu")).lower()
+            if index > 0 and activation not in self.SUPPORTED_ACTIVATIONS:
+                raise ValueError(f"Unsupported activation '{activation}' at layer {index}.")
+            if index == 0 and kind != "input":
+                raise ValueError("The first layer must have type 'input'.")
+            if index > 0 and kind == "input":
+                raise ValueError("Only the first layer may have type 'input'.")
+            normalized.append({"type": kind, "neurons": neurons, "activation": activation})
+
         self._backend = self._get_backend()
-        xp = cp if self._backend == "cupy" and CUPY_AVAILABLE else np
-        
-        weights = []
-        biases = []
-        layer_configs = []
-        
-        for i, layer in enumerate(architecture):
-            ltype = layer.get("type", "dense")
-            neurons = layer.get("neurons", 64)
-            activation = layer.get("activation", "relu")
-            
-            if i == 0:
-                # Input layer - no weights
-                layer_configs.append({"type": ltype, "neurons": neurons})
-                continue
-            
-            # Initialize weights based on activation
-            if activation in ["relu", "leaky_relu"]:
-                scale = np.sqrt(2.0 / neurons)
-            else:
-                scale = np.sqrt(1.0 / neurons)
-            
-            if i > 0 and len(weights) > 0:
-                in_dim = weights[-1].shape[0]
-            else:
-                in_dim = neurons
-            
-            w = xp.random.randn(in_dim, neurons) * scale
-            b = xp.zeros(neurons)
-            
-            weights.append(w)
-            biases.append(b)
-            layer_configs.append({
-                "type": ltype,
-                "neurons": neurons,
-                "activation": activation
-            })
-        
-        total_params = sum(w.size + b.size for w, b in zip(weights, biases))
-        
+        xp = self._xp()
+        rng = np.random.default_rng()
+        weights, biases = [], []
+        previous_dim = normalized[0]["neurons"]
+        for layer in normalized[1:]:
+            out_dim = layer["neurons"]
+            activation = layer["activation"]
+            scale = np.sqrt(2.0 / previous_dim) if activation in {"relu", "leaky_relu"} else np.sqrt(1.0 / previous_dim)
+            w = rng.normal(0.0, scale, size=(previous_dim, out_dim)).astype(np.float32)
+            b = np.zeros((out_dim,), dtype=np.float32)
+            weights.append(xp.asarray(w))
+            biases.append(xp.asarray(b))
+            previous_dim = out_dim
+
+        total_params = int(sum(int(w.size + b.size) for w, b in zip(weights, biases)))
         self._graph = {
             "weights": weights,
             "biases": biases,
-            "layers": layer_configs,
+            "layers": normalized,
             "total_params": total_params,
-            "graph_id": str(uuid.uuid4())
+            "graph_id": str(uuid.uuid4()),
         }
-        
+        self._last_forward = None
         return {
             "graph_id": self._graph["graph_id"],
             "total_params": total_params,
-            "layers": len(layer_configs),
-            "device": self._backend
+            "layers": len(normalized),
+            "device": self._backend,
         }
-    
+
     def forward(self, input_data: List[float]) -> ForwardResult:
-        """
-        Execute forward pass through the network.
-        
-        Args:
-            input_data: Input values as list
-            
-        Returns:
-            ForwardResult with layer data and statistics
-        """
         if not self._graph:
             raise ValueError("No graph built. Call build_graph first.")
-        
-        start_time = time.time()
-        xp = cp if self._backend == "cupy" and CUPY_AVAILABLE else np
-        
-        x = xp.array(input_data, dtype=xp.float32)
+        start = time.perf_counter()
+        xp = self._xp()
+        x = xp.asarray(input_data, dtype=xp.float32)
         if x.ndim == 1:
             x = x.reshape(1, -1)
-        
-        layers_data = []
-        
-        # Input layer
-        input_stats = self._compute_stats(self._to_numpy(x))
-        layers_data.append(LayerData(
+        expected = self._graph["layers"][0]["neurons"]
+        if x.ndim != 2 or x.shape[1] != expected:
+            raise ValueError(f"Input must have shape (batch, {expected}); received {tuple(x.shape)}.")
+
+        activations = [x]
+        pre_activations = []
+        current = x
+        layers_data = [LayerData(
             layer_index=0,
             layer_type="input",
             pre_activation=x,
             post_activation=x,
-            activation_stats=input_stats
-        ))
-        
-        current = x
-        
-        for idx, (w, b, layer_config) in enumerate(zip(
-            self._graph["weights"], 
-            self._graph["biases"], 
-            self._graph["layers"][1:]
+            activation_stats=self._compute_stats(x),
+        )]
+        for idx, (w, b, config) in enumerate(zip(
+            self._graph["weights"], self._graph["biases"], self._graph["layers"][1:]
         )):
-            # Linear transformation
-            z = xp.dot(current, w) + b
-            
-            # Activation function
-            act = layer_config.get("activation", "relu")
-            if act == "relu":
-                a = xp.maximum(z, 0)
-            elif act == "sigmoid":
-                a = 1 / (1 + xp.exp(-xp.clip(z, -500, 500)))
-            elif act == "tanh":
-                a = xp.tanh(z)
-            elif act == "softmax":
-                a = xp.exp(z - xp.max(z, axis=-1, keepdims=True))
-                a = a / xp.sum(a, axis=-1, keepdims=True)
-            else:  # linear
-                a = z
-            
-            # Compute statistics
-            z_np = self._to_numpy(z)
-            a_np = self._to_numpy(a)
-            
-            layer_data = LayerData(
+            z = current @ w + b
+            a = self._activation(config["activation"], z, xp)
+            pre_activations.append(z)
+            activations.append(a)
+            layers_data.append(LayerData(
                 layer_index=idx + 1,
-                layer_type=layer_config["type"],
+                layer_type=config["type"],
                 pre_activation=z,
                 post_activation=a,
                 weights=w,
                 biases=b,
-                activation_stats=self._compute_stats(a_np),
-                weight_stats=self._compute_stats(self._to_numpy(w))
-            )
-            
-            layers_data.append(layer_data)
+                activation_stats=self._compute_stats(a),
+                weight_stats=self._compute_stats(w),
+            ))
             current = a
-        
-        output_np = self._to_numpy(current)
-        
+
+        self._last_forward = {
+            "input": x.copy(),
+            "activations": [value.copy() for value in activations],
+            "pre_activations": [value.copy() for value in pre_activations],
+        }
+        output = self._to_numpy(current)
         return ForwardResult(
             layers=layers_data,
-            final_output=output_np[0] if output_np.shape[0] == 1 else output_np,
+            final_output=output[0] if output.shape[0] == 1 else output,
             total_params=self._graph["total_params"],
-            execution_time_ms=(time.time() - start_time) * 1000,
-            device_used=self._backend
+            execution_time_ms=(time.perf_counter() - start) * 1000.0,
+            device_used=self._backend,
         )
-    
-    def backward(self, target: List[float]) -> BackwardResult:
-        """
-        Execute backward pass (backpropagation).
-        
-        Args:
-            target: Target values as list
-            
-        Returns:
-            BackwardResult with gradient data
-        """
+
+    def backward(self, target: List[float], loss_function: str = "mse") -> BackwardResult:
         if not self._graph:
             raise ValueError("No graph built. Call build_graph first.")
-        
-        start_time = time.time()
-        xp = cp if self._backend == "cupy" and CUPY_AVAILABLE else np
-        
-        # Get final activation
-        final_layer = self._graph["layers"][-1]
-        y = xp.array(target, dtype=xp.float32)
-        
-        # Initialize gradients
-        grad_weights = [None] * len(self._graph["weights"])
-        grad_biases = [None] * len(self._graph["biases"])
-        layer_deltas = [None] * len(self._graph["weights"])
-        
-        # Compute loss gradient (assuming softmax + cross-entropy or MSE)
-        # Simplified: use simple delta = output - target
-        output = self._to_numpy(self._graph["weights"][-1])
-        
-        # Work backwards through layers
-        for idx in reversed(range(len(self._graph["weights"]))):
-            w = self._graph["weights"][idx]
-            b = self._graph["biases"][idx]
-            
-            # Simple gradient computation
-            delta = xp.random.randn(*w.shape[:1]) * 0.01  # Placeholder gradient
-            
-            if idx == len(self._graph["weights"]) - 1:
-                # Output layer
-                delta = delta.reshape(1, -1)
-            else:
-                delta = delta.reshape(1, -1)
-            
-            grad_weights[idx] = xp.outer(xp.ones(w.shape[0]), xp.ones(w.shape[1])) * 0.01
-            grad_biases[idx] = xp.ones(b.shape) * 0.01
-            layer_deltas[idx] = delta
-        
-        # Compute total gradient norm
-        total_grad_norm = 0
-        for gw in grad_weights:
-            if gw is not None:
-                total_grad_norm += float(np.sum(gw ** 2))
-        total_grad_norm = np.sqrt(total_grad_norm)
-        
-        # Build layer data with gradients
-        layers_data = []
-        for idx, layer_config in enumerate(self._graph["layers"][1:]):
-            layer_data = LayerData(
-                layer_index=idx + 1,
-                layer_type=layer_config["type"],
-                gradient_weights=grad_weights[idx] if idx < len(grad_weights) else None,
-                gradient_bias=grad_biases[idx] if idx < len(grad_biases) else None,
-                deltas=layer_deltas[idx] if idx < len(layer_deltas) else None
+        if self._last_forward is None:
+            raise ValueError("Run forward before backward so the input and activations are available.")
+        start = time.perf_counter()
+        xp = self._xp()
+        loss_name = (loss_function or "mse").lower()
+        if loss_name not in self.SUPPORTED_LOSSES:
+            raise ValueError(f"Unsupported loss '{loss_function}'. Choose from {sorted(self.SUPPORTED_LOSSES)}.")
+
+        cache = self._last_forward
+        activations = cache["activations"]
+        pre_activations = cache["pre_activations"]
+        y_hat = activations[-1]
+        y = xp.asarray(target, dtype=xp.float32)
+        if y.ndim == 1:
+            y = y.reshape(1, -1)
+        if y.shape != y_hat.shape:
+            raise ValueError(f"Target shape {tuple(y.shape)} must match output shape {tuple(y_hat.shape)}.")
+
+        output_activation = self._graph["layers"][-1]["activation"]
+        if loss_name == "bce" and output_activation != "sigmoid":
+            raise ValueError("BCE currently requires a sigmoid output activation; softmax/categorical cross-entropy is not implemented.")
+        if loss_name == "mse":
+            loss = 0.5 * xp.mean((y_hat - y) ** 2)
+            delta = ((y_hat - y) / y.size) * self._activation_derivative(
+                output_activation, pre_activations[-1], y_hat, xp
             )
-            
-            if layer_data.gradient_weights is not None:
-                gnp = self._to_numpy(layer_data.gradient_weights)
-                layer_data.gradient_stats = self._compute_stats(gnp)
-            
-            layers_data.append(layer_data)
-        
+        else:
+            clipped = xp.clip(y_hat, 1e-7, 1.0 - 1e-7)
+            loss = -xp.mean(y * xp.log(clipped) + (1.0 - y) * xp.log(1.0 - clipped))
+            delta = (y_hat - y) / y.size
+
+        grad_w = [None] * len(self._graph["weights"])
+        grad_b = [None] * len(self._graph["biases"])
+        deltas = [None] * len(grad_w)
+        for idx in reversed(range(len(grad_w))):
+            deltas[idx] = delta
+            grad_w[idx] = activations[idx].T @ delta
+            grad_b[idx] = xp.sum(delta, axis=0)
+            if idx > 0:
+                previous_config = self._graph["layers"][idx]
+                previous_z = pre_activations[idx - 1]
+                previous_a = activations[idx]
+                delta = (delta @ self._graph["weights"][idx].T) * self._activation_derivative(
+                    previous_config["activation"], previous_z, previous_a, xp
+                )
+
+        layers_data = []
+        total_squared_norm = 0.0
+        for idx, config in enumerate(self._graph["layers"][1:]):
+            gw, gb, d = grad_w[idx], grad_b[idx], deltas[idx]
+            gw_np, gb_np = self._to_numpy(gw), self._to_numpy(gb)
+            total_squared_norm += float(np.sum(gw_np ** 2) + np.sum(gb_np ** 2))
+            layers_data.append(LayerData(
+                layer_index=idx + 1,
+                layer_type=config["type"],
+                pre_activation=pre_activations[idx],
+                post_activation=activations[idx + 1],
+                gradient_weights=gw,
+                gradient_bias=gb,
+                deltas=d,
+                weights=self._graph["weights"][idx],
+                biases=self._graph["biases"][idx],
+                gradient_stats=self._compute_stats(gw),
+                weight_stats=self._compute_stats(self._graph["weights"][idx]),
+            ))
         return BackwardResult(
             layers=layers_data,
-            loss_value=float(np.random.random()),  # Placeholder
-            total_gradient_norm=total_grad_norm,
-            execution_time_ms=(time.time() - start_time) * 1000
+            loss_value=float(self._to_numpy(loss)),
+            total_gradient_norm=float(np.sqrt(total_squared_norm)),
+            execution_time_ms=(time.perf_counter() - start) * 1000.0,
         )
-    
-    def train(self, dataset: Dict, epochs: int = 10) -> TrainingResult:
-        """
-        Execute training loop.
-        
-        Args:
-            dataset: Training dataset
-            epochs: Number of training epochs
-            
-        Returns:
-            TrainingResult with loss history and metrics
-        """
+
+    def train(
+        self,
+        dataset: Dict,
+        epochs: int = 10,
+        learning_rate: float = 0.01,
+        loss_function: str = "mse",
+    ) -> TrainingResult:
         if not self._graph:
             raise ValueError("No graph built. Call build_graph first.")
-        
-        start_time = time.time()
-        
-        loss_history = []
-        metrics_history = []
-        
+        if not isinstance(epochs, int) or epochs < 1:
+            raise ValueError("epochs must be a positive integer.")
+        if not np.isfinite(learning_rate) or learning_rate <= 0:
+            raise ValueError("learning_rate must be finite and positive.")
+        if not isinstance(dataset, dict) or "x_train" not in dataset or "y_train" not in dataset:
+            raise ValueError("dataset must contain x_train and y_train arrays.")
+        x_train = np.asarray(dataset["x_train"], dtype=np.float32)
+        y_train = np.asarray(dataset["y_train"], dtype=np.float32)
+        if x_train.ndim == 1:
+            x_train = x_train.reshape(1, -1)
+        if y_train.ndim == 1:
+            y_train = y_train.reshape(1, -1)
+        if x_train.ndim != 2 or y_train.ndim != 2 or x_train.shape[0] != y_train.shape[0]:
+            raise ValueError("x_train and y_train must be 2D arrays with the same sample count.")
+        if x_train.shape[0] == 0:
+            raise ValueError("Training dataset must contain at least one sample.")
+
+        xp = self._xp()
+        x_dev, y_dev = xp.asarray(x_train), xp.asarray(y_train)
+        start = time.perf_counter()
+        loss_history: List[float] = []
+        metrics_history: List[Dict[str, float]] = []
         for epoch in range(epochs):
-            # Simulate training (placeholder - real implementation would use actual data)
-            train_loss = np.random.random() * (0.5 / (epoch + 1))
-            test_loss = train_loss + np.random.random() * 0.1
-            train_acc = 0.5 + (epoch / epochs) * 0.4 + np.random.random() * 0.05
-            test_acc = train_acc - np.random.random() * 0.05
-            
+            forward = self.forward(x_dev)
+            backward = self.backward(y_dev, loss_function=loss_function)
+            train_loss = backward.loss_value
+            # Apply the gradients produced by this exact forward/backward pass.
+            gradients_w = [layer.gradient_weights for layer in backward.layers]
+            gradients_b = [layer.gradient_bias for layer in backward.layers]
+            for idx in range(len(self._graph["weights"])):
+                self._graph["weights"][idx] = self._graph["weights"][idx] - learning_rate * gradients_w[idx]
+                self._graph["biases"][idx] = self._graph["biases"][idx] - learning_rate * gradients_b[idx]
             loss_history.append(float(train_loss))
+            post_update = self.forward(x_dev)
+            predictions = xp.asarray(post_update.final_output, dtype=xp.float32)
+            if predictions.ndim == 1:
+                predictions = predictions.reshape(1, -1)
+            if predictions.shape[1] == 1:
+                predicted_labels = (predictions[:, 0] >= 0.5).astype(xp.int32)
+                true_labels = (y_dev[:, 0] >= 0.5).astype(xp.int32)
+            else:
+                predicted_labels = xp.argmax(predictions, axis=1)
+                true_labels = xp.argmax(y_dev, axis=1)
+            accuracy = float(self._to_numpy(xp.mean(predicted_labels == true_labels)))
             metrics_history.append({
+                "epoch": float(epoch + 1),
                 "train_loss": float(train_loss),
-                "test_loss": float(test_loss),
-                "train_accuracy": float(train_acc),
-                "test_accuracy": float(test_acc),
-                "epoch": epoch + 1
+                "train_accuracy": accuracy,
             })
-        
         final_metrics = metrics_history[-1] if metrics_history else {}
-        
         return TrainingResult(
             loss_history=loss_history,
             metrics_history=metrics_history,
             final_metrics=final_metrics,
             total_epochs=epochs,
-            execution_time_ms=(time.time() - start_time) * 1000
+            execution_time_ms=(time.perf_counter() - start) * 1000.0,
         )
-    
+
     def get_device_info(self) -> Dict:
-        """Get current device information."""
         return {
             "backend": self._backend,
             "cupy_available": CUPY_AVAILABLE,
-            "device_preference": self._device_preference
+            "device_preference": self._device_preference,
         }
-    
+
     def set_device(self, device: str) -> None:
-        """Set device preference (auto/gpu/cpu)."""
         self._device_preference = device
         self._backend = self._get_backend()
-    
+        self._last_forward = None
+
     def get_layer_data_json(self, result: ForwardResult) -> List[Dict]:
-        """Convert forward result to JSON-serializable format."""
         layers_json = []
-        
         for layer in result.layers:
-            layer_dict = {
-                "layer_index": layer.layer_index,
-                "type": layer.layer_type,
-            }
-            
-            # Add activation data (with sampling for large arrays)
+            layer_dict = {"layer_index": layer.layer_index, "type": layer.layer_type}
             if layer.post_activation is not None:
                 arr = self._to_numpy(layer.post_activation)
                 layer_dict["activation"] = {
@@ -433,10 +422,8 @@ class ExecutionEngine:
                     "std": float(np.std(arr)),
                     "min": float(np.min(arr)),
                     "max": float(np.max(arr)),
-                    "sample": arr.flatten()[:10].tolist()  # First 10 values
+                    "sample": arr.flatten()[:10].tolist(),
                 }
-            
-            # Add weight data
             if layer.weights is not None:
                 arr = self._to_numpy(layer.weights)
                 layer_dict["weights"] = {
@@ -445,29 +432,23 @@ class ExecutionEngine:
                         "mean": float(np.mean(arr)),
                         "std": float(np.std(arr)),
                         "min": float(np.min(arr)),
-                        "max": float(np.max(arr))
-                    }
+                        "max": float(np.max(arr)),
+                    },
                 }
-            
-            # Add gradient data if available
             if layer.gradient_weights is not None:
                 arr = self._to_numpy(layer.gradient_weights)
                 layer_dict["gradient"] = {
                     "shape": list(arr.shape),
                     "mean": float(np.mean(arr)),
                     "std": float(np.std(arr)),
-                    "norm": float(np.linalg.norm(arr))
+                    "norm": float(np.linalg.norm(arr)),
                 }
-            
             layers_json.append(layer_dict)
-        
         return layers_json
 
 
-# Singleton instance
 execution_engine = ExecutionEngine()
 
 
 def get_engine() -> ExecutionEngine:
-    """Get the execution engine instance."""
     return execution_engine

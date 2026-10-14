@@ -65,7 +65,7 @@ def execute_forward(input_data: List[Any] = Body(...)):
 
 
 @router.post("/backward")
-def execute_backward(target: List[Any] = Body(...)):
+def execute_backward(target: List[Any] = Body(...), loss_function: str = "mse"):
     """Execute backward pass (backpropagation)."""
     start_time = time.time()
     engine = get_engine()
@@ -77,7 +77,7 @@ def execute_backward(target: List[Any] = Body(...)):
         )
     
     try:
-        result = engine.backward(target)
+        result = engine.backward(target, loss_function=loss_function)
         
         # Convert gradients to JSON
         gradients_data = []
@@ -114,7 +114,7 @@ def execute_backward(target: List[Any] = Body(...)):
 
 
 @router.post("/train")
-def execute_train(dataset: dict, epochs: int = 10):
+def execute_train(dataset: dict, epochs: int = 10, learning_rate: float = 0.01, loss_function: str = "mse"):
     """Execute training loop."""
     start_time = time.time()
     engine = get_engine()
@@ -126,7 +126,7 @@ def execute_train(dataset: dict, epochs: int = 10):
         )
     
     try:
-        result = engine.train(dataset, epochs)
+        result = engine.train(dataset, epochs, learning_rate=learning_rate, loss_function=loss_function)
         
         return success_response(
             data={
