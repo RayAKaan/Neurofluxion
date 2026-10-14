@@ -20,7 +20,7 @@ from literature_search_export import (
 class LiteratureSearchExportTests(unittest.TestCase):
     def test_normalize_doi_variants(self):
         self.assertEqual(normalize_doi("https://doi.org/10.1234/ABC "), "10.1234/abc")
-        self.assertEqual(normalize_doi("doi:10.1234/ABC"), "doi:10.1234/abc")
+        self.assertEqual(normalize_doi("doi:10.1234/ABC"), "10.1234/abc")
 
     def test_reconstruct_openalex_inverted_abstract(self):
         self.assertEqual(
