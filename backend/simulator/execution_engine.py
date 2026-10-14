@@ -278,22 +278,17 @@ class ExecutionEngine:
             raise ValueError(f"Target shape {tuple(y.shape)} must match output shape {tuple(y_hat.shape)}.")
 
         output_activation = self._graph["layers"][-1]["activation"]
+        if loss_name == "bce" and output_activation != "sigmoid":
+            raise ValueError("BCE currently requires a sigmoid output activation; softmax/categorical cross-entropy is not implemented.")
         if loss_name == "mse":
             loss = 0.5 * xp.mean((y_hat - y) ** 2)
             delta = ((y_hat - y) / y.size) * self._activation_derivative(
                 output_activation, pre_activations[-1], y_hat, xp
             )
-        elif output_activation == "sigmoid":
-            clipped = xp.clip(y_hat, 1e-7, 1.0 - 1e-7)
-            loss = -xp.mean(y * xp.log(clipped) + (1.0 - y) * xp.log(1.0 - clipped))
-            delta = (y_hat - y) / y.size
         else:
             clipped = xp.clip(y_hat, 1e-7, 1.0 - 1e-7)
             loss = -xp.mean(y * xp.log(clipped) + (1.0 - y) * xp.log(1.0 - clipped))
-            d_loss_da = -(y / clipped - (1.0 - y) / (1.0 - clipped)) / y.size
-            delta = d_loss_da * self._activation_derivative(
-                output_activation, pre_activations[-1], y_hat, xp
-            )
+            delta = (y_hat - y) / y.size
 
         grad_w = [None] * len(self._graph["weights"])
         grad_b = [None] * len(self._graph["biases"])
