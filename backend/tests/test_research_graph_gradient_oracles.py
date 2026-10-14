@@ -76,3 +76,27 @@ def test_rnn_dense_graph_backward_matches_finite_differences():
     target = np.asarray([-0.15], dtype=np.float32)
     _assert_graph_gradients_match_finite_difference(graph, x, target)
 
+
+def test_lstm_dense_graph_backward_matches_finite_differences():
+    np.random.seed(433)
+    graph = build_graph([
+        LayerConfig("input", neurons=6, input_shape=[3, 2]),
+        LayerConfig("lstm", neurons=2, hidden_size=2, return_sequences=False),
+        LayerConfig("output", neurons=1, activation="linear"),
+    ])
+    x = np.asarray([[0.1, -0.2], [0.3, 0.4], [-0.5, 0.2]], dtype=np.float32)
+    target = np.asarray([0.1], dtype=np.float32)
+    _assert_graph_gradients_match_finite_difference(graph, x, target)
+
+
+def test_gru_dense_graph_backward_matches_finite_differences():
+    np.random.seed(434)
+    graph = build_graph([
+        LayerConfig("input", neurons=6, input_shape=[3, 2]),
+        LayerConfig("gru", neurons=2, hidden_size=2, return_sequences=False),
+        LayerConfig("output", neurons=1, activation="linear"),
+    ])
+    x = np.asarray([[-0.2, 0.1], [0.4, -0.3], [0.2, 0.5]], dtype=np.float32)
+    target = np.asarray([-0.2], dtype=np.float32)
+    _assert_graph_gradients_match_finite_difference(graph, x, target)
+
