@@ -2,7 +2,7 @@
 
 Working title: Neurofluxion: An Inspectable Simulator for Neural-Network Computation  
 Historical audit baseline: main after PR #22, commit `b3e0990da61d54b71b27963f3a664b30ccd47378`  
-Current-main reference at reconciliation: `0866972ea5a9e9f2d1864681402e3e3659bdaf8a` (after PR #29). 
+Current-main reference at reconciliation: `203407474ca11232eb32e85e044e6e52e189e18c` (PR #33 merge, 2026-10-14). 
 Status: manuscript revision in progress; not submission-ready.
 
 ## 1. Research framing
@@ -139,3 +139,23 @@ A top-tier visualization venue is likely to require a sharper task-centered cont
 6. Build the operator-family coverage matrix.
 7. Expand the literature matrix and document the systematic search.
 8. Finalize empirical results and choose the submission venue only after the evidence gates are met.
+
+
+## Next validation round update (2026-10-14)
+
+The following research PRs are in progress and have successful initial evidence; they are not yet merged at the time of this update.
+
+- PR #34: graph-level forward/trace consistency across nine representative fixed configurations. Backend suite passed 98 tests with 12 opt-in tests skipped. The coverage does not yet prove graph-integrated backward/update/training for each family.
+- PR #35: repeated source audit found five provenance/stale-state gaps and one route-identity check pass. The gaps remain open pending adversarial browser tests; runtime changes remain out of scope.
+- PR #36: two Ubuntu/Windows benchmark executions passed output parity across four dense graph widths. Ratio ranges reproduce qualitatively across runner families but remain hosted-runner diagnostics.
+- PR #37: structured rapid literature review adds a query log and 12 provisional comparator candidates. It is not a completed systematic review and cannot support a novelty-priority claim.
+
+### Remaining gates, ordered by dependency
+
+1. Merge/reconcile the research-only PRs after their checks pass and preserve the exact tested SHAs/artifacts.
+2. Extend graph-integrated tests from forward/trace consistency to backward gradients, parameter updates, and small deterministic training trajectories where the implementation claims those behaviors.
+3. Add browser-level delayed-response, graph-switch, unmount/remount, failure-after-success, demo-label, and stream-correlation tests. Keep source-level gaps open until the runtime behavior is tested.
+4. Run additional benchmark repetitions and, if possible, a local or hardware-diverse environment. Decompose computation, trace-record creation, serialization, API transport, and browser rendering before making causal overhead claims.
+5. Complete the literature review using exportable bibliographic database searches, deduplication, title/abstract and full-text screening, screening counts, and backward/forward citation chasing.
+6. Regenerate the manuscript and figures from the updated evidence only after the relevant results are merged and frozen. Do not claim submission readiness until all stated claims have matched evidence.
+
