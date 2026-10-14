@@ -9,6 +9,16 @@ PRs #47–#55 have merged. Earlier sections below are retained as historical aud
 - **UI provenance:** PR #40 and PR #51 preserve adversarial expected-failure tests for stale response/graph-switch state. Green expected-failure handling does not mean the invariants pass. Runtime/application fixes remain outside the authorized research-only scope.
 - **Evidence reconciliation:** PR #55 updates this ledger and the graph validation docs. Continue to scope all results to the exact graph, input, loss, seed, dtype and tolerance; do not infer general operator correctness, convergence, user benefit, novelty priority or superiority.
 
+## Live literature export audit (run 38592362340; 2026-10-14)
+
+- Merge revision: `7758e4ebf402c0ccd5a8bb5d3bf6de002cb4c580`.
+- Workflow run: [38592362340](https://github.com/RayAKaan/Neurofluxion/actions/runs/38592362340); artifact: `neurofluxion-literature-search-export` (artifact ID `11907269115`, SHA-256 `18e76ee8884b16336ad57bcfde89a0fe878fc7e98ee4e6d5b3f10e924630facf`).
+- The job completed successfully, but the manifest records **6 OpenAlex query failures** on page 2 (HTTP 401); all six Crossref searches returned two pages each.
+- Export counts: **1,200 raw Crossref records**, **1,127 deduplicated records**; **73 records removed by the script's deterministic deduplication rule**. The unique records all originate from Crossref in this run. Four titles are blank and 915 abstracts are blank; year range among numeric years is 1964–2026.
+- Screening CSV contains 1,127 rows and **zero screening decisions**. These are discovery candidates, not included studies. Do not report 1,127 as screened/included works, or use this run as a complete two-database search.
+- Root cause for data loss: the exporter raised on a later OpenAlex page and the caller discarded the records already returned by earlier pages. CI also treated a partial export as successful because Crossref returned records. PR #57 hardens partial-result preservation, adds optional `OPENALEX_API_KEY` support, and makes query failures fail the job while still uploading artifacts.
+- Required after PR #57 merges: inspect its push-triggered artifact and manifest; verify OpenAlex coverage, source failures, and counts before screening. Human duplicate adjudication, title/abstract screening, full-text review, and citation snowballing remain pending.
+
 ## Next actions
 
 1. Run and archive the live literature export, inspect query failures and deduplicate manually.
