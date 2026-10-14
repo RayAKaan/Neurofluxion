@@ -130,3 +130,9 @@ Follow-up fix PR: https://github.com/RayAKaan/Neurofluxion/pull/19
 ### Repeated trace benchmark runs
 
 Five independent CI runs were inspected: [38492813970](https://github.com/RayAKaan/Neurofluxion/actions/runs/38492813970), [38492888157](https://github.com/RayAKaan/Neurofluxion/actions/runs/38492888157), [38493816167](https://github.com/RayAKaan/Neurofluxion/actions/runs/38493816167), [38493984213](https://github.com/RayAKaan/Neurofluxion/actions/runs/38493984213), and [38494414914](https://github.com/RayAKaan/Neurofluxion/actions/runs/38494414914). Each passed output parity for all four widths and retained 40 timing samples per path per width. Trace/forward median-ratio ranges across runs were 2.36–2.46×, 4.43–4.86×, 9.65–11.13×, and 26.43–32.34×. This supports repeatability within this CI runner class only; it is not a second-hardware validation or a general performance claim.
+
+## Graph-integrated finite-difference oracles (PR #43, 2026-10-14)
+
+- Workflow [38575599616](https://github.com/RayAKaan/Neurofluxion/actions/runs/38575599616) passed central finite-difference checks for Conv2D→Flatten→Dense and short tanh RNN→Dense graph backward paths.
+- Protocol: epsilon 1e-3, rtol 2e-2, atol 2e-3, fixed seeds, MSE.
+- This is independent numerical evidence for two specific mixed-layer graphs. It does not generalize to all operator families, losses, shapes, or integrated training configurations.
