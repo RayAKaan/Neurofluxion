@@ -25,3 +25,5 @@ The dedicated oracle workflow [38575599616](https://github.com/RayAKaan/Neuroflu
 - short tanh RNN → Dense output.
 
 The test uses central differences with epsilon 1e-3 and comparison tolerances rtol 2e-2 / atol 2e-3. This supports the tested mixed-layer MSE-gradient cases only; it does not establish correctness for other operators, losses, shapes, or training configurations.
+
+The full-stack workflow [38575599333](https://github.com/RayAKaan/Neurofluxion/actions/runs/38575599333) also passed backend tests, frontend build, and the existing browser E2E on the PR head. This is integration-suite evidence for that revision; it does not extend the two finite-difference graph cases.
