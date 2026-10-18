@@ -175,16 +175,29 @@ def deduplicate(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return sorted(merged.values(), key=lambda item: (str(item.get("year") or ""), item.get("title", "").lower()), reverse=True)
 
 
-def search_openalex(query: str, page_size: int, max_pages: int) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+def search_openalex(
+    query: str,
+    page_size: int,
+    max_pages: int,
+    mailto: str = "",
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Query OpenAlex with page-based pagination.
+
+    Cursor paging is used by OpenAlex for deep result traversal and now requires
+    an API key: an anonymous cursor request succeeds for the first page and then
+    fails with HTTP 401 on the follow-up page. Page-based paging is available
+    without a key, so the exporter uses it and records the mode in the manifest.
+    """
     records: list[dict[str, Any]] = []
     requests: list[dict[str, Any]] = []
-    cursor = "*"
     api_key = os.environ.get("OPENALEX_API_KEY", "").strip()
     for page in range(max_pages):
-        params = urllib.parse.urlencode({
-            "search": query, "per-page": page_size, "cursor": cursor, "select": OPENALEX_SELECT,
-        })
-        manifest_url = "https://api.openalex.org/works?" + params
+        params = {
+            "search": query, "per-page": page_size, "page": page + 1, "select": OPENALEX_SELECT,
+        }
+        if mailto:
+            params["mailto"] = mailto
+        manifest_url = "https://api.openalex.org/works?" + urllib.parse.urlencode(params)
         request_url = manifest_url
         if api_key:
             request_url += "&api_key=" + urllib.parse.quote(api_key, safe="")
@@ -209,8 +222,7 @@ def search_openalex(query: str, page_size: int, max_pages: int) -> tuple[list[di
         requests.append({
             "page": page + 1, "url": manifest_url, "records_returned": len(results), "status": "success",
         })
-        cursor = (payload.get("meta") or {}).get("next_cursor")
-        if not cursor or not results:
+        if len(results) < page_size:
             break
         time.sleep(0.15)
     return records, requests
@@ -275,14 +287,23 @@ def write_exports(output: Path, raw_records: list[dict[str, Any]], unique_record
             })
 
 
-def run_search(output: Path, queries: list[str] = QUERIES, page_size: int = 100, max_pages: int = 2) -> dict[str, Any]:
+def run_search(
+    output: Path,
+    queries: list[str] = QUERIES,
+    page_size: int = 100,
+    max_pages: int = 2,
+    mailto: str = "",
+) -> dict[str, Any]:
     raw: list[dict[str, Any]] = []
     query_runs: list[dict[str, Any]] = []
     failures: list[dict[str, str]] = []
     for query in queries:
         for database, search_fn in (("OpenAlex", search_openalex), ("Crossref", search_crossref)):
             try:
-                records, requests = search_fn(query, page_size, max_pages)
+                if database == "OpenAlex":
+                    records, requests = search_fn(query, page_size, max_pages, mailto=mailto)
+                else:
+                    records, requests = search_fn(query, page_size, max_pages)
                 raw.extend(records)
                 query_runs.append({
                     "query": query, "database": database,
@@ -313,8 +334,10 @@ def run_search(output: Path, queries: list[str] = QUERIES, page_size: int = 100,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "queries": queries,
         "databases": ["OpenAlex", "Crossref"],
+        "pagination_mode": {"OpenAlex": "page", "Crossref": "offset"},
         "page_size": page_size,
         "max_pages_per_query": max_pages,
+        "openalex_mailto_provided": bool(mailto),
         "query_runs": query_runs,
         "raw_record_count": len(raw),
         "deduplicated_record_count": len(unique),
@@ -338,12 +361,22 @@ def main() -> int:
     parser.add_argument("--page-size", type=int, default=100)
     parser.add_argument("--max-pages", type=int, default=2)
     parser.add_argument("--query", action="append", dest="queries", help="Override default query; repeat for multiple queries")
+    parser.add_argument(
+        "--mailto",
+        default=os.environ.get("OPENALEX_MAILTO", ""),
+        help=(
+            "Contact address sent to OpenAlex for the polite pool. Required for reliable "
+            "cursor paging; also read from OPENALEX_MAILTO."
+        ),
+    )
     args = parser.parse_args()
     if args.page_size < 1 or args.page_size > 200:
         parser.error("--page-size must be between 1 and 200")
     if args.max_pages < 1 or args.max_pages > 10:
         parser.error("--max-pages must be between 1 and 10")
-    manifest = run_search(Path(args.out), args.queries or QUERIES, args.page_size, args.max_pages)
+    manifest = run_search(
+        Path(args.out), args.queries or QUERIES, args.page_size, args.max_pages, mailto=args.mailto
+    )
     print(json.dumps({
         "output": str(Path(args.out)),
         "raw_record_count": manifest["raw_record_count"],
