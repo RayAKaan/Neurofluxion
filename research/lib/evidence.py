@@ -52,10 +52,11 @@ def _jsonable(value: Any) -> Any:
 
 def write_json(path: Path, payload: Any) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
-        json.dumps(_jsonable(payload), indent=2, sort_keys=True, default=str) + "\n",
-        encoding="utf-8",
-    )
+    # newline="\n" keeps the bytes identical on every platform: manifests record a
+    # SHA-256 for every emitted file, and an OS line-ending translation would
+    # invalidate those checksums on any other machine.
+    with open(path, "w", encoding="utf-8", newline="\n") as handle:
+        handle.write(json.dumps(_jsonable(payload), indent=2, sort_keys=True, default=str) + "\n")
     return path
 
 
@@ -82,8 +83,12 @@ def write_csv(
                 if key not in seen:
                     seen.append(key)
         fieldnames = seen
+    # lineterminator="\n" keeps the bytes identical on every platform; see
+    # write_json for why the emitted artifacts must be byte-stable.
     with open(path, "w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(fieldnames), extrasaction="ignore")
+        writer = csv.DictWriter(
+            handle, fieldnames=list(fieldnames), extrasaction="ignore", lineterminator="\n"
+        )
         writer.writeheader()
         for row in rows:
             writer.writerow({key: _csv_value(row.get(key)) for key in fieldnames})
@@ -147,7 +152,8 @@ class EvidenceWriter:
     def text(self, name: str, content: str) -> Path:
         path = self._record(str(Path("summary") / name))
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(content, encoding="utf-8")
+        with open(path, "w", encoding="utf-8", newline="\n") as handle:
+            handle.write(content)
         return path
 
     # -- finalisation ------------------------------------------------------

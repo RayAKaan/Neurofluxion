@@ -1,0 +1,20 @@
+# Research evidence and machine-readable artifacts must be byte-identical on
+# every platform. Evidence manifests record a SHA-256 for every emitted file, so
+# any line-ending normalisation applied by git would silently invalidate those
+# checksums on a checkout with different autocrlf settings.
+* text=auto eol=lf
+
+*.json   text eol=lf
+*.jsonl  text eol=lf
+*.csv    text eol=lf
+*.md     text eol=lf
+*.yml    text eol=lf
+*.yaml   text eol=lf
+*.py     text eol=lf
+*.ts     text eol=lf
+*.tsx    text eol=lf
+
+# Keep the lockfile and any future binary artifacts untouched by normalisation.
+frontend/package-lock.json -text
+*.png    binary
+*.pdf    binary
