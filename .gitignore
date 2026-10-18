@@ -31,6 +31,7 @@ server_err.log
 server_stderr.log
 server_stdout.log
 *.log
+*.err
 .eslintcache
 
 # Auto-generated docs & test scripts (not part of shipped project)
