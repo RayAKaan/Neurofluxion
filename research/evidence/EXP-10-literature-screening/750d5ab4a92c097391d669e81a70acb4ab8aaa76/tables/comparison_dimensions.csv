@@ -1,0 +1,13 @@
+key,definition
+execution_tracing,records intermediate operations of a model execution
+tensor_inspection,exposes individual tensor/activation values
+graph_visualization,renders the model or computation graph
+operation_level_inspection,explains or exposes individual operator semantics
+recurrent_inspection,exposes hidden or gate state over time
+interactive_navigation,supports user-driven navigation of a computation
+numerical_transparency,shows the arithmetic/equation behind a value
+training_visibility,shows behaviour during training
+provenance,ties a displayed value to an execution or parameter revision
+independent_numerical_oracle,validates displayed values against an independent reference
+browser_accessible,runs in a browser without installation
+local_execution,executes locally without a hosted service

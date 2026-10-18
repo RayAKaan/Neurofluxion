@@ -1,0 +1,31 @@
+sweep,quantity,fitted,exponent,r_squared,points,tested_range,scope_note,reason,constant_value
+depth,forward_ms,true,0.26283541693282453,0.9010073479308826,5,"[1.0, 10.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+depth,trace_ms,true,0.6095471832391106,0.9849670454266828,5,"[1.0, 10.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+depth,trace_payload_bytes,true,0.9086891816044848,0.999234403707495,5,"[1.0, 10.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+depth,trace_records,true,0.7475064044385197,0.9942138684032412,5,"[1.0, 10.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+depth,packed_parameter_scalars,true,0.9173304748595154,0.9993581157715401,5,"[1.0, 10.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+width,forward_ms,true,0.060586043711226265,0.6922859747136783,6,"[8.0, 256.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+width,trace_ms,true,0.6875983167704535,0.8744040267618602,6,"[8.0, 256.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+width,trace_payload_bytes,true,1.4014086652542537,0.9886789846388793,6,"[8.0, 256.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+width,trace_records,false,,,6,"[8.0, 256.0]",,quantity is invariant across the sweep factor,9.0
+width,packed_parameter_scalars,true,1.5105269567768367,0.9942493160688202,6,"[8.0, 256.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+sequence,forward_ms,true,0.8669702018904407,0.9863570443132894,6,"[4.0, 128.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+sequence,trace_ms,true,0.8328409629904278,0.9926123937426811,6,"[4.0, 128.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+sequence,trace_payload_bytes,true,0.8693320793656005,0.9964226007451842,6,"[4.0, 128.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+sequence,trace_records,false,,,6,"[4.0, 128.0]",,quantity is invariant across the sweep factor,2.0
+sequence,packed_parameter_scalars,false,,,6,"[4.0, 128.0]",,quantity is invariant across the sweep factor,8386.0
+features,forward_ms,true,0.009698698293629082,0.5549486310955156,5,"[8.0, 128.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+features,trace_ms,true,0.08787745304129138,0.8545549902512426,5,"[8.0, 128.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+features,trace_payload_bytes,true,0.8384458938403864,0.9962967289509751,5,"[8.0, 128.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+features,trace_records,false,,,5,"[8.0, 128.0]",,quantity is invariant across the sweep factor,2.0
+features,packed_parameter_scalars,true,0.48863337878282626,0.9639960964694164,5,"[8.0, 128.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+spatial,forward_ms,true,1.4378823466438038,0.9759626426514892,4,"[8.0, 64.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+spatial,trace_ms,true,1.5026645745556584,0.9832525537701802,4,"[8.0, 64.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+spatial,trace_payload_bytes,true,1.994418436521441,0.99999565701847,4,"[8.0, 64.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+spatial,trace_records,false,,,4,"[8.0, 64.0]",,quantity is invariant across the sweep factor,4.0
+spatial,packed_parameter_scalars,true,1.9626045499585698,0.9999056682827091,4,"[8.0, 64.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+filters,forward_ms,true,0.0884892407130907,0.9263319341418977,5,"[4.0, 64.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+filters,trace_ms,true,0.35423718916589675,0.9622117085889847,5,"[4.0, 64.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+filters,trace_payload_bytes,true,0.9478276521584228,0.999491802764447,5,"[4.0, 64.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,
+filters,trace_records,false,,,5,"[4.0, 64.0]",,quantity is invariant across the sweep factor,4.0
+filters,packed_parameter_scalars,true,0.9987586494070864,0.9999997717432652,5,"[4.0, 64.0]",Descriptive exponent for the tested range only; no extrapolation is claimed.,,

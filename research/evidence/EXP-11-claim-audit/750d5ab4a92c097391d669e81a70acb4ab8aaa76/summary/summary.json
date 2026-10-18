@@ -1,0 +1,60 @@
+{
+  "claims_invalidated": [
+    "C-09",
+    "C-10",
+    "C-11",
+    "C-12",
+    "C-17"
+  ],
+  "claims_not_tested": [],
+  "claims_partially_supported": [
+    "C-03",
+    "C-04",
+    "C-05",
+    "C-06"
+  ],
+  "claims_supported": [
+    "C-01",
+    "C-02",
+    "C-07",
+    "C-08",
+    "C-15",
+    "C-16"
+  ],
+  "claims_unsupported": [
+    "C-13",
+    "C-14"
+  ],
+  "ledger_entries": 17,
+  "ledger_status_counts": {
+    "INVALIDATED": 5,
+    "PARTIALLY_SUPPORTED": 4,
+    "SUPPORTED": 6,
+    "UNSUPPORTED": 2
+  },
+  "overclaim_scan": {
+    "files_scanned": 483,
+    "occurrences_by_term": {
+      "accurate": 1,
+      "all operators": 1,
+      "arbitrary": 8,
+      "complete": 191,
+      "exact": 98,
+      "exhaustive": 4,
+      "first": 125,
+      "guarantee": 9,
+      "novel": 27,
+      "proves": 6,
+      "real-time": 1,
+      "state of the art": 3,
+      "state-of-the-art": 2,
+      "superior": 11,
+      "universal": 19
+    },
+    "occurrences_code": 168,
+    "occurrences_prose": 338,
+    "occurrences_requiring_adjudication": 173,
+    "occurrences_total": 506
+  },
+  "status": "COMPLETE"
+}

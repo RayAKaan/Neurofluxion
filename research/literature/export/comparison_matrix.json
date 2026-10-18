@@ -1,0 +1,399 @@
+{
+  "dimension_summary": {
+    "browser_accessible": {
+      "no": 8,
+      "unknown": 1,
+      "yes": 4
+    },
+    "execution_tracing": {
+      "no": 6,
+      "partial": 5,
+      "yes": 2
+    },
+    "graph_visualization": {
+      "no": 2,
+      "partial": 3,
+      "yes": 8
+    },
+    "independent_numerical_oracle": {
+      "no": 12,
+      "yes": 1
+    },
+    "interactive_navigation": {
+      "no": 2,
+      "yes": 11
+    },
+    "local_execution": {
+      "unknown": 6,
+      "yes": 7
+    },
+    "numerical_transparency": {
+      "no": 5,
+      "partial": 6,
+      "yes": 2
+    },
+    "operation_level_inspection": {
+      "no": 7,
+      "partial": 5,
+      "yes": 1
+    },
+    "provenance": {
+      "no": 1,
+      "not_stated": 8,
+      "partial": 2,
+      "yes": 2
+    },
+    "recurrent_inspection": {
+      "no": 10,
+      "partial": 2,
+      "yes": 1
+    },
+    "tensor_inspection": {
+      "no": 4,
+      "partial": 2,
+      "yes": 7
+    },
+    "training_visibility": {
+      "no": 7,
+      "partial": 1,
+      "yes": 5
+    }
+  },
+  "dimensions": [
+    {
+      "definition": "records intermediate operations of a model execution",
+      "key": "execution_tracing"
+    },
+    {
+      "definition": "exposes individual tensor/activation values",
+      "key": "tensor_inspection"
+    },
+    {
+      "definition": "renders the model or computation graph",
+      "key": "graph_visualization"
+    },
+    {
+      "definition": "explains or exposes individual operator semantics",
+      "key": "operation_level_inspection"
+    },
+    {
+      "definition": "exposes hidden or gate state over time",
+      "key": "recurrent_inspection"
+    },
+    {
+      "definition": "supports user-driven navigation of a computation",
+      "key": "interactive_navigation"
+    },
+    {
+      "definition": "shows the arithmetic/equation behind a value",
+      "key": "numerical_transparency"
+    },
+    {
+      "definition": "shows behaviour during training",
+      "key": "training_visibility"
+    },
+    {
+      "definition": "ties a displayed value to an execution or parameter revision",
+      "key": "provenance"
+    },
+    {
+      "definition": "validates displayed values against an independent reference",
+      "key": "independent_numerical_oracle"
+    },
+    {
+      "definition": "runs in a browser without installation",
+      "key": "browser_accessible"
+    },
+    {
+      "definition": "executes locally without a hosted service",
+      "key": "local_execution"
+    }
+  ],
+  "interpretation_limits": [
+    "Values are recorded from the cited primary source at the granularity that source presents; absence of a stated capability is not proof of absence.",
+    "Only the neurofluxion row is supported by this repository's own executed experiments; the other rows come from reading the cited papers, not from reimplementing them.",
+    "No system in the set is re-implemented and benchmarked here, so no performance or superiority comparison is implied."
+  ],
+  "rows": [
+    {
+      "browser_accessible": "no",
+      "category": "direct_competitor",
+      "doi": "10.1109/TVCG.2017.2744718",
+      "evidence_note": "Coordinated architecture, activation and instance views with deployment case studies.",
+      "execution_tracing": "no",
+      "graph_visualization": "yes",
+      "independent_numerical_oracle": "no",
+      "interactive_navigation": "yes",
+      "key": "activis",
+      "local_execution": "unknown",
+      "numerical_transparency": "partial",
+      "operation_level_inspection": "partial",
+      "provenance": "not_stated",
+      "recurrent_inspection": "no",
+      "tensor_inspection": "yes",
+      "title": "ActiVis: Visual Exploration of Industry-Scale Deep Neural Network Models",
+      "training_visibility": "partial",
+      "venue": "IEEE TVCG",
+      "year": 2018
+    },
+    {
+      "browser_accessible": "yes",
+      "category": "direct_competitor",
+      "doi": "10.1109/TVCG.2020.3030418",
+      "evidence_note": "Multi-level interactive explanation linking low-level convolution operations to architecture.",
+      "execution_tracing": "partial",
+      "graph_visualization": "yes",
+      "independent_numerical_oracle": "no",
+      "interactive_navigation": "yes",
+      "key": "cnn_explainer",
+      "local_execution": "yes",
+      "numerical_transparency": "yes",
+      "operation_level_inspection": "yes",
+      "provenance": "not_stated",
+      "recurrent_inspection": "no",
+      "tensor_inspection": "yes",
+      "title": "CNN Explainer: Learning to Explain a Single CNN",
+      "training_visibility": "no",
+      "venue": "IEEE TVCG",
+      "year": 2021
+    },
+    {
+      "browser_accessible": "no",
+      "category": "direct_competitor",
+      "doi": "10.1109/TVCG.2017.2744158",
+      "evidence_note": "Hidden-state pattern search and matching for recurrent networks.",
+      "execution_tracing": "no",
+      "graph_visualization": "no",
+      "independent_numerical_oracle": "no",
+      "interactive_navigation": "yes",
+      "key": "lstmvis",
+      "local_execution": "unknown",
+      "numerical_transparency": "partial",
+      "operation_level_inspection": "partial",
+      "provenance": "not_stated",
+      "recurrent_inspection": "yes",
+      "tensor_inspection": "yes",
+      "title": "LSTMVis: A Systematic Tool for Visual Analysis of Hidden State Dynamics in Recurrent Networks",
+      "training_visibility": "no",
+      "venue": "IEEE TVCG",
+      "year": 2019
+    },
+    {
+      "browser_accessible": "yes",
+      "category": "adjacent",
+      "doi": "10.1109/TVCG.2017.2744878",
+      "evidence_note": "Hierarchical exploration of TensorFlow dataflow graphs; visualisation, not numerical validation.",
+      "execution_tracing": "no",
+      "graph_visualization": "yes",
+      "independent_numerical_oracle": "no",
+      "interactive_navigation": "yes",
+      "key": "tf_graph_visualizer",
+      "local_execution": "yes",
+      "numerical_transparency": "no",
+      "operation_level_inspection": "no",
+      "provenance": "not_stated",
+      "recurrent_inspection": "no",
+      "tensor_inspection": "no",
+      "title": "Visualizing Dataflow in TensorFlow Graphs",
+      "training_visibility": "no",
+      "venue": "IEEE TVCG",
+      "year": 2018
+    },
+    {
+      "browser_accessible": "no",
+      "category": "direct_competitor",
+      "doi": "10.1109/TVCG.2017.2744358",
+      "evidence_note": "Progressive model design and diagnosis during training.",
+      "execution_tracing": "no",
+      "graph_visualization": "yes",
+      "independent_numerical_oracle": "no",
+      "interactive_navigation": "yes",
+      "key": "deepeyes",
+      "local_execution": "unknown",
+      "numerical_transparency": "partial",
+      "operation_level_inspection": "partial",
+      "provenance": "not_stated",
+      "recurrent_inspection": "no",
+      "tensor_inspection": "partial",
+      "title": "DeepEyes: Progressive Visual Analytics for Designing, Training, and Diagnosing Deep Neural Networks",
+      "training_visibility": "yes",
+      "venue": "IEEE TVCG",
+      "year": 2018
+    },
+    {
+      "browser_accessible": "no",
+      "category": "adjacent",
+      "doi": "10.1109/TVCG.2023.3326575",
+      "evidence_note": "Toolkit for prototyping visualisation systems with PyTorch integration.",
+      "execution_tracing": "partial",
+      "graph_visualization": "yes",
+      "independent_numerical_oracle": "no",
+      "interactive_navigation": "yes",
+      "key": "nnvisbuilder",
+      "local_execution": "yes",
+      "numerical_transparency": "partial",
+      "operation_level_inspection": "no",
+      "provenance": "not_stated",
+      "recurrent_inspection": "partial",
+      "tensor_inspection": "yes",
+      "title": "NNVisBuilder: A Toolkit for Building Customizable Neural Network Visual Analytics Systems",
+      "training_visibility": "yes",
+      "venue": "IEEE TVCG",
+      "year": 2024
+    },
+    {
+      "browser_accessible": "no",
+      "category": "direct_competitor",
+      "doi": "10.1109/TVCG.2023.3339585",
+      "evidence_note": "Visual analytics integrated with DNN training.",
+      "execution_tracing": "partial",
+      "graph_visualization": "partial",
+      "independent_numerical_oracle": "no",
+      "interactive_navigation": "yes",
+      "key": "in_situ_va",
+      "local_execution": "unknown",
+      "numerical_transparency": "partial",
+      "operation_level_inspection": "no",
+      "provenance": "not_stated",
+      "recurrent_inspection": "no",
+      "tensor_inspection": "yes",
+      "title": "An In-Situ Visual Analytics Framework for Deep Neural Networks",
+      "training_visibility": "yes",
+      "venue": "IEEE TVCG",
+      "year": 2024
+    },
+    {
+      "browser_accessible": "no",
+      "category": "direct_competitor",
+      "doi": "10.1109/TVCG.2026.3669148",
+      "evidence_note": "Dataset-to-example drilldown with activation-channel, similarity and heatmap views.",
+      "execution_tracing": "no",
+      "graph_visualization": "partial",
+      "independent_numerical_oracle": "no",
+      "interactive_navigation": "yes",
+      "key": "channel_explorer",
+      "local_execution": "unknown",
+      "numerical_transparency": "no",
+      "operation_level_inspection": "no",
+      "provenance": "not_stated",
+      "recurrent_inspection": "no",
+      "tensor_inspection": "yes",
+      "title": "ChannelExplorer: Exploring Class Separability Through Activation Channel Visualization",
+      "training_visibility": "no",
+      "venue": "IEEE TVCG",
+      "year": 2026
+    },
+    {
+      "browser_accessible": "unknown",
+      "category": "adjacent",
+      "doi": "10.18653/v1/2026.acl-demo.29",
+      "evidence_note": "Fine-grained agent workflow event traces rendered as an evolving directed graph.",
+      "execution_tracing": "yes",
+      "graph_visualization": "yes",
+      "independent_numerical_oracle": "no",
+      "interactive_navigation": "yes",
+      "key": "graph_of_trace",
+      "local_execution": "unknown",
+      "numerical_transparency": "no",
+      "operation_level_inspection": "no",
+      "provenance": "partial",
+      "recurrent_inspection": "no",
+      "tensor_inspection": "no",
+      "title": "Graph of Trace: Visualizing Execution Traces of Scientific Agents",
+      "training_visibility": "no",
+      "venue": "ACL System Demonstrations",
+      "year": 2026
+    },
+    {
+      "browser_accessible": "no",
+      "category": "adjacent",
+      "doi": "10.1016/j.simpa.2024.100730",
+      "evidence_note": "Workflow-level lineage and W3C PROV-compatible provenance graphs.",
+      "execution_tracing": "no",
+      "graph_visualization": "partial",
+      "independent_numerical_oracle": "no",
+      "interactive_navigation": "no",
+      "key": "dlprov",
+      "local_execution": "yes",
+      "numerical_transparency": "no",
+      "operation_level_inspection": "no",
+      "provenance": "yes",
+      "recurrent_inspection": "no",
+      "tensor_inspection": "no",
+      "title": "DLProv: a suite of provenance services for deep learning workflow analyses",
+      "training_visibility": "no",
+      "venue": "Software Impacts",
+      "year": 2025
+    },
+    {
+      "browser_accessible": "no",
+      "category": "adjacent",
+      "doi": "10.1016/j.softx.2025.102298",
+      "evidence_note": "PROV-JSON capture of ML execution provenance with minimal code change.",
+      "execution_tracing": "partial",
+      "graph_visualization": "no",
+      "independent_numerical_oracle": "no",
+      "interactive_navigation": "no",
+      "key": "yprov4ml",
+      "local_execution": "yes",
+      "numerical_transparency": "no",
+      "operation_level_inspection": "no",
+      "provenance": "yes",
+      "recurrent_inspection": "no",
+      "tensor_inspection": "no",
+      "title": "yProv4ML: Effortless provenance tracking for machine learning systems",
+      "training_visibility": "no",
+      "venue": "SoftwareX",
+      "year": 2025
+    },
+    {
+      "browser_accessible": "yes",
+      "category": "educational_software",
+      "doi": "",
+      "evidence_note": "Browser small-network construction, training and decision-boundary exploration; not peer reviewed.",
+      "execution_tracing": "partial",
+      "graph_visualization": "yes",
+      "independent_numerical_oracle": "no",
+      "interactive_navigation": "yes",
+      "key": "tf_playground",
+      "local_execution": "yes",
+      "numerical_transparency": "partial",
+      "operation_level_inspection": "partial",
+      "provenance": "no",
+      "recurrent_inspection": "no",
+      "tensor_inspection": "partial",
+      "title": "TensorFlow Playground",
+      "training_visibility": "yes",
+      "venue": "open-source software",
+      "year": 2016
+    },
+    {
+      "browser_accessible": "yes",
+      "category": "this_work",
+      "doi": "",
+      "evidence_note": "Values in this row are the claims this repository's own experiments support; they are not asserted for any other system.",
+      "execution_tracing": "yes",
+      "graph_visualization": "yes",
+      "independent_numerical_oracle": "yes",
+      "interactive_navigation": "yes",
+      "key": "neurofluxion",
+      "local_execution": "yes",
+      "numerical_transparency": "yes",
+      "operation_level_inspection": "partial",
+      "provenance": "partial",
+      "recurrent_inspection": "partial",
+      "tensor_inspection": "yes",
+      "title": "Neurofluxion (this work)",
+      "training_visibility": "yes",
+      "venue": "implementation study",
+      "year": 2026
+    }
+  ],
+  "value_vocabulary": {
+    "no": "the cited source does not present the capability",
+    "not_stated": "the cited source does not address the capability",
+    "partial": "the cited source demonstrates a narrower form of the capability",
+    "unknown": "the cited source does not establish deployment detail",
+    "yes": "the cited source states or demonstrates the capability"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "figure_id": "FIG-01-trace-overhead-decomposition",
+  "generated_at_utc": "2026-10-18T22:01:07+00:00",
+  "labels": [
+    "dense_8_16_4",
+    "dense_16_32_8",
+    "dense_32_64_16",
+    "dense_64_128_32",
+    "dense_128_256_64",
+    "conv_1x8_16",
+    "conv_1x16_32",
+    "conv_2x32_32",
+    "lstm_t8_d16_h16",
+    "gru_t8_d16_h16",
+    "lstm_t32_d32_h32",
+    "gru_t32_d32_h32",
+    "lstm_t64_d64_h64",
+    "gru_t64_d64_h64"
+  ],
+  "series": {
+    "forward": [
+      0.07089999999999999,
+      0.08865,
+      0.08425,
+      0.0881,
+      0.11715,
+      0.83625,
+      2.01265,
+      2.2451,
+      0.38545,
+      0.35450000000000004,
+      1.5537,
+      1.1364,
+      2.48345,
+      2.34175
+    ],
+    "trace_json": [
+      0.46445000000000003,
+      1.3793,
+      5.4991,
+      23.2713,
+      96.2413,
+      2.72175,
+      23.8205,
+      44.66635,
+      0.1467,
+      0.14435,
+      0.6864,
+      0.68445,
+      2.4767,
+      2.51975
+    ],
+    "trace_total": [
+      0.12635,
+      0.16365000000000002,
+      0.28445,
+      0.6657,
+      2.80845,
+      1.2697500000000002,
+      3.6814999999999998,
+      5.20135,
+      0.4107,
+      0.4252,
+      1.2591999999999999,
+      1.112,
+      2.69415,
+      2.3902
+    ]
+  },
+  "specification": {
+    "caption_notes": "The JSON serialisation component dominates for dense graphs; recurrent workloads emit one layer-level record per layer.",
+    "experiment": "EXP-05-performance-benchmark",
+    "figure_id": "FIG-01-trace-overhead-decomposition",
+    "kind": "grouped_bar",
+    "limitations": "Single machine; tracemalloc peak memory is Python allocations only.",
+    "purpose": "Attribute the cost of producing an execution trace to its components.",
+    "series": [
+      "forward",
+      "trace_total",
+      "trace_json"
+    ],
+    "statistical_treatment": "median of repeated samples with t-based 95% interval on the mean",
+    "table": "component_medians",
+    "units": "milliseconds",
+    "x": "workload",
+    "y": "median milliseconds"
+  }
+}

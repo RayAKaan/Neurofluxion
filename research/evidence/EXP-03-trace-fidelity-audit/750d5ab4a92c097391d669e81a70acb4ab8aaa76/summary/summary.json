@@ -1,0 +1,192 @@
+{
+  "cases_audited": 21,
+  "cases_declared_unsupported": 1,
+  "cases_declared_unsupported_that_behaved_as_declared": 1,
+  "cases_failed_to_run": 0,
+  "cases_supported": 20,
+  "forward_final_max_abs_error_distribution": {
+    "count": 20,
+    "max": 1.1082138090534599e-07,
+    "mean": 3.258453972987981e-08,
+    "median": 1.6610476889777903e-08,
+    "min": 0.0,
+    "p90": 1.0598863483535226e-07,
+    "p95": 1.0642943394090221e-07,
+    "p99": 1.0994299151245722e-07,
+    "std": 3.990301018945881e-08
+  },
+  "forward_final_output_failures": [],
+  "forward_per_layer_max_abs_error_distribution": {
+    "count": 67,
+    "max": 4.50710694099854e-07,
+    "mean": 6.16102799191822e-08,
+    "median": 2.4310225832380183e-08,
+    "min": 0.0,
+    "p90": 1.2612731343647486e-07,
+    "p95": 2.664301243848749e-07,
+    "p99": 4.50710694099854e-07,
+    "std": 9.354117040005652e-08
+  },
+  "status": "PASS",
+  "trace_final_max_abs_error_distribution": {
+    "count": 20,
+    "max": 1.1082138090534599e-07,
+    "mean": 3.258453972987981e-08,
+    "median": 1.6610476889777903e-08,
+    "min": 0.0,
+    "p90": 1.0598863483535226e-07,
+    "p95": 1.0642943394090221e-07,
+    "p99": 1.0994299151245722e-07,
+    "std": 3.990301018945881e-08
+  },
+  "trace_final_output_failures": [],
+  "trace_property_classification": {
+    "batchnorm_spatial_conv": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "layer_level (one forward record per layer)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "batchnorm_vector_5_dense": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "layer_level (one forward record per layer)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "composite_conv_pool_dense_residual": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "layer_level (one forward record per layer)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "composite_embedding_attention_lstm": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "layer_level (one forward record per layer)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "conv1_5x5_1_valid_flatten_dense": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "layer_level (one forward record per layer)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "conv1_6x6_2_same_s2_batchnorm_flatten_dense": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "layer_level (one forward record per layer)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "conv1_6x6_2_same_s2_batchnorm_flatten_tanh": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "layer_level (one forward record per layer)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "conv_pool_avg_flatten_dense": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "layer_level (one forward record per layer)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "conv_pool_max_flatten_dense": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "layer_level (one forward record per layer)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "dense_3_4_1_sigmoid_bce": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "operation_level (matmul, bias_add, activation)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "dense_3_4_2_mse_batch3": {
+      "completeness": null,
+      "granularity": null,
+      "ordering": null,
+      "step_selection": null,
+      "trace": null
+    },
+    "dense_3_4_2_relu": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "operation_level (matmul, bias_add, activation)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "dense_4_5_1_tanh_linear_mse": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "operation_level (matmul, bias_add, activation)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "dense_deep_6x4_mse": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "operation_level (matmul, bias_add, activation)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "embedding_attention_2head_dense": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "layer_level (one forward record per layer)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "embedding_attention_rnn_dense": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "layer_level (one forward record per layer)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "gru_t4_d3_h3_dense": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "layer_level (one forward record per layer)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "lstm_t3_d2_h2_returnseq_dense": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "layer_level (one forward record per layer)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "lstm_t4_d3_h3_dense": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "layer_level (one forward record per layer)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "residual_dense_4_4": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "layer_level (one forward record per layer)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    },
+    "rnn_t3_d2_h3_dense": {
+      "completeness": "EXACTLY_VALIDATED",
+      "granularity": "layer_level (one forward record per layer)",
+      "ordering": "EXACTLY_VALIDATED",
+      "step_selection": "EXACTLY_VALIDATED",
+      "trace": "EXACTLY_VALIDATED"
+    }
+  }
+}

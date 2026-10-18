@@ -1,0 +1,22 @@
+case_id,granularity,trace,step_selection,ordering,completeness
+dense_3_4_2_relu,"operation_level (matmul, bias_add, activation)",EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+dense_4_5_1_tanh_linear_mse,"operation_level (matmul, bias_add, activation)",EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+dense_3_4_1_sigmoid_bce,"operation_level (matmul, bias_add, activation)",EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+dense_deep_6x4_mse,"operation_level (matmul, bias_add, activation)",EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+dense_3_4_2_mse_batch3,,,,,
+conv1_5x5_1_valid_flatten_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+conv1_6x6_2_same_s2_batchnorm_flatten_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+conv1_6x6_2_same_s2_batchnorm_flatten_tanh,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+conv_pool_max_flatten_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+conv_pool_avg_flatten_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+batchnorm_vector_5_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+batchnorm_spatial_conv,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+rnn_t3_d2_h3_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+lstm_t4_d3_h3_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+gru_t4_d3_h3_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+lstm_t3_d2_h2_returnseq_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+embedding_attention_rnn_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+embedding_attention_2head_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+residual_dense_4_4,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+composite_conv_pool_dense_residual,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED
+composite_embedding_attention_lstm,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED

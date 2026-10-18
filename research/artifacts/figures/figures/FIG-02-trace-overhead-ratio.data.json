@@ -1,0 +1,54 @@
+{
+  "figure_id": "FIG-02-trace-overhead-ratio",
+  "generated_at_utc": "2026-10-18T22:01:08+00:00",
+  "labels": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "series": {
+    "paired_ratio_median": [
+      1.866512270700396,
+      1.9772148783946826,
+      3.405242887993202,
+      7.622817220936206,
+      23.273158081793234,
+      1.3739576310804358,
+      1.8020821299882956,
+      2.333565101603269,
+      1.0695769130565407,
+      1.1023401397833243,
+      1.0206607427828005,
+      1.1014605971586422,
+      1.1329242726406221,
+      1.14176368344088
+    ]
+  },
+  "specification": {
+    "caption_notes": "A ratio of two independently summarised statistics is reported separately and is not used for the interval.",
+    "experiment": "EXP-05-performance-benchmark",
+    "figure_id": "FIG-02-trace-overhead-ratio",
+    "kind": "errorbar",
+    "limitations": "Paths perform different amounts of work by construction.",
+    "purpose": "Show the paired trace/forward ratio with its confidence interval per workload.",
+    "series": [
+      "paired_ratio_median"
+    ],
+    "statistical_treatment": "median of per-trial paired ratios; 95% t interval on the mean ratio",
+    "table": "trace_overhead",
+    "units": "ratio",
+    "x": "workload",
+    "y": "paired trace/forward time ratio (dimensionless)"
+  }
+}
