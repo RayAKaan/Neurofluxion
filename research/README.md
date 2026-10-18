@@ -1,5 +1,14 @@
 # Neurofluxion Research Evidence Package
 
+**Current status (2026-10-19): see [RESEARCH_STATUS.md](RESEARCH_STATUS.md) and
+[FINAL_RESEARCH_READINESS_AUDIT.md](FINAL_RESEARCH_READINESS_AUDIT.md).** Those
+two files are authoritative. The material below is the historical record of how
+the evidence programme reached this point; where it disagrees with the status
+file, the status file is correct. In particular the single-case dense diagnostics
+and the hosted-CI overhead ratios described below have been superseded by
+eleven experiments over twenty graph cases, recorded at evidence revision
+`750d5ab4a92c097391d669e81a70acb4ab8aaa76`.
+
 This directory contains the research protocol and evidence ledger for the Neurofluxion implementation paper. It is intentionally separate from runtime application code: the work must characterize the pinned implementation, not change it to manufacture a stronger paper.
 
 ## Status

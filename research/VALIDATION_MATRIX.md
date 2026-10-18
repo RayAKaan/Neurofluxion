@@ -1,5 +1,15 @@
 # Validation Matrix and Remaining Evidence
 
+> **Superseded on 2026-10-19.** The current, executed validation status is
+> [RESEARCH_STATUS.md](RESEARCH_STATUS.md), produced by eleven experiments over
+> twenty graph cases at evidence revision
+> `1ab65d16e20ccbb65b70598112bf5dd605c6179b`. Seven runtime defects are
+> reproduced in [FINAL_RESEARCH_READINESS_AUDIT.md](FINAL_RESEARCH_READINESS_AUDIT.md)
+> and are not fixed. The matrix below is retained as the historical record of
+> what was known at each earlier reconciliation point; where it says a gate is
+> open, that gate has since been either executed or converted into a recorded
+> limitation.
+
 **Latest main at this reconciliation:** `35b30de7807cc0ce522ced93ee7f3b1ea8e8e8aa` (research-file cleanup after PR #38, 2026-10-14).  
 **Frozen validation target:** `30ff803cb342c494310ff35832df43a092d3d74d` (PR #31 merge commit, 2026-10-14). The integrated workflow in PR #32 checked out this exact base SHA in all four jobs. PR #32's workflow run [38566683696](https://github.com/RayAKaan/Neurofluxion/actions/runs/38566683696) passed backend tests, frontend build, browser E2E, and the deterministic dense research audit. PR #32 itself merged as `7c35cc131ad732972a3bdcde400548a02863193b`; that merge commit adds the workflow, while the successful test run is evidence for the frozen target SHA `30ff803...`, not for the new workflow file or later merge commit.
 
