@@ -181,8 +181,13 @@ them with their required environment.
   produced them, from a clean working tree.
 - **Environment:** OS, CPU, memory, interpreter and dependency versions recorded
   in every manifest.
-- **Determinism:** independently re-measured by EXP-07.
-- **Integrity:** SHA-256 checksums for every emitted file in every manifest.
+- **Determinism:** independently re-measured by EXP-07, and re-measured again on
+  Ubuntu 24.04 hosted runners by the `evidence-validation` workflow, where three
+  cases again passed in-process and cross-process.
+- **Integrity:** SHA-256 checksums for every emitted file in every manifest,
+  verified on every CI run (11 bundles, 56 files, 0 problems).
+- **Pinning:** every bundle's recorded source revision is verified on every CI
+  run to contain the script that produced it (11 bundles, 0 problems).
 - **Immutability:** evidence directories are keyed by experiment and source SHA;
   the writer refuses to overwrite an existing revision directory.
 

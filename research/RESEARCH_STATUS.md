@@ -187,9 +187,20 @@ parameter and trace digests. `seed_insensitive_cases` = `batchnorm_vector_5_dens
 independently corroborating the EXP-01 degeneracy finding: that graph's output
 does not depend on initialisation at all.
 
+**Cross-environment confirmation.** The `evidence-validation` workflow re-runs
+the determinism study on Ubuntu 24.04 GitHub-hosted runners. Three cases passed
+in-process and cross-process there as well (0 build, forward, training or
+cross-process failures), which extends the reproducibility claim to a second
+operating system and hardware class. Timings are not compared across
+environments.
+
 Every evidence bundle records the exact source SHA, the full command line, git
 branch and dirty state, OS, CPU, memory, interpreter and dependency versions, the
-seed, the configuration, and SHA-256 checksums of every emitted file.
+seed, the configuration, and SHA-256 checksums of every emitted file. Evidence
+artifacts are written with explicit LF line endings and `.gitattributes` pins
+them, so the recorded checksums are byte-identical on any platform; the
+`evidence-validation` workflow verifies this on every run and verifies that each
+bundle's recorded revision actually contains the script that produced it.
 
 ## 7. Reproduced runtime defects
 
