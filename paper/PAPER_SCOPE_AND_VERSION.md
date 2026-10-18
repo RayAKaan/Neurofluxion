@@ -4,7 +4,7 @@
 **Neurofluxion: An Interactive System for Exploring, Simulating, and Inspecting Neural-Network Computation**
 
 ## Paper type and intended audience
-Implementation/system paper for a peer-reviewed computing or visualization venue (IEEE-style two-column format is the working target; venue and page limit remain unselected). This is not a new-learning-algorithm paper, model-accuracy benchmark, or user study.
+Implementation/system paper for a peer-reviewed computing, visualization, or software-artifact venue. IEEE-style two-column format remains the working target. This is not a new-learning-algorithm paper, model-accuracy benchmark, or user study.
 
 ## Research question
 How can an interactive application connect practical framework-backed neural-network inference with a separately inspectable simulator so that users can construct networks, step through supported computation, and examine selected intermediate values and internal mechanisms?
@@ -14,55 +14,42 @@ How can an interactive application connect practical framework-backed neural-net
 - Explain the TensorFlow/Keras inference/trace path separately from the NumPy simulator. They are distinct computational paths; do not imply shared weights or numerical equivalence without evidence.
 - Cover model-registry exploration, training telemetry, and visualization as integrated supporting capabilities.
 - Report functional and numerical validation, trace fidelity, and reproducibility—not model-accuracy rankings.
-- Distinguish direct runtime values from derived, sampled, estimated, illustrative, or unsupported values. Do not call approximate explainers canonical methods without verification.
-- No fabricated measurements, screenshots, benchmarks, user-study findings, or claims of universal interpretability.
+- Distinguish direct runtime values from derived, sampled, estimated, illustrative, or unsupported values.
+- Do not claim universal interpretability, user-study outcomes, superiority, or novelty priority.
 
-## Source baseline
-- Repository: https://github.com/RayAKaan/NN-Visualizer
-- Default branch at paper kickoff: `main`
-- Source commit used to start this paper branch: `cae464530645c86a191531f0072b426f39fafcf0`
-- Commit date reported by GitHub: 2026-09-11
-- Commit message: `Backend: add real-time execution trace engine with per-layer timing and detail endpoints; Frontend: build execution workspace with progressive stage views, live math, tensor inspector, and execution/classic mode toggle`
-- Paper branch: `research/neurofluxion-paper`
-- Important: this is a starting snapshot, not the final experimental freeze. Re-freeze after audit/fixes and before final validation.
+## Current source baseline
+- Repository: https://github.com/RayAKaan/Neurofluxion
+- Current main source revision used by the manuscript: `50de1fb7328d82c8f4799bbf3feffff8fd713216`
+- Current manuscript branch: `research/final-implementation-paper`
+- Manuscript implementation commit: `d1eb8189ac207554b06b737520b34217aa669bb3`
 
-## Initial repository evidence
-README at the source baseline documents a React/Vite/TypeScript client, FastAPI backend, TensorFlow/Keras inference/training, a NumPy simulator, registry-backed pretrained model adapters, and API tests. The README explicitly warns that the architecture-comparison path is same-input legacy comparison rather than a cross-task pretrained benchmark. It also describes `/stream` as topology + metrics streaming; this endpoint must be audited before any claim that it represents actual model execution.
+The current main revision is the evidence baseline for the manuscript implementation. A separate final publication freeze is still required after the manuscript branch is merged and the exact resulting main SHA is validated.
 
-The source tree includes `backend/services/execution_trace.py`, `backend/tests/test_execution_trace.py`, `backend/simulator/` engines and layer implementations, `backend/model_registry/`, and the frontend Lab execution workspace. Presence in the tree establishes implementation locations, not correctness or end-to-end behavior.
+## Current evidence status
+- [x] Scope and evidence boundaries recorded.
+- [x] Source audit and simulator numerics audit recorded.
+- [x] Research-only graph-level finite-difference oracles cover fixed Dense/Conv2D, RNN, LSTM, GRU, Embedding→Attention→RNN→Dense, and Conv2D→BatchNorm→Flatten→Dense configurations.
+- [x] One-batch training-update contracts cover LSTM/GRU, Conv2D/BatchNorm, and Embedding/Attention/RNN/Dense configurations.
+- [x] Adversarial browser tests reproduce stale inspection state after graph replacement and out-of-order response behavior; these remain expected failures and are not presented as fixes.
+- [x] Live OpenAlex/Crossref metadata export completed on current main revision.
+- [x] Live export recorded 12 successful queries, 2,400 raw records, 2,074 automated deduplicated candidates, and zero query/partial-query failures.
+- [x] Evidence-grounded IEEE manuscript implemented in `paper/neurofluxion.tex`.
+- [ ] Human literature screening, full-text extraction, duplicate adjudication beyond automated deduplication, and citation snowballing.
+- [ ] Runtime/application fix for the known stale-response/graph-switch provenance defects; requires explicit authorization because runtime source is outside the research-only scope.
+- [ ] Final figure capture from the running application, if required by the target venue.
+- [ ] Final publication freeze: merge manuscript branch, record resulting main SHA, run the integrated validation suite against that exact SHA, and archive the final PDF/package.
 
-## Paper acceptance criteria
-1. Every substantive implementation claim maps to source locations and/or test evidence in `CLAIM_EVIDENCE_LEDGER.md`.
-2. Every reported result includes exact command, environment, commit SHA, and artifact path.
-3. Figures use actual UI or explicitly labeled schematics; no synthetic values presented as measured runtime output.
-4. Manuscript distinguishes TensorFlow/Keras trace data from NumPy simulator data.
-5. No accuracy comparison unless the research question is explicitly changed (currently out of scope).
-6. All citations are complete and verified; no `[?]` placeholders at submission.
+## Live literature export
+The authoritative live export is GitHub Actions workflow run `39172931277`, artifact `12153262023`, generated from main SHA `50de1fb7328d82c8f4799bbf3feffff8fd713216` on 2026-10-18. The live exporter ran with CPython 3.11.17 on Ubuntu 24.04.5 and reported:
 
-## Initial status snapshot (2026-09-24; superseded by the current research status below)
-- [x] Scope and source-start commit recorded.
-- [ ] Full simulator, execution-trace, model-registry, training, and frontend audit.
-- [ ] Claim/evidence ledger populated from code and tests.
-- [ ] Reproducible validation run and report.
-- [ ] Figure capture and final LaTeX manuscript.
-- [ ] Venue selection, formatting, references, and submission review.
+- `raw_record_count`: 2400
+- `deduplicated_record_count`: 2074
+- `query_failures`: 0
+- `successful_queries`: 12
+- `partial_failed_queries`: 0
+- `failed_queries`: 0
 
+These counts describe a reproducible metadata export, not a completed systematic review. Screening and full-text review remain separate evidence gates.
 
-## Current status after research PRs #47–#55 (2026-10-14)
-
-- [x] Research-only graph-level finite-difference oracles extended to fixed RNN/LSTM/GRU, Embedding→Attention→RNN→Dense, and Conv2D→BatchNorm→Flatten→Dense graphs.
-- [x] One-batch training-update contracts added for recurrent, Conv2D/BatchNorm, and Embedding/Attention/RNN/Dense paths.
-- [x] Claim/evidence ledger reconciled for these new bounded results.
-- [x] Reproducible OpenAlex/Crossref metadata-export script, manifest, deduplicated records, and reviewer screening CSV implemented with offline tests.
-- [ ] Execute and archive a live literature export; inspect source/query failures and adjudicate duplicates.
-- [ ] Complete screening, full-text extraction, and citation snowballing; update counts only from the actual review log.
-- [ ] Fix stale-response/graph-switch UI provenance defects only after explicit authorization to modify runtime/application code; current browser tests remain expected failures.
-- [ ] Complete remaining full source audit and verify paper claims, figures, and citations against the frozen revision.
-- [ ] Freeze a final source SHA and run full backend tests, frontend build, browser E2E, and numerical research audits against that exact SHA.
-- [ ] Generate final LaTeX/PDF and submission package only after the evidence freeze; choose a venue and complete formatting/submission review.
-
-## Live literature export audit (2026-10-14)
-
-The first post-merge run is archived at [Actions run 38592362340](https://github.com/RayAKaan/Neurofluxion/actions/runs/38592362340), artifact ID `11907269115`. Its job was green but the manifest exposes six OpenAlex page-2 HTTP 401 failures; the output contains 1,200 raw Crossref records and 1,127 deduplicated candidates, with no human screening decisions. This is **not** a completed two-source search. The exporter is being hardened to retain partial-page results and mark any query failure as a failed workflow while preserving artifacts. Do not start final screening or report inclusion counts from this incomplete run as though it were comprehensive.
-
-The source baseline recorded above is historical, not the current paper baseline. Do not regenerate or label a final paper package until the final source revision is frozen and the remaining evidence gates are recorded.
+## Publication claim discipline
+The manuscript may state that the repository contains the documented architecture, that the selected fixed research-validation contracts passed, and that the live literature export completed without query failures. It must not convert these results into claims of arbitrary operator correctness, convergence, usability improvement, comprehensive literature coverage, or first/superior status.
