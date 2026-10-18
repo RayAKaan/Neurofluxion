@@ -1,0 +1,174 @@
+file,line,term,claim_kind,context_class,text
+research/ADVERSARIAL_UI_PROVENANCE.md,19,first,priority claim,prose,## First browser reproduction (2026-10-14)
+research/ADVERSARIAL_UI_PROVENANCE.md,21,first,priority claim,prose,"The dedicated workflow [38574488415](https://github.com/RayAKaan/Neurofluxion/actions/runs/38574488415) completed successfully with the adversarial test reported as an expected failure. The test delayed the first Run-tab forward response, built a replacement graph, released a synthetic sentinel response, and observed that the stale sentinel was rendered. This reproduces the selected-graph/stale-re"
+research/ADVERSARIAL_UI_PROVENANCE.md,21,complete,completeness claim,prose,"The dedicated workflow [38574488415](https://github.com/RayAKaan/Neurofluxion/actions/runs/38574488415) completed successfully with the adversarial test reported as an expected failure. The test delayed the first Run-tab forward response, built a replacement graph, released a synthetic sentinel response, and observed that the stale sentinel was rendered. This reproduces the selected-graph/stale-re"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,1,complete,completeness claim,prose,"case_id,granularity,trace,step_selection,ordering,completeness"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,2,exact,exactness claim,prose,"dense_3_4_2_relu,""operation_level (matmul, bias_add, activation)"",EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,3,exact,exactness claim,prose,"dense_4_5_1_tanh_linear_mse,""operation_level (matmul, bias_add, activation)"",EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,4,exact,exactness claim,prose,"dense_3_4_1_sigmoid_bce,""operation_level (matmul, bias_add, activation)"",EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,5,exact,exactness claim,prose,"dense_deep_6x4_mse,""operation_level (matmul, bias_add, activation)"",EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,7,exact,exactness claim,prose,"conv1_5x5_1_valid_flatten_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,8,exact,exactness claim,prose,"conv1_6x6_2_same_s2_batchnorm_flatten_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,9,exact,exactness claim,prose,"conv1_6x6_2_same_s2_batchnorm_flatten_tanh,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,10,exact,exactness claim,prose,"conv_pool_max_flatten_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,11,exact,exactness claim,prose,"conv_pool_avg_flatten_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,12,exact,exactness claim,prose,"batchnorm_vector_5_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,13,exact,exactness claim,prose,"batchnorm_spatial_conv,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,14,exact,exactness claim,prose,"rnn_t3_d2_h3_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,15,exact,exactness claim,prose,"lstm_t4_d3_h3_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,16,exact,exactness claim,prose,"gru_t4_d3_h3_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,17,exact,exactness claim,prose,"lstm_t3_d2_h2_returnseq_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,18,exact,exactness claim,prose,"embedding_attention_rnn_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,19,exact,exactness claim,prose,"embedding_attention_2head_dense,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,20,exact,exactness claim,prose,"residual_dense_4_4,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,21,exact,exactness claim,prose,"composite_conv_pool_dense_residual,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-03-trace-property-classification.markdown.md,22,exact,exactness claim,prose,"composite_embedding_attention_lstm,layer_level (one forward record per layer),EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED,EXACTLY_VALIDATED"
+research/artifacts/figures/tables/TAB-05-performance-components.markdown.md,6,first,priority claim,prose,"dense_8_16_4,dense,step_first,0.13365,0.14397666666666667,0.037412530152735976,0.0932,0.2933,0.13431198530526592,0.15364134802806742,33270,60"
+research/artifacts/figures/tables/TAB-05-performance-components.markdown.md,15,first,priority claim,prose,"dense_16_32_8,dense,step_first,0.22895,0.22409833333333334,0.047495796394430974,0.1659,0.3535,0.2118288680957738,0.23636779857089288,88262,60"
+research/artifacts/figures/tables/TAB-05-performance-components.markdown.md,24,first,priority claim,prose,"dense_32_64_16,dense,step_first,0.3005,0.3339566666666667,0.07563275760276675,0.2819,0.7144,0.31441865360712107,0.3534946797262123,284446,60"
+research/artifacts/figures/tables/TAB-05-performance-components.markdown.md,33,first,priority claim,prose,"dense_64_128_32,dense,step_first,0.9616,0.9439216666666667,0.19318677191938574,0.6883,1.386,0.8940162316101199,0.9938271017232134,1020958,60"
+research/artifacts/figures/tables/TAB-05-performance-components.markdown.md,42,first,priority claim,prose,"dense_128_256_64,dense,step_first,2.58915,2.8611283333333333,0.7054662591101986,2.1602,4.7745,2.678887074116578,3.0433695925500888,3870302,60"
+research/artifacts/figures/tables/TAB-05-performance-components.markdown.md,51,first,priority claim,prose,"conv_1x8_16,conv,step_first,1.1587,1.163411666666667,0.20821291831466018,0.9222,1.8411,1.1096245663924185,1.2171987669409154,344277,60"
+research/artifacts/figures/tables/TAB-05-performance-components.markdown.md,60,first,priority claim,prose,"conv_1x16_32,conv,step_first,4.190300000000001,4.35281,0.7810700744838693,3.4822,6.2387,4.151038204294275,4.554581795705725,2613349,60"
+research/artifacts/figures/tables/TAB-05-performance-components.markdown.md,69,first,priority claim,prose,"conv_2x32_32,conv,step_first,6.45395,6.57072,1.3591272851430578,4.8848,10.7211,6.219620192345513,6.921819807654487,5210741,60"
+research/artifacts/figures/tables/TAB-05-performance-components.markdown.md,78,first,priority claim,prose,"lstm_t8_d16_h16,lstm,step_first,0.43115000000000003,0.4953466666666666,0.1528389475461201,0.4052,1.4512,0.45586417987374733,0.5348291534595859,14568,60"
+research/artifacts/figures/tables/TAB-05-performance-components.markdown.md,87,first,priority claim,prose,"gru_t8_d16_h16,gru,step_first,0.3943,0.4496433333333334,0.09604326949775922,0.3536,0.8011,0.4248327259562458,0.47445394071042096,12773,60"
+research/artifacts/figures/tables/TAB-05-performance-components.markdown.md,96,first,priority claim,prose,"lstm_t32_d32_h32,lstm,step_first,1.39115,1.5375649999999998,0.39821870697488054,1.2394,3.6216,1.4346941997801494,1.6404358002198502,73224,60"
+research/artifacts/figures/tables/TAB-05-performance-components.markdown.md,105,first,priority claim,prose,"gru_t32_d32_h32,gru,step_first,1.1894,1.2666066666666667,0.19075387893220838,1.0715,1.7462,1.217329714511743,1.3158836188215903,64493,60"
+research/artifacts/figures/tables/TAB-05-performance-components.markdown.md,114,first,priority claim,prose,"lstm_t64_d64_h64,lstm,step_first,2.9551999999999996,3.1624350000000003,0.5504617217021742,2.5768,4.3783,3.020235658758427,3.3046343412415737,272718,60"
+research/artifacts/figures/tables/TAB-05-performance-components.markdown.md,123,first,priority claim,prose,"gru_t64_d64_h64,gru,step_first,2.26375,2.444225,0.31205473749795126,2.2062,3.4605,2.3636127133430738,2.524837286656926,239725,60"
+research/CLAIM_EVIDENCE_LEDGER.md,16,complete,completeness claim,prose,"- The job completed successfully, but the manifest records **6 OpenAlex query failures** on page 2 (HTTP 401); all six Crossref searches returned two pages each."
+research/CLAIM_EVIDENCE_LEDGER.md,25,complete,completeness claim,prose,"2. Complete explicit inclusion/exclusion decisions, full-text review and citation snowballing; report actual counts and reasons."
+research/CLAIM_EVIDENCE_LEDGER.md,27,exact,exactness claim,prose,"4. Once evidence collection is complete, update the paper claim ledger and manuscript; freeze a source SHA and run the final integrated validation on that exact revision before generating the final PDF."
+research/CLAIM_EVIDENCE_LEDGER.md,27,complete,completeness claim,prose,"4. Once evidence collection is complete, update the paper claim ledger and manuscript; freeze a source SHA and run the final integrated validation on that exact revision before generating the final PDF."
+research/CLAIM_EVIDENCE_LEDGER.md,72,exact,exactness claim,prose,"- Pull request: [#23](https://github.com/RayAKaan/Neurofluxion/pull/23), exact tested head `b473a2cd76af1dba57bf38eb34305eaac77bb683`."
+research/CLAIM_EVIDENCE_LEDGER.md,73,exact,exactness claim,prose,"- Training-contract CI: [run 38492813949](https://github.com/RayAKaan/Neurofluxion/actions/runs/38492813949), **10 passed**. This includes the existing MSE and BCE finite-difference contracts plus four new tests: tiny separable BCE loss reduction, repeatable fixed-order training trajectory, exact SGD arithmetic, and finite Adam update with step counter."
+research/CLAIM_EVIDENCE_LEDGER.md,81,complete,completeness claim,prose,"- Research validation on the same PR head: [run 38492813935](https://github.com/RayAKaan/Neurofluxion/actions/runs/38492813935), workflow completed successfully and preserved the numerical audit artifact."
+research/CLAIM_EVIDENCE_LEDGER.md,193,complete,completeness claim,prose,## Graph-family training checks completed (2026-10-14)
+research/CROSS_PLATFORM_BENCHMARK.md,9,exact,exactness claim,prose,- Fixed source revision per workflow run; the report records the exact checkout commit.
+research/CROSS_PLATFORM_BENCHMARK.md,30,first,priority claim,prose,## First cross-platform run (2026-10-14)
+research/EXPERIMENT_PROTOCOL.md,18,exact,exactness claim,prose,"- Exact command, environment variables, start/end time, exit code, stdout and stderr."
+research/EXPERIMENT_PROTOCOL.md,34,exact,exactness claim,prose,Compare analytical gradients from the simulator with central finite differences of the exact scalar loss returned by the implementation:
+research/experiments/build_figures_and_tables.py,14,exact,exactness claim,prose,exactly what each figure shows.
+research/experiments/build_figures_and_tables.py,155,complete,completeness claim,prose,"""limitations"": ""Metadata completeness is partial; see the metadata audit."","
+research/experiments/literature_search_export.py,5,complete,completeness claim,prose,or a completed systematic review. Human screening and full-text verification
+research/experiments/literature_search_export.py,187,first,priority claim,prose,an API key: an anonymous cursor request succeeds for the first page and then
+research/experiments/literature_search_export.py,313,complete,completeness claim,prose,# Preserve completed-page records. The previous implementation
+research/experiments/run_defect_register.py,422,exact,exactness claim,prose,"""The output equals beta for every input and the input gradient is exactly zero, """
+research/experiments/run_gradient_validation.py,186,first,priority claim,prose,An unperturbed write proves nothing: before the first optimizer step the
+research/experiments/run_gradient_validation.py,186,proves,proof claim,prose,An unperturbed write proves nothing: before the first optimizer step the
+research/experiments/run_graph_capability_audit.py,8,guarantee,guarantee claim,prose,guarantees are weaker than their names suggest.
+research/experiments/run_graph_capability_audit.py,23,exact,exactness claim,prose,6. ``residual_identity`` - the residual layer is an exact identity in both
+research/experiments/run_graph_capability_audit.py,300,exact,exactness claim,prose,"""independent of the input and the input gradient is exactly """
+research/experiments/run_graph_capability_audit.py,388,exact,exactness claim,prose,"""expectation"": ""the residual layer must be an exact identity in both directions"","
+research/experiments/run_literature_screening.py,12,complete,completeness claim,prose,"1. ``metadata_audit``      completeness of titles, abstracts, years, venues, DOIs"
+research/experiments/run_literature_screening.py,562,superior,comparative claim,prose,"""or superiority comparison is implied."","
+research/experiments/run_literature_screening.py,732,complete,completeness claim,prose,"""Abstract and title metadata are incomplete for part of the corpus; the """
+research/experiments/run_literature_screening.py,733,exact,exactness claim,prose,"""completeness audit records exactly how incomplete."","
+research/experiments/run_literature_screening.py,733,complete,completeness claim,prose,"""completeness audit records exactly how incomplete."","
+research/experiments/run_performance_benchmark.py,19,first,priority claim,prose,``step_first``       run_forward_step at index 0
+research/experiments/run_performance_benchmark.py,380,first,priority claim,prose,"""step_first"","
+research/experiments/run_simulator_audit.py,149,exact,exactness claim,prose,# Finite differences of the exact implemented scalar loss.
+research/experiments/run_simulator_audit.py,189,exact,exactness claim,prose,# Re-run with the exact same fixed parameters and input.
+research/experiments/run_simulator_audit.py,251,exact,exactness claim,prose,"""note"": ""Numerical derivatives are computed from the implementation's own scalar loss; check the exact reduction convention."","
+research/experiments/run_trace_fidelity_audit.py,15,exact,exactness claim,prose,"property is classified as ``EXACTLY_VALIDATED``, ``PARTIALLY_VALIDATED``,"
+research/experiments/run_trace_fidelity_audit.py,280,exact,exactness claim,prose,"""classification"": EXACT"
+research/experiments/run_trace_fidelity_audit.py,284,complete,completeness claim,prose,"""run_forward_step regenerates the complete forward trace and then """
+research/experiments/run_trace_fidelity_audit.py,296,exact,exactness claim,prose,"""classification"": EXACT if contiguous else PARTIAL,"
+research/experiments/run_trace_fidelity_audit.py,299,complete,completeness claim,prose,# --- trace value completeness ---------------------------------------
+research/experiments/run_trace_fidelity_audit.py,488,exact,exactness claim,prose,"EXACT: ""every checked record reproduced from its own recorded values or the reference"","
+research/experiments/test_literature_search_export.py,102,first,priority claim,prose,"""title"": ""First page record"", ""publication_year"": 2025,"
+research/FINAL_POST_MERGE_AUDIT.md,10,complete,completeness claim,prose,"PRs #24–#30 are merged. The latest recorded `main` commit is `d85aca48e7993c3b48c951c97480aaa6e0c2934a`. The manuscript was reconciled to this source snapshot and rebuilt locally as an 11-page IEEEtran conference-format PDF. Three core diagrams were redrawn in TikZ, and a fourth measured-results graphic visualizes the trace-cost ratios. The LaTeX build completed successfully."
+research/FINAL_POST_MERGE_AUDIT.md,19,guarantee,guarantee claim,prose,"| #25 | Legacy execution-engine numerical contracts | [Run 38493639390](https://github.com/RayAKaan/Neurofluxion/actions/runs/38493639390): frontend build, full backend suite, execution contracts passed; [research run 38493639458](https://github.com/RayAKaan/Neurofluxion/actions/runs/38493639458) passed | Branch-specific evidence; distinct from custom simulator guarantees |"
+research/GRAPH_BACKWARD_TRAINING_AUDIT.md,28,first,priority claim,prose,- Inspect the first diagnostic artifact and prioritize actual graph-family failures.
+research/GRAPH_BACKWARD_TRAINING_AUDIT.md,33,first,priority claim,prose,## First CI result (2026-10-14)
+research/GRAPH_INTEGRATED_GRADIENT_ORACLES.md,21,first,priority claim,prose,## First numerical result (2026-10-14)
+research/GRAPH_INTEGRATED_GRADIENT_ORACLES.md,48,complete,completeness claim,prose,## Graph-family training checks completed (2026-10-14)
+research/lib/evidence.py,4,exact,exactness claim,prose,identifier and the exact source revision that produced it:
+research/lib/provenance.py,4,exact,exactness claim,prose,exact source revision and an exact execution environment. This module provides
+research/LITERATURE_REVIEW_PROTOCOL.md,20,state-of-the-art,priority claim,prose,| Q5 | systematic literature review neural network visualization interactive inspection model debugging IEEE TVCG visualization survey 2024 | Systematic/state-of-the-art surveys |
+research/LITERATURE_REVIEW_PROTOCOL.md,93,state-of-the-art,priority claim,prose,- State-of-the-art review: https://onlinelibrary.wiley.com/doi/full/10.1111/cgf.14733
+research/LITERATURE_REVIEW_PROTOCOL.md,118,exact,exactness claim,prose,"| yProv4ML: Effortless provenance tracking for machine learning systems | SoftwareX, 2025; DOI: 10.1016/j.softx.2025.102298 | Captures ML execution provenance in PROV-JSON with minimal code changes. | Directly rules out a broad claim that machine-learning execution provenance is absent. Distinguish any Neurofluxion claim by its exact graph/operation/value granularity and guarantees, if those are a"
+research/LITERATURE_REVIEW_PROTOCOL.md,118,guarantee,guarantee claim,prose,"| yProv4ML: Effortless provenance tracking for machine learning systems | SoftwareX, 2025; DOI: 10.1016/j.softx.2025.102298 | Captures ML execution provenance in PROV-JSON with minimal code changes. | Directly rules out a broad claim that machine-learning execution provenance is absent. Distinguish any Neurofluxion claim by its exact graph/operation/value granularity and guarantees, if those are a"
+research/LITERATURE_SEARCH_EXPORT.md,5,exact,exactness claim,prose,"The script `research/experiments/literature_search_export.py` queries public OpenAlex and Crossref metadata APIs with a versioned, fixed query list. It exports raw records, deduplicated records, a manifest containing the exact request URLs and counts, and a CSV screening sheet."
+research/LITERATURE_SEARCH_EXPORT.md,22,exact,exactness claim,prose,"- `search_manifest.json`: timestamp, script version, query list, exact request URLs, counts, failures, and limitations."
+research/paper/COMPLETION_PLAN.md,18,accurate,accuracy claim,prose,3. Analytical utility: do users answer concrete debugging or inspection questions more accurately or quickly? This requires a controlled user study.
+research/paper/COMPLETION_PLAN.md,28,complete,completeness claim,prose,"- PR #22 merge-preview CI run 38491607499 completed successfully: 11 tests passed across simulator smoke, simulator MSE, TrainingEngine MSE, and BCE gradient-contract tests."
+research/paper/COMPLETION_PLAN.md,29,complete,completeness claim,prose,"- Research audit run 38491607397 completed successfully on merge-preview tree d2e64487b9c7ab495a2be9d7c22d22dd32150349, Python 3.11.17 and NumPy 2.4.6. The fixed dense case reported forward maximum absolute error 0.0, trace final-output error 0.0, passing selected MSE finite differences, and identical output/trace hashes on repeated runs."
+research/paper/COMPLETION_PLAN.md,60,exact,exactness claim,prose,- Pin the exact main commit and dependency/environment versions for every experiment.
+research/paper/COMPLETION_PLAN.md,65,exact,exactness claim,prose,Exit gate: immutable experiment manifest and exact evidence revision for each claim.
+research/paper/COMPLETION_PLAN.md,70,exact,exactness claim,prose,- Match the scalar loss reduction exactly; test multiple epsilon values and record normalized L2 and maximum absolute error.
+research/paper/COMPLETION_PLAN.md,114,novel,priority claim,prose,Exit gate: comparison matrix is traceable to primary papers; novelty language matches evidence.
+research/paper/COMPLETION_PLAN.md,124,complete,completeness claim,prose,"Exit gate: clean build, frozen source, reproducible results, completed comparison protocol, and venue-specific compliance."
+research/paper/COMPLETION_PLAN.md,134,exact,exactness claim,prose,1. Freeze current `main` at `0866972ea5a9e9f2d1864681402e3e3659bdaf8a` (or a newer explicitly recorded commit) and rerun targeted tests against that exact checkout.
+research/paper/COMPLETION_PLAN.md,159,complete,completeness claim,prose,"5. Complete the literature review using exportable bibliographic database searches, deduplication, title/abstract and full-text screening, screening counts, and backward/forward citation chasing."
+research/README.md,8,exact,exactness claim,prose,- Source baseline: record the exact commit SHA before every experimental run.
+research/README.md,17,exact,exactness claim,prose,"4. Preserve raw JSON, stdout/stderr, exit code, and exact commit."
+research/README.md,32,exact,exactness claim,prose,- EXECUTED: the exact command completed and its raw output is retained.
+research/README.md,32,complete,completeness claim,prose,- EXECUTED: the exact command completed and its raw output is retained.
+research/README.md,35,complete,completeness claim,prose,- UNRESOLVED: evidence is incomplete or conflicting.
+research/RELATED_WORK.md,15,guarantee,guarantee claim,prose,"| NNVisBuilder (Lai et al., IEEE TVCG 2024) | Toolkit for prototyping customizable neural-network visual analytics systems with PyTorch integration. DOI: [10.1109/TVCG.2023.3326575](https://doi.org/10.1109/TVCG.2023.3326575); [PubMed](https://pubmed.ncbi.nlm.nih.gov/37922180/). | Relevant general-purpose visual analytics toolkit. | Any distinction must be based on measured, specific guarantees rat"
+research/RELATED_WORK.md,34,complete,completeness claim,prose,1. Which operator families have complete construction → forward → backward → parameter update → trace → API/UI coverage?
+research/SIMULATOR_SYSTEM_AUDIT.md,108,complete,completeness claim,prose,### A. Complete call graph and contracts
+research/SIMULATOR_SYSTEM_AUDIT.md,164,exact,exactness claim,prose,**Next action:** complete the call-site inventory and per-layer/loss test matrix against the exact post-merge commit before rewriting paper claims or presenting broad simulator correctness.
+research/SIMULATOR_SYSTEM_AUDIT.md,164,complete,completeness claim,prose,**Next action:** complete the call-site inventory and per-layer/loss test matrix against the exact post-merge commit before rewriting paper claims or presenting broad simulator correctness.
+research/SIMULATOR_SYSTEM_AUDIT.md,173,complete,completeness claim,prose,"`RunInspectTab.tsx` constructs training commands for `useTrainingSimSocket`, and that hook connects to `SIM_WS_URL`, which resolves to the `/backend/ws/simulator/train` proxy path in development. The backend route is registered as `/ws/simulator/train`. It accepts `start`, `pause`, `resume`, `stop`, and `update_config` actions and emits status/batch/epoch/warning/complete/error messages. This is t"
+research/SIMULATOR_SYSTEM_AUDIT.md,202,exact,exactness claim,prose,2. Add a UI integration test proving that the exact hyperparameter values selected in the Build tab are transmitted in the WebSocket `start` payload and are reflected in the server's `TrainingConfig`.
+research/SOURCE_AUDIT_FINDINGS.md,38,first,priority claim,prose,## F-05 — Step selection performs a full forward trace first
+research/UI_PROVENANCE_AUDIT.md,27,first,priority claim,prose,"1. **Out-of-order responses:** delay forward request A, switch graph, issue request B, resolve B first and A last."
+research/UI_PROVENANCE_AUDIT.md,38,first,priority claim,prose,## First source-audit result (2026-10-14)
+research/VALIDATION_MATRIX.md,53,exact,exactness claim,prose,1. Freeze exact source SHA and run smoke + MSE/BCE finite-difference contracts.
+research/VALIDATION_MATRIX.md,98,complete,completeness claim,prose,## Graph-family training checks completed (2026-10-14)
+research/VENUE_SHORTLIST.md,12,exact,exactness claim,prose,"As checked on 2026-10-14, COMPSAC lists full papers due 2027-01-31, notification 2027-04-07, camera-ready 2027-06-01, and a 10-page full-paper limit inclusive of references. It uses double-blind review. The author page requires disclosure of AI-generated content in the acknowledgments, identifying the AI system and the sections/content it helped generate. This requirement must be followed exactly "
+research/VENUE_SHORTLIST.md,18,first,priority claim,prose,"| IEEE COMPSAC 2027 | Medium; software systems and applications are relevant, but the announced theme emphasizes trusted agentic ecosystems. | Full paper deadline 2027-01-31; 10-page full paper limit. | Keep as first candidate pending track review and final contribution. |"
+paper/CLAIM_EVIDENCE_LEDGER.md,7,exact,exactness claim,prose,| C-01 | Neurofluxion combines a React/Vite client with a FastAPI backend. | `README.md`; `frontend/`; `backend/app.py` | Source-confirmed by README/tree | Verify exact app wiring during full audit. |
+paper/CLAIM_EVIDENCE_LEDGER.md,13,exact,exactness claim,prose,"| C-07 | Convolution-cell and LSTM-gate details are available. | `conv_cell_detail()`, `lstm_gates_detail()`, `lstm_gate_gradients()` in trace service | Pending full source read | Establish exactly which values are computed vs retrieved, and supported conditions. |"
+paper/CLAIM_EVIDENCE_LEDGER.md,43,exact,exactness claim,prose,"Before publication, perform the remaining source audit (including details, model registry, training, stream semantics and frontend wiring), select a venue, resolve all citations/placeholders, generate real or explicitly schematic figures, freeze a source revision, and run the full integrated validation against that exact revision."
+paper/neurofluxion.tex,133,complete,completeness claim,prose,"% TODO: Replace with verified, complete primary references after related-work research."
+paper/PAPER_SCOPE_AND_VERSION.md,25,real-time,latency claim,prose,"- Commit message: `Backend: add real-time execution trace engine with per-layer timing and detail endpoints; Frontend: build execution workspace with progressive stage views, live math, tensor inspector, and execution/classic mode toggle`"
+paper/PAPER_SCOPE_AND_VERSION.md,36,exact,exactness claim,prose,"2. Every reported result includes exact command, environment, commit SHA, and artifact path."
+paper/PAPER_SCOPE_AND_VERSION.md,60,complete,completeness claim,prose,"- [ ] Complete remaining full source audit and verify paper claims, figures, and citations against the frozen revision."
+paper/PAPER_SCOPE_AND_VERSION.md,61,exact,exactness claim,prose,"- [ ] Freeze a final source SHA and run full backend tests, frontend build, browser E2E, and numerical research audits against that exact SHA."
+paper/SIMULATOR_NUMERICS_AUDIT.md,10,first,priority claim,prose,"- `backward_full()` first calls `graph.forward(x)`, obtains the flattened final output, and computes the configured loss through `compute_loss()`."
+paper/SIMULATOR_NUMERICS_AUDIT.md,30,exact,exactness claim,prose,6. **L2 convention:** determine whether the loss adds the matching regularization term and whether the reported gradient corresponds to the exact stated objective.
+paper/SOURCE_AUDIT.md,9,first,priority claim,prose,- `build_graph()` first calls `validate_layers()` and raises `ValueError` when validation fails.
+paper/SOURCE_AUDIT.md,28,complete,completeness claim,prose,"- `run_forward_step()` calls `run_forward_full()` to regenerate the full sequence, then returns one indexed step plus completed-layer and partial-activation information."
+paper/SOURCE_AUDIT.md,66,complete,completeness claim,prose,"These observations supersede any implication that the initial audit is a current, complete audit. They are static source findings unless explicitly paired with executed evidence."
+paper/SOURCE_AUDIT.md,71,complete,completeness claim,prose,"- `backend/api/train_ws.py` delegates to `training.manager.training_manager` and maps manager callbacks into status, batch, epoch, complete, and error messages. This is a distinct framework-training path; verify the manager's model/data/configuration semantics separately."
+backend/api/predict.py,22,exact,exactness claim,prose,# Family-appropriate input — exactly one should be present depending on the
+backend/api/session.py,120,complete,completeness claim,prose,"""""""Mark execution as complete."""""""
+backend/api/session.py,160,complete,completeness claim,prose,"""""""Get complete session state."""""""
+backend/api/session.py,302,complete,completeness claim,prose,"""""""Get complete session state."""""""
+backend/api/session_routes.py,12,complete,completeness claim,prose,"""""""Get complete session state."""""""
+backend/api/simulator_train_ws.py,97,complete,completeness claim,prose,"""type"": ""complete"","
+backend/api/train_ws.py,22,complete,completeness claim,prose,"""completed"": ""completed"","
+backend/api/train_ws.py,84,complete,completeness claim,prose,"""type"": ""complete"","
+backend/model_registry/adapters/_mysticdan_convert.py,5,exact,exactness claim,prose,This module registers a light shim that reconstructs exactly the underlying
+backend/services/input_utils.py,3,exact,exactness claim,prose,These live outside ``api.lab`` so the execution-trace service can reuse the exact
+backend/simulator/backward_engine.py,263,complete,completeness claim,prose,for i in completed_layers:
+backend/simulator/backward_engine.py,270,complete,completeness claim,prose,"""completed_layers"": completed_layers,"
+backend/simulator/execution_engine.py,369,exact,exactness claim,prose,# Apply the gradients produced by this exact forward/backward pass.
+backend/simulator/forward_engine.py,119,complete,completeness claim,prose,"""completed_layers"": completed_layers,"
+backend/tests/conftest.py,13,first,priority claim,prose,# access for the first weight download and a TensorFlow-capable environment.
+backend/tests/test_trace_step_contract.py,48,complete,completeness claim,prose,for layer in expected_completed:
+frontend/src/components/lab/flow/DataFlowRibbon.tsx,26,complete,completeness claim,prose,<small>Completed activations</small>
+frontend/src/components/models/ModelsMode.tsx,262,first,priority claim,prose,Real pre-trained checkpoints · lazy-loaded · CPU-first
+frontend/src/components/tabs/AnalyzeTab.tsx,21,first,priority claim,prose,"<p>Metrics stay quiet until the Simulator has something to evaluate. Run forward or train first, then use these views to compare health and cost.</p>"
+frontend/src/components/tabs/RunInspectTab.tsx,151,complete,completeness claim,prose,"forwardPassState: 'complete',"
+frontend/src/data/equations.ts,47,first,priority claim,prose,"explanation: ""Combines first-layer features into higher-level representation."","
+frontend/src/data/tutorials/lesson01-forward-pass.ts,24,first,priority claim,prose,"body: ""Choose ANN first to learn the basics."","
+frontend/src/data/tutorials/lesson01-forward-pass.ts,58,complete,completeness claim,prose,"title: ""Lesson Complete"","
+frontend/src/data/tutorials/lesson02-backprop.ts,35,complete,completeness claim,prose,"id: ""complete"","
+frontend/src/data/tutorials/lesson03-cnn.ts,35,complete,completeness claim,prose,"id: ""complete"","
+frontend/src/data/tutorials/lesson03-cnn.ts,37,complete,completeness claim,prose,"title: ""CNN tour complete"","
+frontend/src/hooks/useExecution.ts,74,first,priority claim,prose,// First ensure model is built
+frontend/src/hooks/useTrainingSocket.ts,123,complete,completeness claim,prose,"case ""complete"":"
+frontend/src/pages/SimulatorPage.tsx,78,complete,completeness claim,prose,"forwardPassState: ""complete"","
+frontend/src/store/computationStore.ts,44,complete,completeness claim,prose,"forwardPassState: ""complete"","
+frontend/src/store/landscapeStore.ts,7,complete,completeness claim,prose,"status: ""idle"" | ""computing"" | ""complete"" | ""error"";"
+frontend/src/store/simulatorStore.ts,10,complete,completeness claim,prose,"forwardPassState: ""idle"" | ""stepping"" | ""complete"";"
+frontend/src/store/tutorialStore.ts,63,complete,completeness claim,prose,"completed: false,"
+frontend/src/types/index.ts,88,complete,completeness claim,prose,"status: ""idle"" | ""training"" | ""paused"" | ""stopping"" | ""stopped"" | ""completed"";"
+frontend/src/types/tutorial.ts,67,complete,completeness claim,prose,completed: boolean;
+frontend/src/types/tutorial.ts,69,complete,completeness claim,prose,completedAt?: number;
+.github/workflows/neurofluxion-research-validation.yml,23,exact,exactness claim,prose,- name: Check out exact pull-request revision

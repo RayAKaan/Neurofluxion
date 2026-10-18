@@ -1,0 +1,367 @@
+{
+  "batch_boundary": {
+    "1": "SUPPORTED",
+    "2": "UNSUPPORTED",
+    "4": "UNSUPPORTED",
+    "8": "UNSUPPORTED"
+  },
+  "depth_boundary": {
+    "16": "UNSUPPORTED"
+  },
+  "depth_boundary_detail": {
+    "16": "ValueError: Maximum 10 hidden layers allowed."
+  },
+  "errors": [],
+  "fitted_exponents": {
+    "depth": {
+      "forward_ms": {
+        "exponent": 0.26283541693282453,
+        "fitted": true,
+        "points": 5,
+        "r_squared": 0.9010073479308826,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          1.0,
+          10.0
+        ]
+      },
+      "packed_parameter_scalars": {
+        "exponent": 0.9173304748595154,
+        "fitted": true,
+        "points": 5,
+        "r_squared": 0.9993581157715401,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          1.0,
+          10.0
+        ]
+      },
+      "trace_ms": {
+        "exponent": 0.6095471832391106,
+        "fitted": true,
+        "points": 5,
+        "r_squared": 0.9849670454266828,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          1.0,
+          10.0
+        ]
+      },
+      "trace_payload_bytes": {
+        "exponent": 0.9086891816044848,
+        "fitted": true,
+        "points": 5,
+        "r_squared": 0.999234403707495,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          1.0,
+          10.0
+        ]
+      },
+      "trace_records": {
+        "exponent": 0.7475064044385197,
+        "fitted": true,
+        "points": 5,
+        "r_squared": 0.9942138684032412,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          1.0,
+          10.0
+        ]
+      }
+    },
+    "features": {
+      "forward_ms": {
+        "exponent": 0.009698698293629082,
+        "fitted": true,
+        "points": 5,
+        "r_squared": 0.5549486310955156,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          8.0,
+          128.0
+        ]
+      },
+      "packed_parameter_scalars": {
+        "exponent": 0.48863337878282626,
+        "fitted": true,
+        "points": 5,
+        "r_squared": 0.9639960964694164,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          8.0,
+          128.0
+        ]
+      },
+      "trace_ms": {
+        "exponent": 0.08787745304129138,
+        "fitted": true,
+        "points": 5,
+        "r_squared": 0.8545549902512426,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          8.0,
+          128.0
+        ]
+      },
+      "trace_payload_bytes": {
+        "exponent": 0.8384458938403864,
+        "fitted": true,
+        "points": 5,
+        "r_squared": 0.9962967289509751,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          8.0,
+          128.0
+        ]
+      },
+      "trace_records": {
+        "constant_value": 2.0,
+        "fitted": false,
+        "points": 5,
+        "reason": "quantity is invariant across the sweep factor",
+        "tested_range": [
+          8.0,
+          128.0
+        ]
+      }
+    },
+    "filters": {
+      "forward_ms": {
+        "exponent": 0.0884892407130907,
+        "fitted": true,
+        "points": 5,
+        "r_squared": 0.9263319341418977,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          4.0,
+          64.0
+        ]
+      },
+      "packed_parameter_scalars": {
+        "exponent": 0.9987586494070864,
+        "fitted": true,
+        "points": 5,
+        "r_squared": 0.9999997717432652,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          4.0,
+          64.0
+        ]
+      },
+      "trace_ms": {
+        "exponent": 0.35423718916589675,
+        "fitted": true,
+        "points": 5,
+        "r_squared": 0.9622117085889847,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          4.0,
+          64.0
+        ]
+      },
+      "trace_payload_bytes": {
+        "exponent": 0.9478276521584228,
+        "fitted": true,
+        "points": 5,
+        "r_squared": 0.999491802764447,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          4.0,
+          64.0
+        ]
+      },
+      "trace_records": {
+        "constant_value": 4.0,
+        "fitted": false,
+        "points": 5,
+        "reason": "quantity is invariant across the sweep factor",
+        "tested_range": [
+          4.0,
+          64.0
+        ]
+      }
+    },
+    "sequence": {
+      "forward_ms": {
+        "exponent": 0.8669702018904407,
+        "fitted": true,
+        "points": 6,
+        "r_squared": 0.9863570443132894,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          4.0,
+          128.0
+        ]
+      },
+      "packed_parameter_scalars": {
+        "constant_value": 8386.0,
+        "fitted": false,
+        "points": 6,
+        "reason": "quantity is invariant across the sweep factor",
+        "tested_range": [
+          4.0,
+          128.0
+        ]
+      },
+      "trace_ms": {
+        "exponent": 0.8328409629904278,
+        "fitted": true,
+        "points": 6,
+        "r_squared": 0.9926123937426811,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          4.0,
+          128.0
+        ]
+      },
+      "trace_payload_bytes": {
+        "exponent": 0.8693320793656005,
+        "fitted": true,
+        "points": 6,
+        "r_squared": 0.9964226007451842,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          4.0,
+          128.0
+        ]
+      },
+      "trace_records": {
+        "constant_value": 2.0,
+        "fitted": false,
+        "points": 6,
+        "reason": "quantity is invariant across the sweep factor",
+        "tested_range": [
+          4.0,
+          128.0
+        ]
+      }
+    },
+    "spatial": {
+      "forward_ms": {
+        "exponent": 1.4378823466438038,
+        "fitted": true,
+        "points": 4,
+        "r_squared": 0.9759626426514892,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          8.0,
+          64.0
+        ]
+      },
+      "packed_parameter_scalars": {
+        "exponent": 1.9626045499585698,
+        "fitted": true,
+        "points": 4,
+        "r_squared": 0.9999056682827091,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          8.0,
+          64.0
+        ]
+      },
+      "trace_ms": {
+        "exponent": 1.5026645745556584,
+        "fitted": true,
+        "points": 4,
+        "r_squared": 0.9832525537701802,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          8.0,
+          64.0
+        ]
+      },
+      "trace_payload_bytes": {
+        "exponent": 1.994418436521441,
+        "fitted": true,
+        "points": 4,
+        "r_squared": 0.99999565701847,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          8.0,
+          64.0
+        ]
+      },
+      "trace_records": {
+        "constant_value": 4.0,
+        "fitted": false,
+        "points": 4,
+        "reason": "quantity is invariant across the sweep factor",
+        "tested_range": [
+          8.0,
+          64.0
+        ]
+      }
+    },
+    "width": {
+      "forward_ms": {
+        "exponent": 0.060586043711226265,
+        "fitted": true,
+        "points": 6,
+        "r_squared": 0.6922859747136783,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          8.0,
+          256.0
+        ]
+      },
+      "packed_parameter_scalars": {
+        "exponent": 1.5105269567768367,
+        "fitted": true,
+        "points": 6,
+        "r_squared": 0.9942493160688202,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          8.0,
+          256.0
+        ]
+      },
+      "trace_ms": {
+        "exponent": 0.6875983167704535,
+        "fitted": true,
+        "points": 6,
+        "r_squared": 0.8744040267618602,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          8.0,
+          256.0
+        ]
+      },
+      "trace_payload_bytes": {
+        "exponent": 1.4014086652542537,
+        "fitted": true,
+        "points": 6,
+        "r_squared": 0.9886789846388793,
+        "scope_note": "Descriptive exponent for the tested range only; no extrapolation is claimed.",
+        "tested_range": [
+          8.0,
+          256.0
+        ]
+      },
+      "trace_records": {
+        "constant_value": 9.0,
+        "fitted": false,
+        "points": 6,
+        "reason": "quantity is invariant across the sweep factor",
+        "tested_range": [
+          8.0,
+          256.0
+        ]
+      }
+    }
+  },
+  "points_error": 0,
+  "points_measured": 36,
+  "points_total": 36,
+  "status": "PASS",
+  "sweeps": [
+    "depth",
+    "width",
+    "sequence",
+    "features",
+    "spatial",
+    "filters",
+    "batch",
+    "depth_boundary"
+  ]
+}
