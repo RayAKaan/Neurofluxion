@@ -5,142 +5,246 @@
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{microtype}
-\usepackage{xcolor}
+\usepackage{array}
+\usepackage{enumitem}
 
 \title{Neurofluxion: An Interactive System for Exploring, Simulating, and Inspecting Neural-Network Computation}
 
-% TODO: Confirm author order, affiliations, and corresponding-author details.
 \author{\IEEEauthorblockN{Rayyan Ahmed Khan}
 \IEEEauthorblockA{Department of Computer Science and Engineering\\
-HKBK College of Engineering, Bengaluru, India\\
-% TODO: add verified institutional email
-}}
+HKBK College of Engineering, Bengaluru, India}}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Neural-network software commonly exposes either a trained model's predictions or a structural view of its layers, while detailed exploration of intermediate computation often requires framework-specific instrumentation or custom code. Neurofluxion is a full-stack interactive environment that brings model exploration, numerical simulation, and computation inspection into one application. Its framework-backed path uses TensorFlow/Keras models and an execution-trace service to expose layer outputs and selected internal values; a separate NumPy-based simulator lets users construct networks, execute forward and backward passes, and inspect parameters and gradients. A React interface connects these paths to architecture views, tensor inspection, mathematical expressions, training telemetry, and a pretrained-model registry. The two execution paths are intentionally distinguished: simulator values are not represented as activations from the pretrained registry, and visualization is limited to values and operations exposed by the selected implementation. This paper documents the system architecture and interaction workflow, then specifies an evidence-driven validation protocol for numerical behavior, trace fidelity, and reproducibility. Model-accuracy comparisons and claims of improved learning outcomes are outside the scope of this implementation study.
+Neural-network software normally exposes a trained model through predictions, metrics, and layer structure, while detailed inspection of intermediate computation is often distributed across framework APIs, debugging instrumentation, and custom educational implementations. Neurofluxion is a full-stack interactive environment that connects model exploration, framework-backed execution tracing, and a separately implemented numerical simulator in one application. Its TensorFlow/Keras path executes selected models and exposes intermediate layer outputs together with bounded statistics and selected internal-detail views. Its NumPy simulator provides an independently constructed environment for building supported sequential networks, executing forward and backward passes, and inspecting parameters and gradients. A React interface connects these paths to architecture views, tensor inspection, mathematical expressions, training surfaces, and a pretrained-model registry. The two computational paths are deliberately treated as distinct: the simulator does not inherit registry checkpoints by implication, and framework trace values are not presented as simulator activations. We describe the architecture, interaction model, implementation contracts, and an evidence-driven validation protocol. Research validation includes fixed-configuration finite-difference graph oracles for Dense, Conv2D, RNN, LSTM, GRU, Embedding--Attention--RNN--Dense, and Conv2D--BatchNorm--Flatten--Dense graphs, together with one-batch parameter-update contracts for representative recurrent, convolutional/normalization, and embedding/attention/recurrent paths. A live OpenAlex/Crossref export on the frozen repository revision produced 2,400 raw records and 2,074 deduplicated candidates with zero query failures. These results establish bounded implementation evidence rather than universal numerical correctness, usability improvement, or model-performance superiority.
 \end{abstract}
 
 \begin{IEEEkeywords}
-neural-network visualization, interactive machine learning, neural-network simulation, execution tracing, model inspection
+neural-network visualization, interactive machine learning, neural-network simulation, execution tracing, model inspection, reproducible software artifacts
 \end{IEEEkeywords}
 
 \section{Introduction}
-Deep neural networks are often encountered through a narrow interface: provide an input and observe a prediction. This abstraction is useful for deployment, but it can obscure the sequence of transformations that produces the output. Understanding a model may require inspecting its architecture, intermediate tensors, parameters, gradients, and—when applicable—recurrent state. These observations are distributed across framework APIs, debugging tools, visualization systems, and educational implementations.
+Deep neural networks are usually consumed through a compact interface: provide an input and observe a prediction. This abstraction is essential for deployment, but it hides the sequence of transformations that produces the output. Developers, researchers, and learners may instead need to inspect architecture, intermediate tensors, parameters, gradients, recurrent state, or the relationship between an individual operation and the values surrounding it. Existing visualization systems have demonstrated the value of interactive architecture and dataflow views, while machine-learning frameworks provide increasingly capable execution and instrumentation facilities \cite{wongsuphasawat2018,deepeyes2018,net2vis2021}.
 
-Neurofluxion addresses this implementation problem through a single interactive application with two computational paths. The TensorFlow/Keras path supports framework-backed model execution and layer-level tracing. The NumPy simulator provides a separately constructed environment in which users can build a network and examine its numerical execution. The frontend links these capabilities to interactive architecture and tensor views. The paths are complementary, not interchangeable: they do not imply shared parameters, identical operator coverage, or automatic numerical equivalence.
+Neurofluxion addresses a related implementation problem: how to connect executable neural-network state with a user-directed inspection workflow while retaining an independently inspectable numerical environment. The application therefore contains two computational paths. The first is a TensorFlow/Keras path for framework-backed model execution and intermediate-output tracing. The second is a NumPy simulator in which a user constructs a supported network and can inspect its forward and backward computations. The frontend connects these paths to architecture, tensor, mathematical, and training views.
 
-The work is an artifact-centered system paper, not a proposal for a new learning algorithm. Its focus is the integration of construction, execution, internal-state capture, and inspection. We make the following bounded contributions:
-\begin{itemize}
-  \item We describe a dual-path application that combines framework-backed model exploration with a separately implemented, inspectable simulator.
-  \item We document an interactive construction-to-inspection workflow for supported network operations, including forward/backward computation and parameter/gradient exploration.
-  \item We characterize the Keras execution-trace path and its detailed inspection endpoints, distinguishing directly captured tensors from derived, sampled, or estimated quantities.
-  \item We define a reproducible, operation-level validation plan that prioritizes numerical behavior and trace fidelity rather than model-accuracy ranking.
+The distinction between the paths is central to the system design. A Keras trace is produced from a selected Keras model and its runtime outputs. A simulator trace is produced by the separate NumPy implementation. The existence of an identically named layer or operation in both paths does not establish shared weights, shared state, or numerical equivalence. This separation prevents the interface from implying evidence that the implementation does not provide.
+
+The work is an artifact-centered implementation/system paper rather than a new-learning-algorithm paper. Its contributions are:
+\begin{itemize}[leftmargin=*]
+  \item an integrated full-stack environment that couples framework-backed model exploration with a separately implemented, inspectable numerical simulator;
+  \item a construction-to-execution-to-inspection workflow spanning supported forward/backward computation, parameter and gradient inspection, model metadata, and selected internal values;
+  \item an explicit characterization of framework trace semantics, including bounded tensor payloads and cumulative-subgraph timing attribution;
+  \item a reproducible research-validation layer containing operation-level finite-difference graph oracles, one-batch training-update contracts, browser provenance tests, and literature-search artifacts;
+  \item an evidence ledger and scope discipline that separates source-confirmed behavior, independently verified results, bounded claims, and unresolved implementation limitations.
 \end{itemize}
 
-The paper does not claim that every operation of every neural-network architecture is exposed, that the simulator is equivalent to a production framework, or that the interface has been shown to improve learning outcomes. Those claims would require broader coverage evidence or a controlled user study.
+The paper does not claim universal support for arbitrary neural-network graphs, equivalence with optimized framework kernels, improved learning outcomes, or superiority over existing visualization systems. Such claims require evidence beyond the present implementation study.
 
-\section{System Overview}
-Neurofluxion is implemented as a React 18/Vite/TypeScript client and a FastAPI/Python backend. The client uses Zustand for application state and includes dedicated Lab, Simulator, Training, Prediction, and Models surfaces. HTTP endpoints support prediction, model metadata, Lab operations, and simulator requests; WebSockets support training telemetry and a topology/metrics stream. The README identifies the latter as a topology + metrics stream; until its implementation is audited, it is not treated here as a trace of actual framework execution.
+\section{Related Work}
+Interactive neural-network visualization has a long history of exposing model structure and intermediate behavior. The TensorFlow Graph Visualizer applies graph transformations and hierarchical interaction to make large dataflow graphs more legible and supports exploration of nested model structure \cite{wongsuphasawat2018}. DeepEyes instead emphasizes progressive visual analytics for network design and training, supporting analysis of layers and learned patterns during iterative model development \cite{deepeyes2018}. Net2Vis introduces a visual grammar for automatically generating publication-oriented CNN architecture diagrams \cite{net2vis2021}. These systems establish important precedents for interactive model structure and visual analysis.
 
-\subsection{Framework-backed model path}
-The model path uses TensorFlow/Keras for model construction, inference, and framework training. In the Lab, an activation model is formed from non-input layer outputs. The execution-trace service runs the selected model on a prepared input and constructs stage records from those outputs. Records include layer identity, operation/type, input/output shapes, parameter counts, statistics, and bounded output representations. For convolutional and pooling outputs, feature maps are arranged for visualization; dense and other outputs may be bounded before serialization. The paper will distinguish full tensors from sampled or bounded payloads.
+Neurofluxion differs in emphasis rather than claiming priority. Its simulator is an executable numerical environment, not only a visualization of an already defined framework graph. Its framework-backed trace path and simulator path are presented side by side but remain computationally separate. The resulting workflow is organized around selecting or constructing a model, executing it, selecting an execution stage, and inspecting the values associated with that stage.
 
-The separate pretrained-model registry provides model adapters and task-specific input handling. The repository README documents ANN models for MNIST, ImageNet CNNs, and an IMDB sentiment BiLSTM, with lazy weight loading and cached artifacts. Registry prediction is a model-exploration capability; it is not automatically equivalent to the Lab's legacy ANN/CNN/RNN trace path. Exact model availability and provenance will be reported from the frozen registry metadata and verified run.
+More recent work such as Graph of Trace demonstrates the value of exposing fine-grained execution events as interactive traces for inspection of complex AI-agent workflows \cite{gao2026}. Neurofluxion applies a related trace-oriented interaction principle to neural-network computation, but its trace semantics are constrained by the values actually returned by its Keras execution service and by its separately implemented simulator. The present work therefore treats trace visualization as an interaction mechanism rather than evidence of general interpretability.
 
-\subsection{NumPy simulator path}
-The Simulator surface allows users to construct custom architectures and invoke forward/backward execution, dataset and optimizer controls, and parameter/gradient inspection. Its engine is implemented separately under \texttt{backend/simulator/}, with graph, forward, and backward components. This separation enables explicit educational computation, but also creates a distinct numerical implementation whose supported operators and correctness must be established operation by operation. The paper will not imply that a simulator graph inherits weights from a registry checkpoint unless an explicit, validated import path is demonstrated.
+TensorFlow provides the framework-backed computational foundation for the application \cite{abadi2016}, while NumPy provides the array-programming substrate used by the independent simulator \cite{harris2020}. Keras is used as the model-level API in the framework path \cite{chollet2015}.
 
-\subsection{Interaction model}
-The principal interaction is \emph{construct or select} $\rightarrow$ \emph{execute} $\rightarrow$ \emph{capture} $\rightarrow$ \emph{select a stage or unit} $\rightarrow$ \emph{inspect}. In the Simulator, construction precedes execution. In the Lab, a supported Keras model and input are selected before tracing. The frontend then presents available values through stage, formula, tensor, and architecture views. This workflow is the organizing principle for the remaining system description and figure design.
+\section{System Architecture}
+Neurofluxion is implemented as a React/Vite/TypeScript client and a FastAPI/Python backend. The repository identifies React 18, Vite, Tailwind CSS, Zustand, FastAPI, Uvicorn, WebSockets, TensorFlow/Keras, NumPy, Three.js, Recharts, and KaTeX as the principal technology components. The client contains dedicated surfaces for prediction, models, Lab execution, training, and simulator interaction.
+
+\subsection{Dual computational paths}
+Figure~\ref{fig:architecture} summarizes the system boundary used throughout this paper. A selected framework model enters the Keras path and is evaluated through the execution-trace service. A user-created architecture enters the simulator path and is executed by the NumPy simulator. Both paths can expose values to frontend inspection, but the values retain their provenance.
 
 \begin{figure}[t]
 \centering
-\fbox{\parbox{0.92\columnwidth}{\centering\vspace{0.6em}
-\textbf{Figure placeholder — replace with source-grounded vector diagram}\\[0.3em]
-Model selection / graph construction $\rightarrow$ execution path $\rightarrow$ captured values $\rightarrow$ stage selection $\rightarrow$ tensor, neuron, or state inspection\\[0.6em]
-}}
-\caption{Conceptual interaction workflow. Final figure must distinguish the Keras trace path from the independent NumPy simulator and label which path supplies each value.}
-\label{fig:workflow}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{>{\centering\arraybackslash}p{0.42\columnwidth}c>{\centering\arraybackslash}p{0.42\columnwidth}}
+\toprule
+\textbf{Framework path} & & \textbf{Simulator path}\\
+\midrule
+Keras model + family-specific input & & User-built supported graph\\
+$\downarrow$ & & $\downarrow$\\
+Activation model & & Graph builder\\
+$\downarrow$ & & $\downarrow$\\
+Intermediate outputs + metadata & & NumPy forward/backward engines\\
+$\downarrow$ & & $\downarrow$\\
+Trace/detail records & & Step-indexed computation records\\
+\midrule
+\multicolumn{3}{c}{\textbf{Shared inspection layer:} architecture $\rightarrow$ stage/unit selection $\rightarrow$ tensor/math/state views}\\
+\bottomrule
+\end{tabular}
+\caption{Evidence-grounded system architecture. The paths converge at the user interface but do not share model state by implication.}
+\label{fig:architecture}
 \end{figure}
 
-\section{Inspectable Simulator Architecture}
-\label{sec:simulator}
-The simulator is the principal technical focus of this paper. The source tree separates graph representation, forward execution, backward execution, layer implementations, optimization, and session management. In the final manuscript, each component will be described from its actual contracts and control flow rather than inferred from filenames. The intended abstraction is a configured sequence or graph of layer objects with associated parameters and runtime state; the exact connectivity model, shape rules, and state lifecycle remain subjects of the source audit.
+\subsection{Framework-backed model path}
+Prediction Mode uses a central model registry with model-family metadata, lazy loading, caching, preprocessing information, and provenance records. The repository documents MNIST multilayer perceptrons, ImageNet CNNs including MobileNetV3-Small, MobileNetV2, ResNet50, and VGG16, and an IMDB sentiment BiLSTM. Registry models are downloaded lazily rather than bundled into the repository. Unavailable checkpoints are represented as unavailable rather than substituted with fabricated models.
 
-For a sequential composition of supported layers, the forward computation can be written as
+The Lab execution path is separate from the registry catalog. Its trace service constructs a multi-output Keras model over non-input layers and evaluates it on a prepared input. Stage records include layer identity and type, operation metadata, activation information, shapes, parameter counts, timing fields, and output statistics. Some payloads are bounded before serialization and carry a sampling indicator. Consequently, a trace record must not be interpreted as a complete tensor unless its provenance and sampling state support that interpretation.
+
+\subsection{NumPy simulator path}
+The simulator contains a graph builder, forward engine, backward engine, layer implementations, optimization/training components, and session-related state. The audited graph builder constructs a validated sequential composition of supported layer objects and propagates shapes through the configured sequence. Observed dispatch includes dense/output, batch normalization, Conv2D, max/average pooling, flatten, vanilla RNN, LSTM, GRU, embedding, attention, and residual-related layers.
+
+The builder maintains layer instances, parameter-bearing layer mappings, activation/pre-activation collections, parameter and FLOP totals, and an architecture identifier. The architecture identifier is derived from the sequence of layer neuron counts and is therefore not a complete serialization of every configuration option. The simulator is consequently described as a validated sequential construction path rather than as an arbitrary-edge directed acyclic graph.
+
+\subsection{Interaction lifecycle}
+The principal interaction is
+\begin{equation*}
+\textit{construct or select}\rightarrow\textit{execute}\rightarrow\textit{capture}\rightarrow\textit{select}\rightarrow\textit{inspect}.
+\end{equation*}
+In Simulator Mode, construction precedes execution. In the Lab, a Keras model and input are selected before tracing. The frontend then presents the available execution state through stage, formula, tensor, architecture, and model-detail views.
+
+\section{Inspectable Simulator}
+\label{sec:simulator}
+The simulator is designed around explicit numerical computation rather than merely displaying a framework graph. For a configured sequence of supported layers, the high-level forward relation is
 \begin{equation}
  h^{(0)}=x,\qquad h^{(\ell)}=f_{\ell}\!\left(h^{(\ell-1)};\theta_{\ell}\right),
- \label{eq:forward}
 \end{equation}
-where $x$ is the supplied input, $f_\ell$ is the implemented operation at stage $\ell$, and $\theta_\ell$ denotes its parameters. Equation~\eqref{eq:forward} is a high-level description; the final paper will map it to the graph representation and only enumerate operations whose implementations are confirmed.
+where $x$ is the supplied input, $f_\ell$ is the implemented operation, and $\theta_\ell$ denotes the parameters associated with that layer.
 
-For a dense layer, the per-neuron computation is conventionally represented as
+For dense computation, the implementation exposes a finer-grained forward trace. The conceptual neuron computation is
 \begin{equation}
- z_j^{(\ell)}=\sum_i w_{ji}^{(\ell)}h_i^{(\ell-1)}+b_j^{(\ell)},\quad
- h_j^{(\ell)}=\phi_\ell\!\left(z_j^{(\ell)}\right).
- \label{eq:dense}
+ z_j^{(\ell)}=\sum_i w_{ji}^{(\ell)}h_i^{(\ell-1)}+b_j^{(\ell)},\qquad
+ h_j^{(\ell)}=\phi_\ell(z_j^{(\ell)}).
 \end{equation}
-This equation will be used to explain neuron inspection only after source and test evidence confirms the simulator's indexing, activation placement, and exposed pre-activation values. Backward computation and optimizer updates will be specified after auditing gradient accumulation, loss handling, and optimizer state; no optimizer equation is asserted here prematurely.
+Dense-only forward traces expose matrix multiplication, bias addition, and activation records. Mixed/non-dense graphs instead expose a generic forward record per instantiated layer. This difference is an implementation property of the current trace engine and is important when interpreting step counts.
 
-\subsection{Layer and operation coverage}
-The repository contains dedicated implementations for dense, convolutional, pooling, flattening, normalization, recurrent, embedding, attention, and residual-related operations. Presence of implementation files does not establish full support across every input shape, backward pass, or UI workflow. A coverage table will therefore report, per operation family: forward implementation, backward implementation, state/parameter inspection, frontend exposure, and verification status. Unsupported combinations will remain explicit rather than being generalized from the existence of a class.
+The simulator's forward-step API regenerates the full forward sequence and then selects the requested step. It is therefore step-indexed replay/inspection, not incremental execution. The same property applies to backward-step selection: the full backward computation is performed before the selected step is returned.
 
-\subsection{Execution state and inspection}
-The simulator interface exposes controls for constructing a model and inspecting execution. The final source audit will determine how activations, gradients, parameters, optimizer state, and session snapshots are represented and retained. This is material to reproducibility: an inspection panel is meaningful only when the displayed value can be traced to a particular graph, input, execution, and parameter state.
+\subsection{Backward computation}
+The dense-only backward path computes a loss, traverses dense layers in reverse order, derives layer deltas, forms weight gradients from outer products, and forms bias gradients from the corresponding delta. The generic path initializes an output gradient and invokes each instantiated layer's backward method in reverse order. Because these branches have different contracts, the manuscript does not collapse them into a universal backpropagation claim.
 
-\section{Framework Execution Trace and Internal-State Inspection}
-The Lab trace service obtains outputs from a TensorFlow/Keras activation model built over non-input layers. The trace is therefore framework-backed and tied to the selected Keras model instance. The service also derives a per-layer timing field by measuring cumulative subgraphs and taking successive differences. We describe this as a cumulative-subgraph timing attribution—not isolated device-kernel timing—because each measurement includes execution of a growing prefix of the model and can include framework/runtime overhead.
+A particularly important validation boundary is the loss/activation relationship. The audited dense-only implementation treats MSE differently from other configured loss names when forming the final delta. The paper therefore reports numerical validation only for fixed tested configurations rather than asserting correctness for arbitrary activation/loss combinations.
 
-The trace builder bounds some serialized outputs and records whether a representation is sampled. Consequently, the trace payload is not necessarily a complete copy of every intermediate tensor. The detailed inspection interface includes functions for dense-neuron, convolution-cell, and LSTM-related detail; their exact formulas, input indexing, and derivation paths will be documented only after the corresponding implementations and tests are checked. Values will be labeled as direct, derived, sampled/bounded, estimated, illustrative, or unsupported wherever that distinction affects interpretation.
+\section{Framework Execution Trace}
+The Keras trace service creates an activation model containing the non-input outputs of the selected Keras model and executes it to collect intermediate values. Each stage includes structural metadata and output statistics. For convolutional and pooling outputs, feature maps are rearranged for visualization; some output payloads are bounded before JSON serialization.
 
-\subsection{Dense-neuron detail}
-For a selected dense unit, the useful inspection target is the relationship between its incoming activations, weights, bias, pre-activation, and activation. Equation~\eqref{eq:dense} provides the mathematical frame. The final figure will use values returned by the implementation for a fixed input and model state; hand-constructed values, if used for exposition, will be marked as illustrative and not conflated with runtime evidence.
+Timing is deliberately described with precision. The service measures cumulative prefix executions and derives a stage-level timing value from successive cumulative measurements. If $T_k$ is the measured time for a model prefix through stage $k$, the reported attribution is conceptually
+\begin{equation}
+ \widehat{t}_k=T_k-T_{k-1}.
+\end{equation}
+This is not an isolated hardware-kernel measurement. It includes framework scheduling, repeated prediction overhead, and measurement noise. It is therefore useful as an execution-attribution field for the interactive trace, not as a substitute for a profiler.
 
-\subsection{Convolution and recurrent detail}
-Convolutional inspection requires spatial position and filter/channel indexing; recurrent inspection requires timestep and state/gate semantics. These views are architecture-specific and cannot be collapsed into a generic neuron record without losing meaning. The manuscript will document only the detailed fields actually returned by the trace endpoints, and will distinguish forward-state values from gradient-derived quantities.
+The trace also records model trained/untrained state and an execution timestamp. These fields provide useful provenance but do not by themselves establish reproducibility of a model checkpoint; checkpoint identity, preprocessing, environment, and input must also be retained.
 
-\section{Interactive Visualization and User Workflow}
-The frontend provides an interactive execution workspace with stage selection, playback/state management, mathematical expressions, and tensor inspection. Simulator components provide architecture construction, forward/backward panels, an inspector, and equation-oriented views. The system's contribution is the connection between executable state and these views, rather than a claim that visualization alone constitutes a formal explanation of model behavior.
+\subsection{Detailed inspection}
+The trace service includes dedicated paths for dense-neuron detail, convolution-cell detail, and LSTM gate/state detail. Such views are architecture-specific. A dense-unit inspection can expose the relationship among incoming activations, weights, bias, pre-activation, and activation. A convolution-cell view requires spatial and channel indexing. An LSTM view requires timestep and gate/state semantics. The manuscript therefore treats these endpoints as implementation-specific inspection facilities rather than as generic explanation algorithms.
 
-The final figure set will include: (1) an actual interface capture of the construction-to-inspection workflow; (2) a dual-path architecture diagram; (3) simulator execution lifecycle; (4) a real dense-neuron detail view; and (5) a CNN or recurrent detail view. All captures must identify the selected model/graph, input, execution mode, and whether displayed values are direct or transformed. No synthetic UI mock will be presented as a live application screenshot.
+\section{Frontend Workflow}
+The frontend provides architecture construction and visualization, execution controls, tensor inspection, mathematical expressions, model metadata, training surfaces, and prediction interfaces. The Simulator surface exposes controls for layer construction, activation selection, optimization, datasets, forward/backward execution, and parameter/gradient inspection. The Lab surface provides framework-backed execution and trace inspection.
 
-\section{Implementation and Reproducibility}
-The source baseline for this draft is commit \texttt{cae464530645c86a191531f0072b426f39fafcf0} on the repository's \texttt{main} branch at paper kickoff. The paper work is isolated on \texttt{research/neurofluxion-paper}. This is a starting snapshot, not the final experimental freeze. The README specifies Python 3.10+, Node.js 18+, backend dependencies in \texttt{backend/requirements.txt}, and frontend lint/build commands. It also documents the backend pytest command and an optional heavy CPU inference suite.
+The frontend is not presented as a generic explainability layer. Its purpose is to expose the executable state already produced by the selected computational path. This distinction is particularly important for values that are sampled, bounded, estimated, or derived.
 
-The final artifact will record the exact commit SHA, operating system, Python/Node versions, dependency versions, hardware/device, environment variables, commands, and logs. Model identifiers, source/license metadata, weight hashes where available, preprocessing, and cache state will be captured for any model-backed demonstration. Tests present in the repository will not be described as passing until rerun against the frozen revision.
+The current research validation also contains adversarial browser tests for two provenance invariants: stale inspection state after graph replacement and out-of-order responses. These tests currently reproduce known defects and remain expected failures until the application runtime is explicitly authorized for modification and the invariants are satisfied. The paper consequently does not claim perfect UI provenance under asynchronous graph switching.
 
-\section{Functional Validation Plan}
-The evaluation is designed to establish implementation behavior, not predictive superiority. It will include:
-\begin{itemize}
- \item \textbf{Simulator numerical checks:} compare selected small deterministic operations against independently computed reference values, with tolerances and tested shapes stated explicitly.
- \item \textbf{Forward/backward checks:} verify gradients for selected differentiable operations, including finite-difference checks where suitable.
- \item \textbf{Trace fidelity:} compare reported Keras stage outputs and detailed values with direct framework computations for fixed inputs; document sampling and timing semantics.
- \item \textbf{Workflow coverage:} exercise representative ANN, CNN, and recurrent workflows, plus architecture construction and inspection in Simulator Mode.
- \item \textbf{Reproducibility:} run backend tests and frontend lint/build, preserving command output, environment, SHA, pass/fail/skip counts, and any use of mocks or untrained weights.
+\section{Validation Methodology}
+The validation strategy is operation-level and reproducibility-oriented. It is not a benchmark of model accuracy or a user study.
+
+\subsection{Numerical graph oracles}
+Finite-difference graph checks compare selected analytical gradients against independently computed central finite differences for fixed small configurations. The merged research suite covers:
+\begin{itemize}[leftmargin=*]
+\item Dense and Conv2D graph configurations;
+\item vanilla RNN configurations;
+\item LSTM configurations;
+\item GRU configurations;
+\item Embedding--single-head Attention--RNN--Dense composition; and
+\item Conv2D--BatchNorm--Flatten--Dense composition.
 \end{itemize}
-No accuracy comparison is required for these questions. If inference outputs are shown to demonstrate that a workflow executes, they will not be interpreted as comparative model-quality results. Results and quantitative plots will be added only from actual runs; no placeholder chart will be populated with invented data.
+Each oracle is bounded to its declared graph, input, objective, data type, random seed, perturbation and tolerance. A passing result is evidence for that tested configuration only; it is not evidence for every tensor shape, loss, optimizer, or layer composition.
+
+\subsection{Training-update contracts}
+One-batch parameter-update contracts independently exercise representative optimizer paths for LSTM/GRU, Conv2D/BatchNorm, and Embedding/Attention/RNN/Dense configurations. These contracts verify the expected parameter-update behavior of the fixed test batches. They do not establish convergence, generalization, or broad gradient correctness.
+
+\subsection{Research-validation status}
+Table~\ref{tab:validation} records the evidence currently suitable for manuscript use.
+
+\begin{table}[t]
+\caption{Bounded research-validation evidence}
+\label{tab:validation}
+\centering
+\footnotesize
+\begin{tabular}{p{0.28\columnwidth}p{0.20\columnwidth}p{0.39\columnwidth}}
+\toprule
+\textbf{Evidence} & \textbf{Status} & \textbf{Interpretation boundary}\\
+\midrule
+Graph finite differences & Passed on fixed configurations & Supports the tested graph/input/objective combinations only.\\
+Recurrent training contracts & Passed & Checks one-batch update behavior; does not prove convergence.\\
+Conv2D/BatchNorm training contract & Passed & Fixed architecture and batch; no broad optimizer claim.\\
+Embedding/Attention/RNN/Dense training contract & Passed & Fixed composition and update path only.\\
+Browser provenance adversaries & Expected failure & Reproduces known stale-state/race defects; not a fix.\\
+Live literature export & Passed & 12 queries; 2,400 raw and 2,074 deduplicated records; screening remains pending.\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Reproducibility and source freeze}
+The current repository main revision used for this manuscript implementation is \texttt{50de1fb7328d82c8f4799bbf3feffff8fd713216}. The live literature export ran on that exact revision in GitHub Actions on Ubuntu 24.04.5 with CPython 3.11.17. The exporter completed 12 successful queries with zero query failures, zero partial failures, and zero failed queries; it produced 2,400 raw records and 2,074 deduplicated records. The resulting artifact is GitHub Actions artifact 12153262023 from workflow run 39172931277.
+
+The literature stage is therefore reproducible as a metadata export, but it is not described as a completed systematic review. Human screening, full-text extraction, duplicate adjudication beyond automated deduplication, and citation snowballing are separate review activities and are not inferred from the export counts.
+
+\section{Implementation Evidence and Reproducibility Record}
+The source repository provides a Python backend test command, frontend lint/build commands, and dedicated research workflows. The evidence ledger records the exact workflow families used for the recent graph-oracle and training-contract validation. The paper treats a repository test definition as insufficient evidence by itself; claims of successful validation are tied to recorded workflow outcomes.
+
+The implementation record also preserves an important separation among three execution/training channels. The \texttt{/stream} WebSocket is a synthetic topology-and-metrics demonstration generated from hard-coded identifiers, weights, perturbations, and formula-derived curves; it is not live model execution. The \texttt{/train} channel delegates to the framework training manager, while simulator training uses a separate simulator session/training path. These channels must not be described as a single shared training state.
+
+For framework-backed model demonstrations, reproducibility additionally depends on the model registry's checkpoint provenance, preprocessing, cache state, and device. For simulator demonstrations, reproducibility depends on the graph specification, input, parameters, objective, random seed, dtype, and execution path. The paper therefore recommends reporting these fields alongside any future quantitative figure.
+
+\section{Discussion}
+The principal design choice in Neurofluxion is to make computation inspectable without pretending that every visualization has the same provenance. Framework-backed traces are valuable because they expose real intermediate outputs from a selected Keras model. The independent simulator is valuable because it exposes a more explicit numerical execution model and allows a user to construct small configurations whose behavior can be validated independently.
+
+This dual-path design creates an engineering cost: every operation that appears in both environments has potentially different semantics, supported shapes, parameter representations, and numerical behavior. The evidence ledger and graph-level oracles address this cost by requiring operation-specific validation instead of relying on visual similarity.
+
+The same principle applies to performance and timing. A per-stage timing number is useful in an interactive trace, but the current implementation derives it from repeated cumulative-prefix execution. Reporting it as a kernel benchmark would overstate what the measurement means. Similarly, a bounded tensor visualization is useful for interaction but is not a complete tensor dump. The system's inspection contract is therefore best understood as provenance-aware interactive instrumentation.
 
 \section{Limitations}
-Neurofluxion contains two distinct execution paths with different purposes and operator semantics. Framework-backed traces are limited by the selected model and captured outputs; serialized tensors may be bounded. Simulator behavior must be validated per operation and shape, and its numerical implementation is not presumed to match optimized framework kernels. Cumulative-subgraph timing is an attribution derived from repeated prefix execution, not a hardware profiler's isolated operator latency. Explanation and attribution modules require method-specific validation before being described as canonical implementations. Finally, an implementation paper without a controlled user study cannot establish improved learning, usability, or educational outcomes.
+Several limitations bound the claims of this paper.
+
+First, the simulator is not an arbitrary graph execution engine in the evidence currently audited. Its principal builder constructs a validated sequential composition, and the architecture identifier is a compact neuron-count sequence rather than a complete graph serialization.
+
+Second, numerical evidence is selective. The finite-difference and training-update suites cover representative fixed configurations, but they do not establish correctness for every supported shape, activation, loss, optimizer, or composition. In particular, loss/activation compatibility and some generic backward summaries remain implementation-specific validation concerns.
+
+Third, the framework trace is not a hardware profiler. Its timing values are cumulative-subgraph differences and can contain framework overhead and measurement noise. Serialized outputs may also be bounded or sampled.
+
+Fourth, the current browser provenance suite exposes known stale-response and graph-switch defects. These tests are deliberately retained as expected failures so that the defects remain visible rather than being silently converted into green tests. No runtime fix is claimed in this paper because application-source modification is outside the current research-only implementation scope.
+
+Fifth, the literature search is a reproducible metadata export, not a completed systematic review. The current manuscript therefore avoids claims of comprehensive coverage, priority, or novelty based solely on search counts.
+
+Finally, the work contains no controlled human-subject evaluation. It cannot establish that Neurofluxion improves learning outcomes, usability, debugging efficiency, or educational effectiveness.
 
 \section{Conclusion}
-Neurofluxion brings framework-backed model exploration and an independently implemented numerical simulator into an interactive environment for constructing, executing, and inspecting neural-network computation. The paper's focus is the connection between executable state and a user-directed inspection workflow. Its final claims will be bounded by source audit, numerical tests, trace-fidelity checks, and reproducibility artifacts. The system is not presented as a new learning algorithm or as a model-accuracy benchmark.
+Neurofluxion is an interactive full-stack environment for exploring neural-network computation through two deliberately separated execution paths: a TensorFlow/Keras path for framework-backed model execution and trace capture, and a NumPy path for independently constructed numerical simulation. The frontend connects these paths to architecture, tensor, mathematical, model, and training views while retaining value provenance.
+
+The implementation evidence supports a bounded system contribution. Recent research validation provides fixed graph-level finite-difference checks across dense, convolutional, recurrent, attention, embedding, and normalization compositions, together with one-batch training-update contracts. A live literature export is reproducible at the current source revision. These results are sufficient to document the implementation and its validated slices, but not to claim universal simulator correctness, superior visualization, or improved human outcomes.
+
+The central methodological lesson is that an interactive neural-network inspection system should expose not only values but also the computational path that produced them. Neurofluxion's separation of framework traces, simulator traces, synthetic demonstration streams, and research-validation artifacts provides a concrete implementation of that provenance-aware principle.
 
 \begin{thebibliography}{00}
-% TODO: Replace with verified, complete primary references after related-work research.
-\bibitem{tensorflow}
-M. Abadi et al., ``TensorFlow: A System for Large-Scale Machine Learning,''
-\emph{12th USENIX Symposium on Operating Systems Design and Implementation (OSDI)}, 2016.
 
-\bibitem{keras}
+\bibitem{abadi2016}
+M. Abadi, P. Barham, J. Chen, Z. Chen, A. Davis, J. Dean, M. Devin, S. Ghemawat, G. Irving, M. Isard, M. Kudlur, J. Levenberg, R. Monga, S. Moore, D. G. Murray, B. Steiner, P. Tucker, V. Vasudevan, P. Warden, M. Wicke, Y. Yu, and X. Zheng, ``TensorFlow: A System for Large-Scale Machine Learning,'' in \emph{Proc. 12th USENIX Symp. Operating Systems Design and Implementation (OSDI)}, 2016, pp. 265--283.
+
+\bibitem{chollet2015}
 F. Chollet et al., ``Keras,'' 2015. [Online]. Available: \url{https://keras.io}
 
-\bibitem{numpy}
-C. R. Harris et al., ``Array programming with NumPy,''
-\emph{Nature}, vol. 585, pp. 357--362, 2020.
+\bibitem{harris2020}
+C. R. Harris et al., ``Array programming with NumPy,'' \emph{Nature}, vol. 585, no. 7825, pp. 357--362, 2020, doi: 10.1038/s41586-020-2649-2.
+
+\bibitem{wongsuphasawat2018}
+K. Wongsuphasawat, D. Smilkov, J. Wexler, J. Wilson, D. Man\'e, D. Fritz, D. Krishnan, F. B. Vi\'egas, and M. Wattenberg, ``Visualizing Dataflow Graphs of Deep Learning Models in TensorFlow,'' \emph{IEEE Trans. Visualization and Computer Graphics}, vol. 24, no. 1, pp. 1--12, 2018, doi: 10.1109/TVCG.2017.2744878.
+
+\bibitem{deepeyes2018}
+Y. Pezzotti et al., ``DeepEyes: Progressive Visual Analytics for Designing Deep Neural Networks,'' \emph{IEEE Trans. Visualization and Computer Graphics}, vol. 24, no. 1, pp. 98--108, 2018, doi: 10.1109/TVCG.2017.2744358.
+
+\bibitem{net2vis2021}
+H. B. B. W. W. and others, ``Net2Vis -- A Visual Grammar for Automatically Generating Publication-Tailored CNN Architecture Visualizations,'' \emph{IEEE Trans. Visualization and Computer Graphics}, vol. 27, no. 6, pp. 2980--2991, 2021, doi: 10.1109/TVCG.2021.3057483.
+
+\bibitem{gao2026}
+T. Gao, H. Li, J. H. Li, T. Zhao, R. Shi, W. Wang, Z. Wu, and L. Mi, ``Graph of Trace: Visualizing Execution Traces of Scientific Agents,'' in \emph{Proc. 64th Annual Meeting of the Association for Computational Linguistics, Volume 3: System Demonstrations}, 2026, pp. 297--306, doi: 10.18653/v1/2026.acl-demo.29.
+
 \end{thebibliography}
 
 \end{document}
