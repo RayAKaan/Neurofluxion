@@ -98,36 +98,60 @@ jobs:
           from pathlib import Path
 
           root = Path("research/evidence")
-          experiments = Path("research/experiments")
+          repo = Path(".")
           if not root.exists():
               print("no evidence directory present")
               raise SystemExit(0)
 
+          def repo_relative(script: str, recorded_root: str) -> Path | None:
+              """Resolve a recorded script path to one that exists in the repo.
+
+              Provenance records the path as the experiment saw it, which may be
+              absolute on the machine that ran it. A recorded path is therefore
+              never used directly as a git object path; it is reduced to a
+              repository-relative one first.
+              """
+              normalised = script.replace("\\", "/")
+              root = (recorded_root or "").replace("\\", "/").rstrip("/")
+              if root and normalised.lower().startswith(root.lower() + "/"):
+                  candidate = Path(*normalised[len(root) + 1 :].split("/"))
+                  if candidate.exists():
+                      return candidate
+              parts = [p for p in normalised.split("/") if p]
+              for start in range(len(parts)):
+                  candidate = Path(*parts[start:])
+                  if candidate.exists():
+                      return candidate
+              return None
+
           problems: list[str] = []
           checked = 0
           for experiment_dir in sorted(p for p in root.iterdir() if p.is_dir()):
-              # EXP-nn-... -> run_*.py is resolved by matching the manifest script field.
               for revision in sorted(p for p in experiment_dir.iterdir() if p.is_dir()):
                   manifest = json.loads((revision / "manifest.json").read_text(encoding="utf-8"))
                   sha = manifest.get("source_sha", "")
                   script = manifest.get("provenance", {}).get("script", "")
                   if not sha or not script:
+                      problems.append(f"{experiment_dir.name}: manifest has no source_sha or script")
                       continue
-                  path = Path(script)
-                  if not path.exists():
-                      problems.append(f"{experiment_dir.name}: script {script} no longer exists")
+                  relative = repo_relative(
+                      script, manifest.get("provenance", {}).get("repository_root", "")
+                  )
+                  if relative is None:
+                      problems.append(f"{experiment_dir.name}: script {script} is not in this repository")
                       continue
+                  checked += 1
                   try:
                       subprocess.run(
-                          ["git", "cat-file", "-e", f"{sha}:{path.as_posix()}"],
+                          ["git", "cat-file", "-e", f"{sha}:{relative.as_posix()}"],
                           check=True, capture_output=True,
                       )
                   except subprocess.CalledProcessError:
                       problems.append(
-                          f"{experiment_dir.name}: revision {sha[:8]} does not contain {script}; "
-                          "evidence was produced from an uncommitted working tree"
+                          f"{experiment_dir.name}: revision {sha[:8]} does not contain "
+                          f"{relative.as_posix()}; evidence was produced from an "
+                          "uncommitted working tree"
                       )
-                  checked += 1
 
           print(f"pinned_bundles={checked} problems={len(problems)}")
           for problem in problems:
