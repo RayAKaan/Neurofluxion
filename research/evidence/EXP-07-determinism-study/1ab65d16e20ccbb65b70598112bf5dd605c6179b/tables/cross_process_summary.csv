@@ -1,0 +1,4 @@
+case_id,processes,build_identical,trace_identical,errors
+dense_3_4_2_relu,5,true,true,[]
+lstm_t4_d3_h3_dense,5,true,true,[]
+conv1_6x6_2_same_s2_batchnorm_flatten_tanh,5,true,true,[]

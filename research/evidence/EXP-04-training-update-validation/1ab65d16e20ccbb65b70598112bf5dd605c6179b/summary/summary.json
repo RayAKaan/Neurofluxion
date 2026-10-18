@@ -1,0 +1,97 @@
+{
+  "cases_with_training_support": 19,
+  "failed_measurements": [],
+  "layer_propagation_inconsistencies": [
+    {
+      "consistent": false,
+      "layer_instance_index": 2,
+      "layer_observed_update": false,
+      "layer_type": "attention",
+      "packed_array_changed": true,
+      "packed_param_index": 1
+    },
+    {
+      "consistent": false,
+      "layer_instance_index": 2,
+      "layer_observed_update": false,
+      "layer_type": "attention",
+      "packed_array_changed": true,
+      "packed_param_index": 1
+    }
+  ],
+  "learning_rate": 0.01,
+  "loss_reduction_measurements": 19,
+  "optimizers": [
+    "sgd",
+    "sgd_momentum",
+    "rmsprop",
+    "adam"
+  ],
+  "parameter_tensor_checks": 100,
+  "parameter_tensor_checks_with_zero_expected_update": 14,
+  "status": "PASS",
+  "trajectories": {
+    "count": 76,
+    "loss_reduced": 76,
+    "monotone_non_increasing": 36,
+    "relative_reduction": {
+      "confidence_interval_95_mean": {
+        "high": 0.9185797589709446,
+        "low": 0.807737118542611,
+        "method": "student_t_95"
+      },
+      "confidence_interval_95_median_note": "A normal-approximation interval is reported for the mean only. Non-parametric medians are reported without an inferential interval.",
+      "cv": 0.28098396548290683,
+      "iqr": 0.09440902454493483,
+      "max": 0.9999999999990042,
+      "mean": 0.8631584387567778,
+      "median": 0.975027717412804,
+      "min": 0.08739223950821054,
+      "n_finite": 76,
+      "n_nonfinite": 0,
+      "n_outliers_iqr": 15,
+      "n_total": 76,
+      "outlier_values": [
+        0.7131489224827665,
+        0.6628433877492881,
+        0.317953385905039,
+        0.7036504134158664,
+        0.27674054393380426,
+        0.29754247879597534,
+        0.4570346298273824,
+        0.2424648974754595,
+        0.2472563905611685,
+        0.22612147197134194,
+        0.08739223950821054,
+        0.4503955791447861,
+        0.3517334956033199,
+        0.7355375419118935,
+        0.449764249944778
+      ],
+      "percentiles": {
+        "p05": 0.2693695055906453,
+        "p25": 0.9052580212852374,
+        "p50": 0.975027717412804,
+        "p75": 0.9996670458301722,
+        "p90": 0.9999999999902944,
+        "p95": 0.9999999999965123,
+        "p99": 0.9999999999990042
+      },
+      "std": 0.2425336809619142
+    },
+    "steps_each": 25
+  },
+  "update_measurements": 19,
+  "update_measurements_failed": 0,
+  "update_relative_error_distribution": {
+    "count": 86,
+    "max": 0.0013614360487046071,
+    "mean": 5.2080652908872905e-05,
+    "median": 6.373492791726427e-08,
+    "min": 2.463606225297686e-10,
+    "p90": 8.946705941477115e-05,
+    "p95": 0.00016139486616917312,
+    "p99": 0.0011028510796545813,
+    "std": 0.00019381587408914355
+  }
+}

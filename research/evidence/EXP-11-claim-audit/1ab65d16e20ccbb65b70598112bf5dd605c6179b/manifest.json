@@ -1,0 +1,167 @@
+{
+  "configuration": {
+    "risk_terms": {
+      "accurate": "accuracy claim",
+      "all architectures": "generality claim",
+      "all operators": "generality claim",
+      "arbitrary": "generality claim",
+      "complete": "completeness claim",
+      "exact": "exactness claim",
+      "exhaustive": "completeness claim",
+      "first": "priority claim",
+      "fully reproducible": "reproducibility claim",
+      "guarantee": "guarantee claim",
+      "lossless": "exactness claim",
+      "novel": "priority claim",
+      "outperforms": "comparative claim",
+      "production-ready": "maturity claim",
+      "proves": "proof claim",
+      "real-time": "latency claim",
+      "realtime": "latency claim",
+      "scalable": "scalability claim",
+      "significantly": "statistical claim",
+      "state of the art": "priority claim",
+      "state-of-the-art": "priority claim",
+      "superior": "comparative claim",
+      "universal": "generality claim"
+    },
+    "scan_directories": [
+      "research",
+      "paper",
+      "backend",
+      "frontend",
+      ".github"
+    ],
+    "scan_suffixes": [
+      ".md",
+      ".tex",
+      ".py",
+      ".ts",
+      ".tsx",
+      ".yml",
+      ".yaml"
+    ],
+    "skipped_files": [
+      "research/experiments/run_claim_audit.py"
+    ],
+    "skipped_path_parts": [
+      "node_modules",
+      "dist",
+      "build",
+      "evidence",
+      ".git",
+      "__pycache__"
+    ],
+    "status_vocabulary": [
+      "SUPPORTED",
+      "PARTIALLY_SUPPORTED",
+      "UNSUPPORTED",
+      "INVALIDATED",
+      "REQUIRES_MORE_EVIDENCE",
+      "NOT_TESTED"
+    ]
+  },
+  "created_at_utc": "2026-10-18T21:23:09+00:00",
+  "experiment_id": "EXP-11-claim-audit",
+  "files": {
+    "raw/claim_ledger.jsonl": "3c2bbb17d13e22790a59b9e143774b9d4530dec0d0c50789fc9617c974028390",
+    "raw/overclaim_findings.jsonl": "3447921e76e3ddffb6cf8f068ea7871f5d1992ecc13f0fd5108e04f76f1b1d50",
+    "summary/summary.json": "2b36784b7c1e1698fc12c77bd84febaddc7b7ab3187a15cab912677f7d23307e",
+    "tables/claim_evidence_ledger.csv": "bbf81bbdbb8317c4b260b8a761dc0e4584200e6a3037e81550384ae953072bb7",
+    "tables/overclaim_candidates.csv": "61e921cbf405158216ffcf5a43f32c470c92d3eaa71caba7e80ec729202322f5"
+  },
+  "immutability_note": "This directory is keyed by the source SHA that produced it. Re-running the same experiment on a different revision writes a sibling directory instead of overwriting this one.",
+  "interpretation": {
+    "detector": "The keyword detector finds candidates; it does not decide. A term inside a negated or scope-limited sentence is reported but not flagged for adjudication.",
+    "ledger_rule": "A claim is SUPPORTED only when an executed experiment in this repository measures it. Claims without evidence are UNSUPPORTED; claims contradicted by a reproduced defect are INVALIDATED.",
+    "purpose": "Bind every research claim to its evidence and surface overclaim candidates."
+  },
+  "limitations": [
+    "The detector is English-language and keyword based; it will miss rhetorical overstatement and will flag harmless technical uses of words such as 'complete'.",
+    "Candidate occurrences are not automatically defects and require human review."
+  ],
+  "provenance": {
+    "command": [
+      "C:\\Users\\Rayyan Khan\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "H:\\Neurofluxion\\repo\\research\\experiments\\run_claim_audit.py",
+      "--repo",
+      "H:\\Neurofluxion\\repo"
+    ],
+    "command_line": "C:\\Users\\Rayyan Khan\\AppData\\Local\\Programs\\Python\\Python312\\python.exe H:\\Neurofluxion\\repo\\research\\experiments\\run_claim_audit.py --repo H:\\Neurofluxion\\repo",
+    "environment": {
+      "captured_at_utc": "2026-10-18T21:23:18+00:00",
+      "cpu": {
+        "logical_cpus": 8,
+        "machine": "AMD64",
+        "physical_cpus": null,
+        "processor": "AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD"
+      },
+      "memory": {
+        "available_bytes_at_capture": 3709808640,
+        "total_bytes": 17101787136
+      },
+      "node": "v24.15.0",
+      "os": {
+        "machine": "AMD64",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "release": "11",
+        "system": "Windows",
+        "version": "10.0.26200"
+      },
+      "packages": {
+        "fastapi": "0.141.1",
+        "jax": null,
+        "keras": "3.15.1",
+        "numpy": "2.4.6",
+        "pydantic": "2.13.4",
+        "scipy": "1.18.0",
+        "tensorflow": "2.21.0",
+        "torch": "2.12.1",
+        "uvicorn": "0.52.4"
+      },
+      "python": {
+        "executable": "C:\\Users\\Rayyan Khan\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "full_version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+        "implementation": "CPython",
+        "version": "3.12.10"
+      },
+      "relevant_env_vars": {
+        "MKL_NUM_THREADS": null,
+        "NEUROFLUXION_BENCH_ENV": null,
+        "OMP_NUM_THREADS": null,
+        "OPENBLAS_NUM_THREADS": null,
+        "PYTHONHASHSEED": null,
+        "PYTHONPATH": "H:\\Neurofluxion\\repo\\backend;H:\\Neurofluxion\\repo\\research",
+        "TF_CPP_MIN_LOG_LEVEL": null,
+        "TF_ENABLE_ONEDNN_OPTS": null
+      }
+    },
+    "exit_code": 0,
+    "experiment_id": "EXP-11-claim-audit",
+    "finished_at_utc": "2026-10-18T21:21:40+00:00",
+    "git": {
+      "branch": "research/evidence-infrastructure",
+      "commit_sha": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
+      "commit_short": "1ab65d1",
+      "commit_timestamp": "2026-10-19T02:51:24+05:30",
+      "dirty_path_count": 2,
+      "is_dirty": true,
+      "is_shallow": "false",
+      "origin_url": "https://github.com/RayAKaan/Neurofluxion.git",
+      "repository_present": true
+    },
+    "notes": {
+      "audit_scope": "repository prose and source comments",
+      "runtime_source_modified": false
+    },
+    "repository_root": "H:\\Neurofluxion\\repo",
+    "script": "H:/Neurofluxion/repo/research/experiments/run_claim_audit.py",
+    "seed": null,
+    "started_at_utc": "2026-10-18T21:21:36+00:00"
+  },
+  "result_summary_sha256": "e69a7bbe7cdab3c70979103542c8df13186368d4dee97538cdb9a0e24e0c3c28",
+  "schema": "neurofluxion.research.manifest",
+  "schema_version": 1,
+  "seed": null,
+  "source_sha": "1ab65d16e20ccbb65b70598112bf5dd605c6179b"
+}

@@ -1,0 +1,30 @@
+{
+  "confirmed_ids": [
+    "D-01",
+    "D-02",
+    "D-03",
+    "D-04",
+    "D-05",
+    "D-06",
+    "D-07"
+  ],
+  "confirmed_requiring_runtime_change": [
+    "D-01",
+    "D-02",
+    "D-03",
+    "D-04",
+    "D-05",
+    "D-07"
+  ],
+  "defects_confirmed": 7,
+  "defects_reproduced": 7,
+  "defects_total": 7,
+  "severity_counts": {
+    "BLOCKING": 1,
+    "HIGH": 2,
+    "INFORMATIONAL": 1,
+    "LOW": 0,
+    "MEDIUM": 3
+  },
+  "status": "REGISTERED"
+}

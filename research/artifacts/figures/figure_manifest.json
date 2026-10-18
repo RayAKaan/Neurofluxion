@@ -11,7 +11,7 @@
         "trace_total": 14
       },
       "source_experiment": "EXP-05-performance-benchmark",
-      "source_revision": "0d780b8bcf7448a2d37d8b7a5647bb1546b5695f",
+      "source_revision": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
       "source_table": "component_medians",
       "status": "GENERATED"
     },
@@ -24,7 +24,7 @@
         "paired_ratio_median": 14
       },
       "source_experiment": "EXP-05-performance-benchmark",
-      "source_revision": "0d780b8bcf7448a2d37d8b7a5647bb1546b5695f",
+      "source_revision": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
       "source_table": "trace_overhead",
       "status": "GENERATED"
     },
@@ -38,7 +38,7 @@
         "trace_median_ms": 11
       },
       "source_experiment": "EXP-06-scalability-study",
-      "source_revision": "0d780b8bcf7448a2d37d8b7a5647bb1546b5695f",
+      "source_revision": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
       "source_table": "scaling_points",
       "status": "GENERATED"
     },
@@ -51,7 +51,7 @@
         "exponent": 24
       },
       "source_experiment": "EXP-06-scalability-study",
-      "source_revision": "0d780b8bcf7448a2d37d8b7a5647bb1546b5695f",
+      "source_revision": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
       "source_table": "scaling_exponents",
       "status": "GENERATED"
     },
@@ -64,7 +64,7 @@
         "relative_l2_error": 406
       },
       "source_experiment": "EXP-02-gradient-validation",
-      "source_revision": "c785e67c7d361d213b8621ae91edc6ac43bc1596",
+      "source_revision": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
       "source_table": "gradient_tensor_checks",
       "status": "GENERATED"
     },
@@ -77,7 +77,7 @@
         "update_relative_error": 86
       },
       "source_experiment": "EXP-04-training-update-validation",
-      "source_revision": "c785e67c7d361d213b8621ae91edc6ac43bc1596",
+      "source_revision": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
       "source_table": "update_tensor_checks",
       "status": "GENERATED"
     },
@@ -90,7 +90,7 @@
         "max_abs_error": 67
       },
       "source_experiment": "EXP-03-trace-fidelity-audit",
-      "source_revision": "c785e67c7d361d213b8621ae91edc6ac43bc1596",
+      "source_revision": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
       "source_table": "forward_per_layer",
       "status": "GENERATED"
     },
@@ -103,12 +103,12 @@
         "record_count": 46
       },
       "source_experiment": "EXP-10-literature-screening",
-      "source_revision": "f94ac4a127d39e9a69cb6165bcc7cff9e84d5b12",
+      "source_revision": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
       "source_table": "screening_dataset",
       "status": "GENERATED"
     }
   ],
-  "generated_at_utc": "2026-10-18T19:28:19+00:00",
+  "generated_at_utc": "2026-10-18T21:42:29+00:00",
   "limitations": [
     "Figures are evidence visualisations, not manuscript artwork; layout, caption and numbering are the responsibility of the manuscript.",
     "Rendered output requires matplotlib; when it is absent the machine-readable source data is still produced."
@@ -131,7 +131,7 @@
       "purpose": "Per-case finite-difference agreement counts and error statistics.",
       "rows": 21,
       "source": "case_summary",
-      "source_revision": "c785e67c7d361d213b8621ae91edc6ac43bc1596",
+      "source_revision": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
       "status": "GENERATED",
       "table_id": "TAB-02-gradient-validation"
     },
@@ -141,7 +141,7 @@
       "purpose": "Per-case trace property classification with granularity.",
       "rows": 21,
       "source": "trace_property_classification",
-      "source_revision": "c785e67c7d361d213b8621ae91edc6ac43bc1596",
+      "source_revision": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
       "status": "GENERATED",
       "table_id": "TAB-03-trace-property-classification"
     },
@@ -151,7 +151,7 @@
       "purpose": "Per-case, per-optimizer update agreement and layer propagation.",
       "rows": 100,
       "source": "update_tensor_checks",
-      "source_revision": "c785e67c7d361d213b8621ae91edc6ac43bc1596",
+      "source_revision": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
       "status": "GENERATED",
       "table_id": "TAB-04-training-update"
     },
@@ -161,7 +161,7 @@
       "purpose": "Per-workload component medians, dispersion and peak traced bytes.",
       "rows": 126,
       "source": "component_medians",
-      "source_revision": "0d780b8bcf7448a2d37d8b7a5647bb1546b5695f",
+      "source_revision": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
       "status": "GENERATED",
       "table_id": "TAB-05-performance-components"
     },
@@ -171,7 +171,7 @@
       "purpose": "Per-sweep-point medians, payload sizes and graph measures.",
       "rows": 36,
       "source": "scaling_points",
-      "source_revision": "0d780b8bcf7448a2d37d8b7a5647bb1546b5695f",
+      "source_revision": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
       "status": "GENERATED",
       "table_id": "TAB-06-scaling-points"
     },
@@ -181,7 +181,7 @@
       "purpose": "Per-case in-process and cross-process determinism results.",
       "rows": 21,
       "source": "determinism_summary",
-      "source_revision": "0d780b8bcf7448a2d37d8b7a5647bb1546b5695f",
+      "source_revision": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
       "status": "GENERATED",
       "table_id": "TAB-07-determinism"
     },
@@ -191,7 +191,7 @@
       "purpose": "Reproduced defects with severity, claim effect and remediation.",
       "rows": 7,
       "source": "defect_register",
-      "source_revision": "0d780b8bcf7448a2d37d8b7a5647bb1546b5695f",
+      "source_revision": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
       "status": "GENERATED",
       "table_id": "TAB-08-defect-register"
     },
@@ -201,7 +201,7 @@
       "purpose": "Source-linked capability matrix over the declared related-work set.",
       "rows": 13,
       "source": "comparison_matrix",
-      "source_revision": "f94ac4a127d39e9a69cb6165bcc7cff9e84d5b12",
+      "source_revision": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
       "status": "GENERATED",
       "table_id": "TAB-09-related-work-comparison"
     },
@@ -211,7 +211,7 @@
       "purpose": "Every research claim with its evidence, status, limitation and allowed wording.",
       "rows": 17,
       "source": "claim_evidence_ledger",
-      "source_revision": "e7bd35525fd4ebcff2340431d7921f9a047f47be",
+      "source_revision": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
       "status": "GENERATED",
       "table_id": "TAB-10-claim-evidence-ledger"
     }

@@ -1,0 +1,44 @@
+{
+  "cases_covered": [
+    "batchnorm_spatial_conv",
+    "batchnorm_vector_5_dense",
+    "composite_conv_pool_dense_residual",
+    "composite_embedding_attention_lstm",
+    "conv1_5x5_1_valid_flatten_dense",
+    "conv1_6x6_2_same_s2_batchnorm_flatten_dense",
+    "conv1_6x6_2_same_s2_batchnorm_flatten_tanh",
+    "conv_pool_avg_flatten_dense",
+    "conv_pool_max_flatten_dense",
+    "dense_3_4_1_sigmoid_bce",
+    "dense_3_4_2_mse_batch3",
+    "dense_3_4_2_relu",
+    "dense_4_5_1_tanh_linear_mse",
+    "dense_deep_6x4_mse",
+    "embedding_attention_2head_dense",
+    "embedding_attention_rnn_dense",
+    "gru_t4_d3_h3_dense",
+    "lstm_t3_d2_h2_returnseq_dense",
+    "lstm_t4_d3_h3_dense",
+    "residual_dense_4_4",
+    "rnn_t3_d2_h3_dense"
+  ],
+  "expectation_violations": 6,
+  "families_covered": [
+    "composite",
+    "conv",
+    "dense",
+    "embedding_attention",
+    "normalization",
+    "recurrent",
+    "residual"
+  ],
+  "probe_count": 47,
+  "records_with_observations": 47,
+  "status": "findings_present",
+  "violating_probes": [
+    "architecture_hash_discrimination",
+    "attention_num_heads_effect",
+    "forward_route_input_schema",
+    "param_sync_roundtrip"
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "configuration": {
+    "dimensions": [
+      "execution_tracing",
+      "tensor_inspection",
+      "graph_visualization",
+      "operation_level_inspection",
+      "recurrent_inspection",
+      "interactive_navigation",
+      "numerical_transparency",
+      "training_visibility",
+      "provenance",
+      "independent_numerical_oracle",
+      "browser_accessible",
+      "local_execution"
+    ],
+    "exclusion_terms": [
+      "molecular",
+      "protein",
+      "medical imaging",
+      "wireless sensor",
+      "power system",
+      "traffic flow",
+      "recommendation",
+      "large language model"
+    ],
+    "included_set_size": 13,
+    "primary_terms": [
+      "neural network",
+      "deep learning",
+      "deep neural",
+      "convolutional neural",
+      "recurrent neural",
+      "transformer"
+    ],
+    "secondary_terms": [
+      "visual analytics",
+      "visualization",
+      "visualisation",
+      "interpretability",
+      "explainab",
+      "inspect",
+      "debug",
+      "trace",
+      "provenance",
+      "graph",
+      "activation",
+      "simulation",
+      "simulator",
+      "teaching",
+      "education",
+      "interactive",
+      "interpretable"
+    ],
+    "triage_version": "triage-1.0.0"
+  },
+  "created_at_utc": "2026-10-18T21:23:31+00:00",
+  "experiment_id": "EXP-10-literature-screening",
+  "files": {
+    "raw/comparison_matrix.jsonl": "12e8e78d525217a3c9bd137fd891eec4ccce1ac1f4c1bf717173fa9271ea133b",
+    "raw/export_manifest.jsonl": "cdff5474f97a104f12665eeb0c7e93d89a750807a7d0da56a2ebcfd1a1baf4ec",
+    "raw/triage_rows.jsonl": "4167b859aafb2e392461af7f599b3183280ac6567e3ad9d4811e23c89d067ca4",
+    "summary/summary.json": "606d76994bcdce5ee8c40adeee5323195d934f6d6f74a110add1815265c9cd07",
+    "tables/comparison_dimensions.csv": "4dcf07b7616e63cdc120f4ba0c676d0aed8cae5266497c053ced41ad054ddac1",
+    "tables/comparison_matrix.csv": "2f1f9699008c863939d5cab94314cd94f7cdc124e519d75b40004dece857850a",
+    "tables/screening_dataset.csv": "0d41e082b034a85d225735f65fcb9095e3bdd487dc1a8fab81846c1d7534e1c2"
+  },
+  "immutability_note": "This directory is keyed by the source SHA that produced it. Re-running the same experiment on a different revision writes a sibling directory instead of overwriting this one.",
+  "interpretation": {
+    "comparison_scope": "The matrix records what each cited source presents. It is a capability inventory, not a benchmark; no system was re-implemented or timed here.",
+    "purpose": "Auditable screening dataset and source-linked comparison matrix.",
+    "review_status": "This remains a structured rapid review. It is not a systematic review: there is no dual independent screening, no full-text eligibility stage and no registered protocol.",
+    "triage_is_not_screening": "The triage column is a versioned keyword rule used to prioritise human review. It writes no include/exclude decision, and no PRISMA-style count may be derived from it."
+  },
+  "limitations": [
+    "Metadata-only discovery: records come from OpenAlex and Crossref APIs, not from IEEE Xplore, ACM DL, Scopus or Web of Science exports.",
+    "Full-text eligibility review was not performed for the discovery set.",
+    "Abstract and title metadata are incomplete for part of the corpus; the completeness audit records exactly how incomplete.",
+    "The comparison matrix reflects the cited sources at review time; capability claims were not re-verified by re-implementation."
+  ],
+  "provenance": {
+    "command": [
+      "C:\\Users\\Rayyan Khan\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "H:\\Neurofluxion\\repo\\research\\experiments\\run_literature_screening.py",
+      "--repo",
+      "H:\\Neurofluxion\\repo",
+      "--export",
+      "H:\\temp-lit\\export3"
+    ],
+    "command_line": "C:\\Users\\Rayyan Khan\\AppData\\Local\\Programs\\Python\\Python312\\python.exe H:\\Neurofluxion\\repo\\research\\experiments\\run_literature_screening.py --repo H:\\Neurofluxion\\repo --export H:\\temp-lit\\export3",
+    "environment": {
+      "captured_at_utc": "2026-10-18T21:23:36+00:00",
+      "cpu": {
+        "logical_cpus": 8,
+        "machine": "AMD64",
+        "physical_cpus": null,
+        "processor": "AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD"
+      },
+      "memory": {
+        "available_bytes_at_capture": 4111126528,
+        "total_bytes": 17101787136
+      },
+      "node": "v24.15.0",
+      "os": {
+        "machine": "AMD64",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "release": "11",
+        "system": "Windows",
+        "version": "10.0.26200"
+      },
+      "packages": {
+        "fastapi": "0.141.1",
+        "jax": null,
+        "keras": "3.15.1",
+        "numpy": "2.4.6",
+        "pydantic": "2.13.4",
+        "scipy": "1.18.0",
+        "tensorflow": "2.21.0",
+        "torch": "2.12.1",
+        "uvicorn": "0.52.4"
+      },
+      "python": {
+        "executable": "C:\\Users\\Rayyan Khan\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "full_version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+        "implementation": "CPython",
+        "version": "3.12.10"
+      },
+      "relevant_env_vars": {
+        "MKL_NUM_THREADS": null,
+        "NEUROFLUXION_BENCH_ENV": null,
+        "OMP_NUM_THREADS": null,
+        "OPENBLAS_NUM_THREADS": null,
+        "PYTHONHASHSEED": null,
+        "PYTHONPATH": "H:\\Neurofluxion\\repo\\backend;H:\\Neurofluxion\\repo\\research",
+        "TF_CPP_MIN_LOG_LEVEL": null,
+        "TF_ENABLE_ONEDNN_OPTS": null
+      }
+    },
+    "exit_code": 0,
+    "experiment_id": "EXP-10-literature-screening",
+    "finished_at_utc": "2026-10-18T21:21:41+00:00",
+    "git": {
+      "branch": "research/evidence-infrastructure",
+      "commit_sha": "1ab65d16e20ccbb65b70598112bf5dd605c6179b",
+      "commit_short": "1ab65d1",
+      "commit_timestamp": "2026-10-19T02:51:24+05:30",
+      "dirty_path_count": 2,
+      "is_dirty": true,
+      "is_shallow": "false",
+      "origin_url": "https://github.com/RayAKaan/Neurofluxion.git",
+      "repository_present": true
+    },
+    "notes": {
+      "export_checksums": {
+        "deduplicated_records.json": "c3bfb80a01d729bca3bd7010740a5a41cb9b7d4918abaaca9c5a17c0c733e84d",
+        "raw_records.json": "97826f8dfa519546e1789d46298b4b3d4903ddb4c1d00bfc218ba7ae5e6c3dd8",
+        "screening.csv": "e47726a884c0f2d9f6289c32e392400d34b3b31c6c2a84073a4fd4439eca19ca",
+        "search_manifest.json": "de5b49d121abcc8742688e26f80110c6e9c66561a53f147262091e97098467d9"
+      },
+      "export_directory": "H:\\temp-lit\\export3",
+      "runtime_source_modified": false
+    },
+    "repository_root": "H:\\Neurofluxion\\repo",
+    "script": "H:/Neurofluxion/repo/research/experiments/run_literature_screening.py",
+    "seed": null,
+    "started_at_utc": "2026-10-18T21:21:37+00:00"
+  },
+  "result_summary_sha256": "0bc122d4a3edd973e57aa540e2094ab5e4389dbbe0340d5708f906550b7e5222",
+  "schema": "neurofluxion.research.manifest",
+  "schema_version": 1,
+  "seed": null,
+  "source_sha": "1ab65d16e20ccbb65b70598112bf5dd605c6179b"
+}

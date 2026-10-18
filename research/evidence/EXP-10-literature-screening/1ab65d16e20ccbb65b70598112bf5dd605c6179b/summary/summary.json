@@ -1,0 +1,435 @@
+{
+  "comparison_matrix": {
+    "dimensions": 12,
+    "direct_competitors": 6,
+    "systems": 13
+  },
+  "dedup_audit": {
+    "distinct_dois": 1944,
+    "duplicate_doi_groups": 0,
+    "false_merge_candidates": 0,
+    "false_merge_examples": [],
+    "note": "A false-merge candidate is one DOI that maps to more than one normalised title. It is a review flag, not a confirmed error: pre-prints, conference and journal versions of the same work share a DOI prefix.",
+    "records": 2076,
+    "records_with_doi": 1944,
+    "residual_duplicate_examples": [
+      {
+        "keys": [
+          "10.1051/itmconf/20268401005",
+          "10.1051/itmconf/20268401005/pdf"
+        ],
+        "normalised_title": "review of visual analytics in healthcare big data from cnns to multimodal deep learning models",
+        "year": "2026"
+      },
+      {
+        "keys": [
+          "10.1039/d6ay01029f/v1/review1",
+          "10.1039/d6ay01029f/v1/review2",
+          "10.1039/d6ay01029f/v2/review1"
+        ],
+        "normalised_title": "review for decoding orthogonal geochemical fingerprints in complex soil matrices via multi model consensus machine learning for high fidelity forensic provenance",
+        "year": "2026"
+      },
+      {
+        "keys": [
+          "10.1002/9781394325313.fmatter",
+          "10.3390/books978-3-7258-8744-6"
+        ],
+        "normalised_title": "machine learning",
+        "year": "2026"
+      },
+      {
+        "keys": [
+          "10.1039/d6ay01029f/v1/decision1",
+          "10.1039/d6ay01029f/v2/decision1"
+        ],
+        "normalised_title": "decision letter for decoding orthogonal geochemical fingerprints in complex soil matrices via multi model consensus machine learning for high fidelity forensic provenance",
+        "year": "2026"
+      },
+      {
+        "keys": [
+          "10.5281/zenodo.19254677",
+          "10.5281/zenodo.19389219"
+        ],
+        "normalised_title": "computational reproducibility validation in cloud big data pipelines through provenance and machine learning",
+        "year": "2026"
+      },
+      {
+        "keys": [
+          "10.1016/j.ecoinf.2026.103604",
+          "10.5061/dryad.3bk3j9kz3"
+        ],
+        "normalised_title": "advancing provenance assignment using machine learning and time series analysis of chemical chronologies in archival tissues",
+        "year": "2026"
+      },
+      {
+        "keys": [
+          "10.1016/j.softx.2025.102298",
+          "10.2139/ssrn.5226904",
+          "10.48550/arxiv.2507.01078"
+        ],
+        "normalised_title": "yprov4ml effortless provenance tracking for machine learning systems",
+        "year": "2025"
+      },
+      {
+        "keys": [
+          "10.1109/tgrs.2025.3567422/v1/review1",
+          "10.1109/tgrs.2025.3567422/v1/review2",
+          "10.1109/tgrs.2025.3567422/v1/review3",
+          "10.1109/tgrs.2025.3567422/v2/review1",
+          "10.1109/tgrs.2025.3567422/v2/review2",
+          "10.1109/tgrs.2025.3567422/v2/review3"
+        ],
+        "normalised_title": "review for svifnn robust inpainting fourier neural network for sst scientific visualization image leveraging significant stability and nonsignificant anomalies",
+        "year": "2025"
+      },
+      {
+        "keys": [
+          "10.1002/eng2.70693/v1/review1",
+          "10.1002/eng2.70693/v1/review2"
+        ],
+        "normalised_title": "review for a graph neural network approach to cross cultural narrative visualization for educational reform",
+        "year": "2025"
+      },
+      {
+        "keys": [
+          "10.1016/j.softx.2024.102006",
+          "title-year:ravsim v2 0 enhanced visualization and comparative analysis for neural network models|2025"
+        ],
+        "normalised_title": "ravsim v2 0 enhanced visualization and comparative analysis for neural network models",
+        "year": "2025"
+      },
+      {
+        "keys": [
+          "10.1109/cisce65916.2025.11065878",
+          "10.21203/rs.3.rs-6565387/v1",
+          "10.36227/techrxiv.174667701.10499039/v1"
+        ],
+        "normalised_title": "invis interactive neural visualization system for human centered data interpretation",
+        "year": "2025"
+      },
+      {
+        "keys": [
+          "10.1145/3766918.3766925",
+          "10.20944/preprints202505.1367.v1"
+        ],
+        "normalised_title": "interpretable slow moving inventory forecasting a hybrid neural network approach with interactive visualization",
+        "year": "2025"
+      },
+      {
+        "keys": [
+          "10.1109/tgrs.2025.3567422/v1/decision1",
+          "10.1109/tgrs.2025.3567422/v2/decision1"
+        ],
+        "normalised_title": "decision letter for svifnn robust inpainting fourier neural network for sst scientific visualization image leveraging significant stability and nonsignificant anomalies",
+        "year": "2025"
+      },
+      {
+        "keys": [
+          "10.2139/ssrn.4963271",
+          "10.2139/ssrn.5005592"
+        ],
+        "normalised_title": "using shapley additive explanations for deep convolutional neural network debugging and transferability",
+        "year": "2024"
+      },
+      {
+        "keys": [
+          "10.20944/preprints202405.1176.v1",
+          "10.62162/2000000"
+        ],
+        "normalised_title": "simple dynamic visualization of memristor based synaptic plasticity in a simulated neural network",
+        "year": "2024"
+      },
+      {
+        "keys": [
+          "10.32388/14pb74",
+          "10.32388/4mhdcz",
+          "10.32388/5ocefw",
+          "10.32388/76n1vh",
+          "10.32388/7buuhy",
+          "10.32388/8h6m0d",
+          "10.32388/dj6jy7",
+          "10.32388/eedggp",
+          "10.32388/g27nuo",
+          "10.32388/kda8hu",
+          "10.32388/l3wwu2",
+          "10.32388/mb3q7p",
+          "10.32388/mjynmc",
+          "10.32388/nrv6rm",
+          "10.32388/nu6xpw",
+          "10.32388/q0m3jn",
+          "10.32388/qf65nf",
+          "10.32388/qg7aur",
+          "10.32388/r23vqq",
+          "10.32388/rzi40z",
+          "10.32388/tjlrz8",
+          "10.32388/uzxthi",
+          "10.32388/wpn8ol",
+          "10.32388/yx7pyb"
+        ],
+        "normalised_title": "review of an intelligent analytics for people detection using deep learning",
+        "year": "2024"
+      },
+      {
+        "keys": [
+          "10.1016/j.entcom.2024.100755",
+          "10.2139/ssrn.4809341"
+        ],
+        "normalised_title": "game provenance graph based representation learning vs metrics based machine learning an empirical comparison on predictive game analytics tasks",
+        "year": "2024"
+      },
+      {
+        "keys": [
+          "10.1007/978-3-658-42505-0_1",
+          "10.1007/978-3-658-46162-1_1"
+        ],
+        "normalised_title": "einleitung vom batch machine learning zum online machine learning",
+        "year": "2024"
+      },
+      {
+        "keys": [
+          "10.1145/3604237.3626887",
+          "10.48550/arxiv.2307.14322"
+        ],
+        "normalised_title": "modeling inverse demand function with explainable dual neural networks",
+        "year": "2023"
+      },
+      {
+        "keys": [
+          "10.30630/joiv.7.4.01376",
+          "10.30630/joiv.7.4.1376",
+          "10.62527/joiv.7.4.1376"
+        ],
+        "normalised_title": "mel frequency cepstral coefficients mfcc method and multiple adaline neural network model for speaker identification",
+        "year": "2023"
+      }
+    ],
+    "residual_duplicate_title_year_groups": 48
+  },
+  "export_complete_two_source": true,
+  "export_databases": [
+    "OpenAlex",
+    "Crossref"
+  ],
+  "export_deduplicated_records": 2076,
+  "export_failures": 0,
+  "export_generated_at_utc": "2026-10-18T19:20:01.913872+00:00",
+  "export_pagination_mode": {
+    "Crossref": "offset",
+    "OpenAlex": "page"
+  },
+  "export_queries": [
+    "neural network visualization",
+    "interactive neural network visualization",
+    "deep learning visual analytics",
+    "neural network debugging operation trace",
+    "machine learning provenance",
+    "execution trace visualization"
+  ],
+  "export_raw_records": 2400,
+  "export_script_version": "1.0.0",
+  "metadata_audit": {
+    "abstract_completeness": 0.5240847784200385,
+    "blank_abstract": 988,
+    "blank_doi": 132,
+    "blank_title": 4,
+    "blank_venue": 257,
+    "distinct_venues": 1043,
+    "doi_completeness": 0.9364161849710982,
+    "multi_source_records": 209,
+    "records": 2076,
+    "records_by_source_database": {
+      "Crossref": 920,
+      "Crossref; OpenAlex": 209,
+      "OpenAlex": 947
+    },
+    "year_histogram": {
+      "confidence_interval_95_mean": {
+        "high": 2017.8825808938282,
+        "low": 2017.0807218584655,
+        "method": "student_t_95"
+      },
+      "confidence_interval_95_median_note": "A normal-approximation interval is reported for the mean only. Non-parametric medians are reported without an inferential interval.",
+      "cv": 0.004488401657990526,
+      "iqr": 9.0,
+      "max": 2026.0,
+      "mean": 2017.4816513761468,
+      "median": 2020.0,
+      "min": 1964.0,
+      "n_finite": 1962,
+      "n_nonfinite": 0,
+      "n_outliers_iqr": 143,
+      "n_total": 1962,
+      "outlier_values": [
+        1964.0,
+        1964.0,
+        1974.0,
+        1975.0,
+        1975.0,
+        1975.0,
+        1983.0,
+        1983.0,
+        1983.0,
+        1985.0,
+        1985.0,
+        1985.0,
+        1986.0,
+        1986.0,
+        1986.0,
+        1987.0,
+        1987.0,
+        1987.0,
+        1987.0,
+        1987.0,
+        1988.0,
+        1988.0,
+        1988.0,
+        1988.0,
+        1988.0,
+        1989.0,
+        1989.0,
+        1989.0,
+        1989.0,
+        1989.0,
+        1990.0,
+        1990.0,
+        1990.0,
+        1990.0,
+        1990.0,
+        1990.0,
+        1991.0,
+        1991.0,
+        1991.0,
+        1991.0,
+        1991.0,
+        1991.0,
+        1991.0,
+        1991.0,
+        1991.0,
+        1991.0,
+        1992.0,
+        1992.0,
+        1992.0,
+        1992.0,
+        1992.0,
+        1992.0,
+        1992.0,
+        1992.0,
+        1993.0,
+        1993.0,
+        1993.0,
+        1993.0,
+        1993.0,
+        1993.0,
+        1993.0,
+        1993.0,
+        1993.0,
+        1993.0,
+        1993.0,
+        1993.0,
+        1993.0,
+        1994.0,
+        1994.0,
+        1994.0,
+        1994.0,
+        1994.0,
+        1994.0,
+        1994.0,
+        1994.0,
+        1994.0,
+        1994.0,
+        1994.0,
+        1994.0,
+        1994.0,
+        1995.0,
+        1995.0,
+        1995.0,
+        1995.0,
+        1995.0,
+        1995.0,
+        1995.0,
+        1995.0,
+        1996.0,
+        1996.0,
+        1996.0,
+        1996.0,
+        1997.0,
+        1997.0,
+        1997.0,
+        1997.0,
+        1997.0,
+        1997.0,
+        1997.0,
+        1997.0,
+        1997.0,
+        1997.0,
+        1997.0,
+        1997.0,
+        1997.0,
+        1997.0,
+        1997.0,
+        1997.0,
+        1998.0,
+        1998.0,
+        1998.0,
+        1998.0,
+        1999.0,
+        1999.0,
+        1999.0,
+        1999.0,
+        1999.0,
+        1999.0,
+        1999.0,
+        1999.0,
+        1999.0,
+        2000.0,
+        2000.0,
+        2000.0,
+        2000.0,
+        2000.0,
+        2000.0,
+        2000.0,
+        2000.0,
+        2000.0,
+        2000.0,
+        2000.0,
+        2000.0,
+        2000.0,
+        2000.0,
+        2001.0,
+        2001.0,
+        2001.0,
+        2001.0,
+        2001.0,
+        2001.0,
+        2001.0,
+        2001.0
+      ],
+      "percentiles": {
+        "p05": 1997.0,
+        "p25": 2015.0,
+        "p50": 2020.0,
+        "p75": 2024.0,
+        "p90": 2025.0,
+        "p95": 2026.0,
+        "p99": 2026.0
+      },
+      "std": 9.055267989002163
+    },
+    "year_range": [
+      1964,
+      2026
+    ]
+  },
+  "status": "COMPLETE",
+  "triage": {
+    "HIGH": 445,
+    "LOW": 1048,
+    "MEDIUM": 583,
+    "records_triaged": 2076,
+    "records_with_exclusion_term": 99,
+    "screening_decisions_made": 0,
+    "screening_decisions_note": "The triage rule is an automated prioritisation aid. It produces no include/exclude decision and must not be reported as screening.",
+    "triage_version": "triage-1.0.0"
+  }
+}

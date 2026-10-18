@@ -1,0 +1,1173 @@
+{
+  "cases_attempted": 21,
+  "cases_compared": 20,
+  "cases_not_comparable": 1,
+  "degenerate_tensors": [
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0,
+      "case_id": "batchnorm_vector_5_dense",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "batchnorm"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0,
+      "case_id": "batchnorm_vector_5_dense",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "dense"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.0,
+      "case_id": "batchnorm_vector_5_dense",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "batchnorm"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.0,
+      "case_id": "batchnorm_vector_5_dense",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "dense"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0,
+      "case_id": "batchnorm_vector_5_dense",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "batchnorm"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0,
+      "case_id": "batchnorm_vector_5_dense",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "dense"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.0,
+      "case_id": "batchnorm_vector_5_dense",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "batchnorm"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.0,
+      "case_id": "batchnorm_vector_5_dense",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "dense"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.0,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "embedding"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.0,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.0,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "embedding"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.0,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.0,
+      "case_id": "embedding_attention_2head_dense",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "embedding"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.0,
+      "case_id": "embedding_attention_2head_dense",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.0,
+      "case_id": "embedding_attention_2head_dense",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "embedding"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.0,
+      "case_id": "embedding_attention_2head_dense",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 4.808797117411265e-07,
+      "case_id": "composite_embedding_attention_lstm",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "dense"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 4.808797117411265e-07,
+      "case_id": "composite_embedding_attention_lstm",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "dense"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.0,
+      "case_id": "composite_embedding_attention_lstm",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "embedding"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.0,
+      "case_id": "composite_embedding_attention_lstm",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 4.808797117411265e-07,
+      "case_id": "composite_embedding_attention_lstm",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "dense"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 4.808797117411265e-07,
+      "case_id": "composite_embedding_attention_lstm",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "dense"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.0,
+      "case_id": "composite_embedding_attention_lstm",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "embedding"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.0,
+      "case_id": "composite_embedding_attention_lstm",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "attention"
+    }
+  ],
+  "epsilon_spread_relative_l2": {
+    "confidence_interval_95_mean": {
+      "high": 0.11202157465312743,
+      "low": 0.0018725250877249314,
+      "method": "student_t_95"
+    },
+    "confidence_interval_95_median_note": "A normal-approximation interval is reported for the mean only. Non-parametric medians are reported without an inferential interval.",
+    "cv": 9.382783829740424,
+    "iqr": 0.000663926859770777,
+    "max": 5.118981763310505,
+    "mean": 0.05694704987042618,
+    "median": 0.00027230488528979575,
+    "min": 2.8901447145419962e-08,
+    "n_finite": 364,
+    "n_nonfinite": 0,
+    "n_outliers_iqr": 24,
+    "n_total": 364,
+    "outlier_values": [
+      0.003402951465848548,
+      0.010205993147150184,
+      0.003402951465848548,
+      0.010205993147150184,
+      0.003402951465848548,
+      0.010205993147150184,
+      0.003402951465848548,
+      0.010205993147150184,
+      0.0025878746471168636,
+      0.0025878746471168636,
+      0.0025878746471168636,
+      0.0025878746471168636,
+      0.0069324307215731015,
+      0.0069324307215731015,
+      0.0069324307215731015,
+      0.0069324307215731015,
+      5.118981763310505,
+      0.00696565898780319,
+      5.118981763310505,
+      0.00696565898780319,
+      5.118981763310505,
+      0.00696565898780319,
+      5.118981763310505,
+      0.00696565898780319
+    ],
+    "percentiles": {
+      "p05": 1.6616002647789855e-06,
+      "p25": 7.539744116983277e-05,
+      "p50": 0.00027230488528979575,
+      "p75": 0.0007393243009406099,
+      "p90": 0.0014042526362125513,
+      "p95": 0.003402951465848548,
+      "p99": 1.9004530281076146
+    },
+    "std": 0.5343218586756563
+  },
+  "epsilon_sweep": [
+    0.01,
+    0.003,
+    0.001,
+    0.0003,
+    0.0001
+  ],
+  "failed_tensors": [],
+  "gradient_sources": [
+    "backward_engine",
+    "training_engine"
+  ],
+  "inconclusive_tensors": [
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.3962254944586354,
+      "case_id": "conv1_6x6_2_same_s2_batchnorm_flatten_dense",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "conv2d",
+      "relative_l2_error": 1.8809665864374912,
+      "resolution_probe": {
+        "dtype_resolution": 1.0427970683079215e-08,
+        "expected_signal": 2.84622395759866e-05,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 0.00011926046143229119,
+        "resolvable": true,
+        "signal_to_resolution": 11436.59347123092
+      }
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.3962254944586354,
+      "case_id": "conv1_6x6_2_same_s2_batchnorm_flatten_dense",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "conv2d",
+      "relative_l2_error": 1.8809665864374912,
+      "resolution_probe": {
+        "dtype_resolution": 1.0427970683079215e-08,
+        "expected_signal": 2.84622395759866e-05,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 0.00011926046143229119,
+        "resolvable": true,
+        "signal_to_resolution": 11436.59347123092
+      }
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.3962254944586354,
+      "case_id": "conv1_6x6_2_same_s2_batchnorm_flatten_dense",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "conv2d",
+      "relative_l2_error": 1.8809665864374912,
+      "resolution_probe": {
+        "dtype_resolution": 1.0427970683079215e-08,
+        "expected_signal": 2.84622395759866e-05,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 0.00011926046143229119,
+        "resolvable": true,
+        "signal_to_resolution": 11436.59347123092
+      }
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.3962254944586354,
+      "case_id": "conv1_6x6_2_same_s2_batchnorm_flatten_dense",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "conv2d",
+      "relative_l2_error": 1.8809665864374912,
+      "resolution_probe": {
+        "dtype_resolution": 1.0427970683079215e-08,
+        "expected_signal": 2.84622395759866e-05,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 0.00011926046143229119,
+        "resolvable": true,
+        "signal_to_resolution": 11436.59347123092
+      }
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 1.4901161193847656e-08,
+      "case_id": "batchnorm_spatial_conv",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "conv2d",
+      "relative_l2_error": 0.9999328956392973,
+      "resolution_probe": {
+        "dtype_resolution": 2.0009715039530714e-08,
+        "expected_signal": 2.9613802403421795e-10,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 0.0,
+        "resolvable": false,
+        "signal_to_resolution": 0.0
+      }
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 1.4901161193847656e-08,
+      "case_id": "batchnorm_spatial_conv",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "conv2d",
+      "relative_l2_error": 0.9999328956392973,
+      "resolution_probe": {
+        "dtype_resolution": 2.0009715039530714e-08,
+        "expected_signal": 2.9613802403421795e-10,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 0.0,
+        "resolvable": false,
+        "signal_to_resolution": 0.0
+      }
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 1.4901161193847656e-08,
+      "case_id": "batchnorm_spatial_conv",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "conv2d",
+      "relative_l2_error": 0.9999328956392973,
+      "resolution_probe": {
+        "dtype_resolution": 2.0009715039530714e-08,
+        "expected_signal": 2.9613802403421795e-10,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 0.0,
+        "resolvable": false,
+        "signal_to_resolution": 0.0
+      }
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 1.4901161193847656e-08,
+      "case_id": "batchnorm_spatial_conv",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "conv2d",
+      "relative_l2_error": 0.9999328956392973,
+      "resolution_probe": {
+        "dtype_resolution": 2.0009715039530714e-08,
+        "expected_signal": 2.9613802403421795e-10,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 0.0,
+        "resolvable": false,
+        "signal_to_resolution": 0.0
+      }
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 7.113225477806316e-07,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "rnn",
+      "relative_l2_error": 0.9999985941699763,
+      "resolution_probe": {
+        "dtype_resolution": 8.262959715953034e-08,
+        "expected_signal": 3.3095101981545753e-10,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 0.0,
+        "resolvable": false,
+        "signal_to_resolution": 0.0
+      }
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 7.643367951535331e-07,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "dense",
+      "relative_l2_error": 0.9999986916779382,
+      "resolution_probe": {
+        "dtype_resolution": 8.262959715953034e-08,
+        "expected_signal": 3.790822171914558e-09,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 0.0,
+        "resolvable": false,
+        "signal_to_resolution": 0.0
+      }
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 1.6760280030086164e-05,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "attention",
+      "relative_l2_error": 0.6692399762175346,
+      "resolution_probe": {
+        "dtype_resolution": 8.262961137038421e-08,
+        "expected_signal": 6.099567722935353e-08,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 1.1920928244535389e-07,
+        "resolvable": false,
+        "signal_to_resolution": 1.4426944586608623
+      }
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 7.113225477806316e-07,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "rnn",
+      "relative_l2_error": 0.9999985941699763,
+      "resolution_probe": {
+        "dtype_resolution": 8.262959715953034e-08,
+        "expected_signal": 3.3095101981545753e-10,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 0.0,
+        "resolvable": false,
+        "signal_to_resolution": 0.0
+      }
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 7.643367951535331e-07,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "dense",
+      "relative_l2_error": 0.9999986916779382,
+      "resolution_probe": {
+        "dtype_resolution": 8.262959715953034e-08,
+        "expected_signal": 3.790822171914558e-09,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 0.0,
+        "resolvable": false,
+        "signal_to_resolution": 0.0
+      }
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 7.113225477806316e-07,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "rnn",
+      "relative_l2_error": 0.9999985941699763,
+      "resolution_probe": {
+        "dtype_resolution": 8.262959715953034e-08,
+        "expected_signal": 3.3095101981545753e-10,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 0.0,
+        "resolvable": false,
+        "signal_to_resolution": 0.0
+      }
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 7.643367951535331e-07,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "dense",
+      "relative_l2_error": 0.9999986916779382,
+      "resolution_probe": {
+        "dtype_resolution": 8.262959715953034e-08,
+        "expected_signal": 3.790822171914558e-09,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 0.0,
+        "resolvable": false,
+        "signal_to_resolution": 0.0
+      }
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 1.6760280030086164e-05,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "attention",
+      "relative_l2_error": 0.6692399762175346,
+      "resolution_probe": {
+        "dtype_resolution": 8.262961137038421e-08,
+        "expected_signal": 6.099567722935353e-08,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 1.1920928244535389e-07,
+        "resolvable": false,
+        "signal_to_resolution": 1.4426944586608623
+      }
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 7.113225477806316e-07,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "rnn",
+      "relative_l2_error": 0.9999985941699763,
+      "resolution_probe": {
+        "dtype_resolution": 8.262959715953034e-08,
+        "expected_signal": 3.3095101981545753e-10,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 0.0,
+        "resolvable": false,
+        "signal_to_resolution": 0.0
+      }
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 7.643367951535331e-07,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "dense",
+      "relative_l2_error": 0.9999986916779382,
+      "resolution_probe": {
+        "dtype_resolution": 8.262959715953034e-08,
+        "expected_signal": 3.790822171914558e-09,
+        "note": "expected_signal is 2*eps*|<analytic, direction>|. A ratio below 10 means the central difference cannot resolve the analytic gradient in this dtype, so a mismatch is inconclusive.",
+        "observed_signal": 0.0,
+        "resolvable": false,
+        "signal_to_resolution": 0.0
+      }
+    }
+  ],
+  "kink_band": {
+    "batchnorm_spatial_conv": {
+      "band": 0.01,
+      "details": [],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 0,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 0
+    },
+    "batchnorm_vector_5_dense": {
+      "band": 0.01,
+      "details": [],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 0,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 0
+    },
+    "composite_conv_pool_dense_residual": {
+      "band": 0.01,
+      "details": [
+        {
+          "activation": "relu",
+          "layer_instance_index": 1,
+          "layer_type": "conv2d",
+          "pre_activation_min_abs": 0.04205356538295746,
+          "pre_activation_size": 16,
+          "within_band": 0
+        }
+      ],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 1,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 16
+    },
+    "composite_embedding_attention_lstm": {
+      "band": 0.01,
+      "details": [],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 0,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 0
+    },
+    "conv1_5x5_1_valid_flatten_dense": {
+      "band": 0.01,
+      "details": [
+        {
+          "activation": "relu",
+          "layer_instance_index": 1,
+          "layer_type": "conv2d",
+          "pre_activation_min_abs": 0.1867036670446396,
+          "pre_activation_size": 9,
+          "within_band": 0
+        }
+      ],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 1,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 9
+    },
+    "conv1_6x6_2_same_s2_batchnorm_flatten_dense": {
+      "band": 0.01,
+      "details": [
+        {
+          "activation": "relu",
+          "layer_instance_index": 1,
+          "layer_type": "conv2d",
+          "pre_activation_min_abs": 0.0,
+          "pre_activation_size": 50,
+          "within_band": 18
+        }
+      ],
+      "elements_within_band": 18,
+      "fraction_within_band": 0.36,
+      "layers_with_non_smooth_activation": 1,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 50
+    },
+    "conv1_6x6_2_same_s2_batchnorm_flatten_tanh": {
+      "band": 0.01,
+      "details": [],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 0,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 0
+    },
+    "conv_pool_avg_flatten_dense": {
+      "band": 0.01,
+      "details": [
+        {
+          "activation": "relu",
+          "layer_instance_index": 1,
+          "layer_type": "conv2d",
+          "pre_activation_min_abs": 0.04829399287700653,
+          "pre_activation_size": 16,
+          "within_band": 0
+        }
+      ],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 1,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 16
+    },
+    "conv_pool_max_flatten_dense": {
+      "band": 0.01,
+      "details": [
+        {
+          "activation": "relu",
+          "layer_instance_index": 1,
+          "layer_type": "conv2d",
+          "pre_activation_min_abs": 0.06385460495948792,
+          "pre_activation_size": 16,
+          "within_band": 0
+        }
+      ],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 1,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 16
+    },
+    "dense_3_4_1_sigmoid_bce": {
+      "band": 0.01,
+      "details": [],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 0,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 0
+    },
+    "dense_3_4_2_relu": {
+      "band": 0.01,
+      "details": [
+        {
+          "activation": "relu",
+          "layer_instance_index": 1,
+          "layer_type": "dense",
+          "pre_activation_min_abs": 0.6213706731796265,
+          "pre_activation_size": 4,
+          "within_band": 0
+        }
+      ],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 1,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 4
+    },
+    "dense_4_5_1_tanh_linear_mse": {
+      "band": 0.01,
+      "details": [
+        {
+          "activation": "leaky_relu",
+          "layer_instance_index": 2,
+          "layer_type": "dense",
+          "pre_activation_min_abs": 0.21290113031864166,
+          "pre_activation_size": 3,
+          "within_band": 0
+        }
+      ],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 1,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 3
+    },
+    "dense_deep_6x4_mse": {
+      "band": 0.01,
+      "details": [],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 0,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 0
+    },
+    "embedding_attention_2head_dense": {
+      "band": 0.01,
+      "details": [],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 0,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 0
+    },
+    "embedding_attention_rnn_dense": {
+      "band": 0.01,
+      "details": [],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 0,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 0
+    },
+    "gru_t4_d3_h3_dense": {
+      "band": 0.01,
+      "details": [],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 0,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 0
+    },
+    "lstm_t3_d2_h2_returnseq_dense": {
+      "band": 0.01,
+      "details": [],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 0,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 0
+    },
+    "lstm_t4_d3_h3_dense": {
+      "band": 0.01,
+      "details": [],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 0,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 0
+    },
+    "residual_dense_4_4": {
+      "band": 0.01,
+      "details": [],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 0,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 0
+    },
+    "rnn_t3_d2_h3_dense": {
+      "band": 0.01,
+      "details": [],
+      "elements_within_band": 0,
+      "fraction_within_band": 0.0,
+      "layers_with_non_smooth_activation": 0,
+      "note": "If fraction_within_band > 0 the finite-difference gradient of every parameter upstream of those activations is biased, and a mismatch with the analytic gradient is evidence about the estimator.",
+      "pre_activation_elements_examined": 0
+    }
+  },
+  "max_abs_error_distribution": {
+    "count": 364,
+    "max": 0.00012289326577885618,
+    "mean": 8.364709187586994e-06,
+    "median": 1.0127008831517514e-06,
+    "min": 2.9304267346041968e-12,
+    "p90": 1.1406428015448e-05,
+    "p95": 4.0554507660495176e-05,
+    "p99": 0.00011736202145463229,
+    "std": 2.34912069161195e-05
+  },
+  "param_sync_unverified_tensors": [
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.3962254944586354,
+      "attribution": null,
+      "case_id": "conv1_6x6_2_same_s2_batchnorm_flatten_dense",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "conv2d"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.3962254944586354,
+      "attribution": null,
+      "case_id": "conv1_6x6_2_same_s2_batchnorm_flatten_dense",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "conv2d"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.3962254944586354,
+      "attribution": null,
+      "case_id": "conv1_6x6_2_same_s2_batchnorm_flatten_dense",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "conv2d"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 0.3962254944586354,
+      "attribution": null,
+      "case_id": "conv1_6x6_2_same_s2_batchnorm_flatten_dense",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "conv2d"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 1.4901161193847656e-08,
+      "attribution": null,
+      "case_id": "batchnorm_spatial_conv",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "conv2d"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 1.4901161193847656e-08,
+      "attribution": null,
+      "case_id": "batchnorm_spatial_conv",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "conv2d"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 1.4901161193847656e-08,
+      "attribution": null,
+      "case_id": "batchnorm_spatial_conv",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "conv2d"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 1.4901161193847656e-08,
+      "attribution": null,
+      "case_id": "batchnorm_spatial_conv",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "conv2d"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 1.6760280030086164e-05,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 7.113225477806316e-07,
+      "attribution": null,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "rnn"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 7.643367951535331e-07,
+      "attribution": null,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "dense"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "embedding"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 1.6760280030086164e-05,
+      "attribution": null,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 7.113225477806316e-07,
+      "attribution": null,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "rnn"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 7.643367951535331e-07,
+      "attribution": null,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "dense"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 1.6760280030086164e-05,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 7.113225477806316e-07,
+      "attribution": null,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "rnn"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 7.643367951535331e-07,
+      "attribution": null,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "dense"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "embedding"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 1.6760280030086164e-05,
+      "attribution": null,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 7.113225477806316e-07,
+      "attribution": null,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "rnn"
+    },
+    {
+      "access_mode": "layer_attribute",
+      "analytic_norm": 7.643367951535331e-07,
+      "attribution": null,
+      "case_id": "embedding_attention_rnn_dense",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "dense"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0013908973028998605,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "embedding_attention_2head_dense",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "embedding_attention_2head_dense",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "embedding"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "embedding_attention_2head_dense",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0013908973028998605,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "embedding_attention_2head_dense",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "embedding_attention_2head_dense",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "embedding"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "embedding_attention_2head_dense",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 2.055991652117625e-05,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "composite_embedding_attention_lstm",
+      "gradient_source": "backward_engine",
+      "kind": "weights",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "composite_embedding_attention_lstm",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "embedding"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "composite_embedding_attention_lstm",
+      "gradient_source": "backward_engine",
+      "kind": "biases",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 2.055991652117625e-05,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "composite_embedding_attention_lstm",
+      "gradient_source": "training_engine",
+      "kind": "weights",
+      "layer_type": "attention"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "composite_embedding_attention_lstm",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "embedding"
+    },
+    {
+      "access_mode": "packed",
+      "analytic_norm": 0.0,
+      "attribution": "packed parameter array does not reach the owning layer",
+      "case_id": "composite_embedding_attention_lstm",
+      "gradient_source": "training_engine",
+      "kind": "biases",
+      "layer_type": "attention"
+    }
+  ],
+  "relative_l2_error_distribution": {
+    "count": 364,
+    "max": 0.03521249271246136,
+    "mean": 0.00041334690948390635,
+    "median": 3.676811099913982e-06,
+    "min": 1.0779114332168095e-08,
+    "p90": 7.53430969311266e-05,
+    "p95": 0.00011681870448130943,
+    "p99": 0.013339031988636842,
+    "std": 0.0036737167595500965
+  },
+  "status": "PASS",
+  "tensor_checks_compared": 364,
+  "tensor_checks_degenerate_zero_gradient": 24,
+  "tensor_checks_failed": 0,
+  "tensor_checks_inconclusive": 18,
+  "tensor_checks_param_sync_unverified": 18,
+  "tensor_checks_total": 424
+}

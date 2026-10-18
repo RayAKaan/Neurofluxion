@@ -1,0 +1,24 @@
+{
+  "cases_checked_in_process": 20,
+  "cases_declared_unsupported": [
+    "dense_3_4_2_mse_batch3"
+  ],
+  "cases_errored": [],
+  "cross_process_cases": [
+    "dense_3_4_2_relu",
+    "lstm_t4_d3_h3_dense",
+    "conv1_6x6_2_same_s2_batchnorm_flatten_tanh"
+  ],
+  "cross_process_failures": [],
+  "declared_unsupported_cases_that_unexpectedly_succeeded": [],
+  "in_process_build_failures": [],
+  "in_process_forward_failures": [],
+  "in_process_trace_failures": [],
+  "in_process_training_failures": [],
+  "repeats": 5,
+  "seed_insensitive_cases": [
+    "batchnorm_vector_5_dense"
+  ],
+  "seed_sensitivity_all_distinct": false,
+  "status": "PASS"
+}

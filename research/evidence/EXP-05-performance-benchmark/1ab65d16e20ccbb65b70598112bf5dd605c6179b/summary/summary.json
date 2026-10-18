@@ -1,0 +1,104 @@
+{
+  "effect_size_trace_vs_forward": {
+    "confidence_interval_95_mean": {
+      "high": 2.768739644103362,
+      "low": 0.6387415835395924,
+      "method": "student_t_95"
+    },
+    "confidence_interval_95_median_note": "A normal-approximation interval is reported for the mean only. Non-parametric medians are reported without an inferential interval.",
+    "cv": 1.0826345590368198,
+    "iqr": 2.1600506066011897,
+    "max": 6.043566870222391,
+    "mean": 1.7037406138214772,
+    "median": 1.3337188614575775,
+    "min": -0.06250819092756026,
+    "n_finite": 14,
+    "n_nonfinite": 0,
+    "n_outliers_iqr": 1,
+    "n_total": 14,
+    "outlier_values": [
+      6.043566870222391
+    ],
+    "percentiles": {
+      "p05": -0.0559344703040943,
+      "p25": 0.192043929171618,
+      "p50": 1.3337188614575775,
+      "p75": 2.3520945357728076,
+      "p90": 4.067591387453457,
+      "p95": 5.143943087626075,
+      "p99": 5.863642113703127
+    },
+    "std": 1.8445284681577359
+  },
+  "median_forward_ms_by_workload": {
+    "conv_1x16_32": 2.2137000000000002,
+    "conv_1x8_16": 0.67765,
+    "conv_2x32_32": 2.91845,
+    "dense_128_256_64": 0.10925,
+    "dense_16_32_8": 0.08,
+    "dense_32_64_16": 0.0891,
+    "dense_64_128_32": 0.08549999999999999,
+    "dense_8_16_4": 0.058050000000000004,
+    "gru_t32_d32_h32": 1.10815,
+    "gru_t64_d64_h64": 1.9536,
+    "gru_t8_d16_h16": 0.3523,
+    "lstm_t32_d32_h32": 1.2236500000000001,
+    "lstm_t64_d64_h64": 2.9809,
+    "lstm_t8_d16_h16": 0.41355
+  },
+  "median_trace_total_ms_by_workload": {
+    "conv_1x16_32": 5.1913,
+    "conv_1x8_16": 0.92535,
+    "conv_2x32_32": 6.103400000000001,
+    "dense_128_256_64": 2.3544,
+    "dense_16_32_8": 0.1584,
+    "dense_32_64_16": 0.35340000000000005,
+    "dense_64_128_32": 0.66265,
+    "dense_8_16_4": 0.11374999999999999,
+    "gru_t32_d32_h32": 1.1781000000000001,
+    "gru_t64_d64_h64": 2.2594000000000003,
+    "gru_t8_d16_h16": 0.3729,
+    "lstm_t32_d32_h32": 1.3669,
+    "lstm_t64_d64_h64": 2.69755,
+    "lstm_t8_d16_h16": 0.4295
+  },
+  "output_parity_failures": [],
+  "paired_trace_overhead_ratio": {
+    "confidence_interval_95_mean": {
+      "high": 6.7276056999024,
+      "low": 0.3168312906820021,
+      "method": "student_t_95"
+    },
+    "confidence_interval_95_median_note": "A normal-approximation interval is reported for the mean only. Non-parametric medians are reported without an inferential interval.",
+    "cv": 1.5761601963579157,
+    "iqr": 0.9573318623247546,
+    "max": 21.741695688314664,
+    "mean": 3.522218495292201,
+    "median": 1.671456481254891,
+    "min": 1.0351292770955658,
+    "n_finite": 14,
+    "n_nonfinite": 0,
+    "n_outliers_iqr": 3,
+    "n_total": 14,
+    "outlier_values": [
+      3.68403341060594,
+      7.931137038075544,
+      21.741695688314664
+    ],
+    "percentiles": {
+      "p05": 1.0610687483037875,
+      "p25": 1.0943753098304883,
+      "p50": 1.671456481254891,
+      "p75": 2.051707172155243,
+      "p90": 6.657005949834668,
+      "p95": 12.76483256565923,
+      "p99": 19.946323063783566
+    },
+    "std": 5.551580595155238
+  },
+  "samples_per_component": 60,
+  "status": "PASS",
+  "warmups_per_component": 10,
+  "workloads_failed": 0,
+  "workloads_measured": 14
+}
