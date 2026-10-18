@@ -1,0 +1,274 @@
+{
+  "databases": [
+    "OpenAlex",
+    "Crossref"
+  ],
+  "deduplicated_record_count": 2076,
+  "deduplication_rule": "normalized DOI; otherwise normalized title + year; otherwise source-ID hash",
+  "failed_query_count": 0,
+  "failures": [],
+  "generated_at_utc": "2026-10-18T19:20:01.913872+00:00",
+  "limitation": "API metadata discovery is not a complete systematic review; search coverage, full-text screening, duplicate adjudication, and independent review remain required.",
+  "max_pages_per_query": 2,
+  "openalex_mailto_provided": true,
+  "page_size": 100,
+  "pagination_mode": {
+    "Crossref": "offset",
+    "OpenAlex": "page"
+  },
+  "partial_failed_query_count": 0,
+  "queries": [
+    "neural network visualization",
+    "interactive neural network visualization",
+    "deep learning visual analytics",
+    "neural network debugging operation trace",
+    "machine learning provenance",
+    "execution trace visualization"
+  ],
+  "query_runs": [
+    {
+      "database": "OpenAlex",
+      "query": "neural network visualization",
+      "records_returned": 200,
+      "requests": [
+        {
+          "page": 1,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.openalex.org/works?search=neural+network+visualization&per-page=100&page=1&select=id%2Cdoi%2Ctitle%2Cpublication_year%2Ctype%2Ccited_by_count%2Cauthorships%2Cprimary_location%2Copen_access%2Cabstract_inverted_index&mailto=rakrayyan16%40gmail.com"
+        },
+        {
+          "page": 2,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.openalex.org/works?search=neural+network+visualization&per-page=100&page=2&select=id%2Cdoi%2Ctitle%2Cpublication_year%2Ctype%2Ccited_by_count%2Cauthorships%2Cprimary_location%2Copen_access%2Cabstract_inverted_index&mailto=rakrayyan16%40gmail.com"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "database": "Crossref",
+      "query": "neural network visualization",
+      "records_returned": 200,
+      "requests": [
+        {
+          "page": 1,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.crossref.org/works?query.bibliographic=neural+network+visualization&rows=100&offset=0&select=DOI%2Ctitle%2Cpublished%2Cauthor%2Ccontainer-title%2Ctype%2Cis-referenced-by-count%2CURL%2Cabstract"
+        },
+        {
+          "page": 2,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.crossref.org/works?query.bibliographic=neural+network+visualization&rows=100&offset=100&select=DOI%2Ctitle%2Cpublished%2Cauthor%2Ccontainer-title%2Ctype%2Cis-referenced-by-count%2CURL%2Cabstract"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "database": "OpenAlex",
+      "query": "interactive neural network visualization",
+      "records_returned": 200,
+      "requests": [
+        {
+          "page": 1,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.openalex.org/works?search=interactive+neural+network+visualization&per-page=100&page=1&select=id%2Cdoi%2Ctitle%2Cpublication_year%2Ctype%2Ccited_by_count%2Cauthorships%2Cprimary_location%2Copen_access%2Cabstract_inverted_index&mailto=rakrayyan16%40gmail.com"
+        },
+        {
+          "page": 2,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.openalex.org/works?search=interactive+neural+network+visualization&per-page=100&page=2&select=id%2Cdoi%2Ctitle%2Cpublication_year%2Ctype%2Ccited_by_count%2Cauthorships%2Cprimary_location%2Copen_access%2Cabstract_inverted_index&mailto=rakrayyan16%40gmail.com"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "database": "Crossref",
+      "query": "interactive neural network visualization",
+      "records_returned": 200,
+      "requests": [
+        {
+          "page": 1,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.crossref.org/works?query.bibliographic=interactive+neural+network+visualization&rows=100&offset=0&select=DOI%2Ctitle%2Cpublished%2Cauthor%2Ccontainer-title%2Ctype%2Cis-referenced-by-count%2CURL%2Cabstract"
+        },
+        {
+          "page": 2,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.crossref.org/works?query.bibliographic=interactive+neural+network+visualization&rows=100&offset=100&select=DOI%2Ctitle%2Cpublished%2Cauthor%2Ccontainer-title%2Ctype%2Cis-referenced-by-count%2CURL%2Cabstract"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "database": "OpenAlex",
+      "query": "deep learning visual analytics",
+      "records_returned": 200,
+      "requests": [
+        {
+          "page": 1,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.openalex.org/works?search=deep+learning+visual+analytics&per-page=100&page=1&select=id%2Cdoi%2Ctitle%2Cpublication_year%2Ctype%2Ccited_by_count%2Cauthorships%2Cprimary_location%2Copen_access%2Cabstract_inverted_index&mailto=rakrayyan16%40gmail.com"
+        },
+        {
+          "page": 2,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.openalex.org/works?search=deep+learning+visual+analytics&per-page=100&page=2&select=id%2Cdoi%2Ctitle%2Cpublication_year%2Ctype%2Ccited_by_count%2Cauthorships%2Cprimary_location%2Copen_access%2Cabstract_inverted_index&mailto=rakrayyan16%40gmail.com"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "database": "Crossref",
+      "query": "deep learning visual analytics",
+      "records_returned": 200,
+      "requests": [
+        {
+          "page": 1,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.crossref.org/works?query.bibliographic=deep+learning+visual+analytics&rows=100&offset=0&select=DOI%2Ctitle%2Cpublished%2Cauthor%2Ccontainer-title%2Ctype%2Cis-referenced-by-count%2CURL%2Cabstract"
+        },
+        {
+          "page": 2,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.crossref.org/works?query.bibliographic=deep+learning+visual+analytics&rows=100&offset=100&select=DOI%2Ctitle%2Cpublished%2Cauthor%2Ccontainer-title%2Ctype%2Cis-referenced-by-count%2CURL%2Cabstract"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "database": "OpenAlex",
+      "query": "neural network debugging operation trace",
+      "records_returned": 200,
+      "requests": [
+        {
+          "page": 1,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.openalex.org/works?search=neural+network+debugging+operation+trace&per-page=100&page=1&select=id%2Cdoi%2Ctitle%2Cpublication_year%2Ctype%2Ccited_by_count%2Cauthorships%2Cprimary_location%2Copen_access%2Cabstract_inverted_index&mailto=rakrayyan16%40gmail.com"
+        },
+        {
+          "page": 2,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.openalex.org/works?search=neural+network+debugging+operation+trace&per-page=100&page=2&select=id%2Cdoi%2Ctitle%2Cpublication_year%2Ctype%2Ccited_by_count%2Cauthorships%2Cprimary_location%2Copen_access%2Cabstract_inverted_index&mailto=rakrayyan16%40gmail.com"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "database": "Crossref",
+      "query": "neural network debugging operation trace",
+      "records_returned": 200,
+      "requests": [
+        {
+          "page": 1,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.crossref.org/works?query.bibliographic=neural+network+debugging+operation+trace&rows=100&offset=0&select=DOI%2Ctitle%2Cpublished%2Cauthor%2Ccontainer-title%2Ctype%2Cis-referenced-by-count%2CURL%2Cabstract"
+        },
+        {
+          "page": 2,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.crossref.org/works?query.bibliographic=neural+network+debugging+operation+trace&rows=100&offset=100&select=DOI%2Ctitle%2Cpublished%2Cauthor%2Ccontainer-title%2Ctype%2Cis-referenced-by-count%2CURL%2Cabstract"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "database": "OpenAlex",
+      "query": "machine learning provenance",
+      "records_returned": 200,
+      "requests": [
+        {
+          "page": 1,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.openalex.org/works?search=machine+learning+provenance&per-page=100&page=1&select=id%2Cdoi%2Ctitle%2Cpublication_year%2Ctype%2Ccited_by_count%2Cauthorships%2Cprimary_location%2Copen_access%2Cabstract_inverted_index&mailto=rakrayyan16%40gmail.com"
+        },
+        {
+          "page": 2,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.openalex.org/works?search=machine+learning+provenance&per-page=100&page=2&select=id%2Cdoi%2Ctitle%2Cpublication_year%2Ctype%2Ccited_by_count%2Cauthorships%2Cprimary_location%2Copen_access%2Cabstract_inverted_index&mailto=rakrayyan16%40gmail.com"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "database": "Crossref",
+      "query": "machine learning provenance",
+      "records_returned": 200,
+      "requests": [
+        {
+          "page": 1,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.crossref.org/works?query.bibliographic=machine+learning+provenance&rows=100&offset=0&select=DOI%2Ctitle%2Cpublished%2Cauthor%2Ccontainer-title%2Ctype%2Cis-referenced-by-count%2CURL%2Cabstract"
+        },
+        {
+          "page": 2,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.crossref.org/works?query.bibliographic=machine+learning+provenance&rows=100&offset=100&select=DOI%2Ctitle%2Cpublished%2Cauthor%2Ccontainer-title%2Ctype%2Cis-referenced-by-count%2CURL%2Cabstract"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "database": "OpenAlex",
+      "query": "execution trace visualization",
+      "records_returned": 200,
+      "requests": [
+        {
+          "page": 1,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.openalex.org/works?search=execution+trace+visualization&per-page=100&page=1&select=id%2Cdoi%2Ctitle%2Cpublication_year%2Ctype%2Ccited_by_count%2Cauthorships%2Cprimary_location%2Copen_access%2Cabstract_inverted_index&mailto=rakrayyan16%40gmail.com"
+        },
+        {
+          "page": 2,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.openalex.org/works?search=execution+trace+visualization&per-page=100&page=2&select=id%2Cdoi%2Ctitle%2Cpublication_year%2Ctype%2Ccited_by_count%2Cauthorships%2Cprimary_location%2Copen_access%2Cabstract_inverted_index&mailto=rakrayyan16%40gmail.com"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "database": "Crossref",
+      "query": "execution trace visualization",
+      "records_returned": 200,
+      "requests": [
+        {
+          "page": 1,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.crossref.org/works?query.bibliographic=execution+trace+visualization&rows=100&offset=0&select=DOI%2Ctitle%2Cpublished%2Cauthor%2Ccontainer-title%2Ctype%2Cis-referenced-by-count%2CURL%2Cabstract"
+        },
+        {
+          "page": 2,
+          "records_returned": 100,
+          "status": "success",
+          "url": "https://api.crossref.org/works?query.bibliographic=execution+trace+visualization&rows=100&offset=100&select=DOI%2Ctitle%2Cpublished%2Cauthor%2Ccontainer-title%2Ctype%2Cis-referenced-by-count%2CURL%2Cabstract"
+        }
+      ],
+      "status": "success"
+    }
+  ],
+  "raw_record_count": 2400,
+  "screening_status": "not screened; CSV decision fields intentionally blank",
+  "script_version": "1.0.0",
+  "successful_query_count": 12
+}
