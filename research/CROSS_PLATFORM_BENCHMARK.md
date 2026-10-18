@@ -1,5 +1,17 @@
 # Cross-Platform Trace Benchmark
 
+> **Superseded on 2026-10-19.** The ratio columns below compare "final-output
+> forward" against "full trace construction", which performs strictly more work.
+> A decomposed benchmark (EXP-05, evidence revision
+> `1ab65d16e20ccbb65b70598112bf5dd605c6179b`) shows that the residual is
+> dominated by **JSON serialisation of the record payload**, not by the traced
+> arithmetic: for `dense_128_256_64`, trace construction is 2.35 ms while JSON
+> serialisation alone is 74.6 ms. Use [RESEARCH_STATUS.md §5](RESEARCH_STATUS.md)
+> for the current performance evidence. This document is retained as the
+> historical record of the earlier hosted-CI diagnostics, whose absolute timings
+> also come from a different environment and must not be pooled with the
+> workstation measurements.
+
 ## Purpose
 
 Compare the existing NumPy simulator's final-output forward path with its full dense trace-construction path on two operating-system runner families. The goal is to characterize whether the previously observed ratios are specific to one hosted-runner environment, not to claim a universal tracing overhead.

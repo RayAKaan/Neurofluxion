@@ -1,0 +1,200 @@
+name: Neurofluxion research evidence validation
+
+on:
+  pull_request:
+    paths:
+      - "research/**"
+      - ".github/workflows/evidence-validation.yml"
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: evidence-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  evidence-integrity:
+    name: Evidence integrity and provenance
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate every committed evidence bundle
+        run: |
+          python - <<'PY'
+          import hashlib, json, sys
+          from pathlib import Path
+
+          root = Path("research/evidence")
+          if not root.exists():
+              print("no evidence directory present")
+              raise SystemExit(0)
+
+          problems: list[str] = []
+          bundles = 0
+          files = 0
+          for manifest_path in sorted(root.rglob("manifest.json")):
+              revision = manifest_path.parent
+              bundles += 1
+              try:
+                  manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+              except Exception as exc:
+                  problems.append(f"{manifest_path}: unreadable manifest ({exc})")
+                  continue
+
+              for required in ("schema", "experiment_id", "source_sha", "provenance", "files"):
+                  if required not in manifest:
+                      problems.append(f"{manifest_path}: missing '{required}'")
+
+              # The directory name must equal the recorded source revision, so a
+              # bundle can never claim to come from a revision it did not run on.
+              if manifest.get("source_sha") != revision.name:
+                  problems.append(
+                      f"{manifest_path}: directory '{revision.name}' does not match "
+                      f"recorded source_sha '{manifest.get('source_sha')}'"
+                  )
+
+              for name, expected in (manifest.get("files") or {}).items():
+                  target = revision / name
+                  if not target.exists():
+                      problems.append(f"{revision.name}:{manifest.get('experiment_id')}: missing file {name}")
+                      continue
+                  digest = hashlib.sha256(target.read_bytes()).hexdigest()
+                  if digest != expected:
+                      problems.append(
+                          f"{revision.name}:{manifest.get('experiment_id')}: checksum mismatch for {name}"
+                      )
+                  files += 1
+
+              # A bundle that declares a pass must carry a summary file.
+              if not (revision / "summary" / "summary.json").exists():
+                  problems.append(f"{revision.name}:{manifest.get('experiment_id')}: no summary.json")
+
+          print(f"bundles={bundles} verified_files={files} problems={len(problems)}")
+          for problem in problems[:50]:
+              print(f"  {problem}")
+          if problems:
+              raise SystemExit("evidence integrity check failed")
+          print("evidence integrity OK")
+          PY
+
+      - name: Assert evidence is pinned to a revision that contains its experiment code
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          root = Path("research/evidence")
+          experiments = Path("research/experiments")
+          if not root.exists():
+              print("no evidence directory present")
+              raise SystemExit(0)
+
+          problems: list[str] = []
+          checked = 0
+          for experiment_dir in sorted(p for p in root.iterdir() if p.is_dir()):
+              # EXP-nn-... -> run_*.py is resolved by matching the manifest script field.
+              for revision in sorted(p for p in experiment_dir.iterdir() if p.is_dir()):
+                  manifest = json.loads((revision / "manifest.json").read_text(encoding="utf-8"))
+                  sha = manifest.get("source_sha", "")
+                  script = manifest.get("provenance", {}).get("script", "")
+                  if not sha or not script:
+                      continue
+                  path = Path(script)
+                  if not path.exists():
+                      problems.append(f"{experiment_dir.name}: script {script} no longer exists")
+                      continue
+                  try:
+                      subprocess.run(
+                          ["git", "cat-file", "-e", f"{sha}:{path.as_posix()}"],
+                          check=True, capture_output=True,
+                      )
+                  except subprocess.CalledProcessError:
+                      problems.append(
+                          f"{experiment_dir.name}: revision {sha[:8]} does not contain {script}; "
+                          "evidence was produced from an uncommitted working tree"
+                      )
+                  checked += 1
+
+          print(f"pinned_bundles={checked} problems={len(problems)}")
+          for problem in problems:
+              print(f"  {problem}")
+          if problems:
+              raise SystemExit("evidence is not pinned to a revision containing its code")
+          print("evidence pinning OK")
+          PY
+
+  research-self-tests:
+    name: Research tooling self-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install research dependencies
+        run: python -m pip install --disable-pip-version-check "numpy>=1.26" pytest
+      - name: Literature exporter offline unit tests
+        working-directory: research/experiments
+        run: python -m unittest test_literature_search_export.py -v
+      - name: Research library imports and case registry is well-formed
+        env:
+          PYTHONPATH: "backend:research"
+        run: |
+          python - <<'PY'
+          from lib import cases, evidence, numerics, provenance, reference, stats
+          index = cases.case_index()
+          assert len(index) >= 20, f"case registry shrank to {len(index)}"
+          for row in index:
+              assert row["case_id"] and row["family"] and row["description"]
+              assert row["gradient_atol"] > 0 and row["gradient_rtol"] > 0
+          ids = [row["case_id"] for row in index]
+          assert len(ids) == len(set(ids)), "duplicate case ids in the registry"
+          print(f"case registry OK: {len(index)} cases")
+          PY
+
+  reproducibility-smoke:
+    name: Determinism smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check "numpy>=1.26" pytest
+      - name: Cross-environment determinism on a subset of cases
+        env:
+          PYTHONPATH: "backend:research"
+        run: |
+          set -e
+          python research/experiments/run_determinism_study.py \
+            --repo . \
+            --cases dense_3_4_2_relu lstm_t4_d3_h3_dense conv1_6x6_2_same_s2_batchnorm_flatten_tanh \
+            --repeats 3 \
+            --cross-process-cases dense_3_4_2_relu lstm_t4_d3_h3_dense conv1_6x6_2_same_s2_batchnorm_flatten_tanh
+      - name: Upload the determinism bundle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: neurofluxion-determinism-evidence
+          path: research/evidence/EXP-07-determinism-study/
+          if-no-files-found: warn
+          retention-days: 30
