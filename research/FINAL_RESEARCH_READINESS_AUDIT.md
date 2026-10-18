@@ -1,7 +1,7 @@
 # Neurofluxion — Final Research Readiness Audit
 
 **Audit date:** 2026-10-19
-**Frozen evidence revision:** `1ab65d16e20ccbb65b70598112bf5dd605c6179b`
+**Frozen evidence revision:** `750d5ab4a92c097391d669e81a70acb4ab8aaa76`
 **Policy:** runtime and application source are read-only for this research phase.
 Seven runtime defects are reproduced, quantified and documented; none is fixed.
 
@@ -111,16 +111,18 @@ unaffected. The attention path is **not** demonstrated to train.
 - **Hardware/environment:** captured in every manifest — a single Windows
   workstation, Python 3.12.10, NumPy 2.4.6, TensorFlow 2.21.0, CPU only. No
   discrete GPU was used or claimed.
-- **Overhead:** paired trace/forward ratio 1.04x to 21.7x. Dense graphs dominate;
-  recurrent workloads sit near 1.1x with confidence intervals that include 1.0.
+- **Overhead:** paired trace/forward ratio 1.02x to 23.3x. Dense graphs dominate;
+  recurrent workloads sit near 1.1x with confidence intervals that include 1.0
+  and effect sizes near zero.
 - **Attribution:** the residual is dominated by JSON serialisation of the record
-  payload. For `dense_128_256_64`, trace construction is 2.35 ms while JSON
-  serialisation alone is 74.6 ms. Recurrent workloads invert this: their
+  payload. For `dense_128_256_64`, trace construction is 2.81 ms while JSON
+  serialisation alone is 96.2 ms. Recurrent workloads invert this: their
   forward pass dominates and serialisation is a small fraction.
-- **Scaling:** trace-cost and payload exponents are well fitted (R² ≥ 0.84) over
-  the tested ranges. Forward-pass exponents have R² ≤ 0.35 for depth, width,
-  features and filters, so **no forward-pass scaling law is claimed** for those
-  sweeps.
+- **Scaling:** trace-cost and payload exponents are well fitted (R² ≥ 0.85)
+  across every tested sweep. Forward-pass exponents are well fitted only for
+  depth, sequence length, spatial size and filters; for width (R² 0.69) and
+  features (R² 0.56) the forward pass is dominated by fixed per-layer overhead,
+  so **no forward-pass scaling law is claimed** for those two sweeps.
 - **Limitations:** tracemalloc peak is Python allocation peak, not resident set
   size. No HTTP transport, browser rendering, concurrency or cold-start cost is
   measured. Absolute timings from the older hosted-CI runs in
@@ -175,7 +177,7 @@ command against a pinned checkout; §11 of `research/RESEARCH_STATUS.md` lists
 them with their required environment.
 
 - **SHA:** all eleven evidence bundles record
-  `1ab65d16e20ccbb65b70598112bf5dd605c6179b`, the revision whose committed code
+  `750d5ab4a92c097391d669e81a70acb4ab8aaa76`, the revision whose committed code
   produced them, from a clean working tree.
 - **Environment:** OS, CPU, memory, interpreter and dependency versions recorded
   in every manifest.

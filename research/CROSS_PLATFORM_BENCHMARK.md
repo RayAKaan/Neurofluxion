@@ -3,10 +3,10 @@
 > **Superseded on 2026-10-19.** The ratio columns below compare "final-output
 > forward" against "full trace construction", which performs strictly more work.
 > A decomposed benchmark (EXP-05, evidence revision
-> `1ab65d16e20ccbb65b70598112bf5dd605c6179b`) shows that the residual is
+> `750d5ab4a92c097391d669e81a70acb4ab8aaa76`) shows that the residual is
 > dominated by **JSON serialisation of the record payload**, not by the traced
-> arithmetic: for `dense_128_256_64`, trace construction is 2.35 ms while JSON
-> serialisation alone is 74.6 ms. Use [RESEARCH_STATUS.md §5](RESEARCH_STATUS.md)
+> arithmetic: for `dense_128_256_64`, trace construction is 2.81 ms while JSON
+> serialisation alone is 96.2 ms. Use [RESEARCH_STATUS.md §5](RESEARCH_STATUS.md)
 > for the current performance evidence. This document is retained as the
 > historical record of the earlier hosted-CI diagnostics, whose absolute timings
 > also come from a different environment and must not be pooled with the

@@ -1,7 +1,7 @@
 # Neurofluxion Research Status
 
 **Status date:** 2026-10-19
-**Evidence revision (frozen):** `1ab65d16e20ccbb65b70598112bf5dd605c6179b`
+**Evidence revision (frozen):** `750d5ab4a92c097391d669e81a70acb4ab8aaa76`
 **Application source unchanged by this research phase.** Every result below was
 produced by research tooling committed at or before that revision.
 
@@ -130,44 +130,48 @@ serialisation of the record payload, not by the traced arithmetic:
 
 | Workload | forward (ms) | trace total (ms) | trace JSON (ms) | paired ratio median [95% CI] |
 |---|---:|---:|---:|---|
-| dense 8-16-4 | 0.058 | 0.114 | 0.448 | 1.97 [1.79, 2.13] |
-| dense 16-32-8 | 0.080 | 0.158 | 1.398 | 2.02 [1.96, 2.25] |
-| dense 32-64-16 | 0.089 | 0.353 | 4.737 | 3.68 [3.67, 4.33] |
-| dense 64-128-32 | 0.086 | 0.663 | 18.49 | 7.93 [7.46, 8.46] |
-| dense 128-256-64 | 0.109 | 2.354 | 74.56 | 21.74 [20.35, 23.03] |
-| conv 1x8-16 | 0.678 | 0.925 | 3.657 | 1.37 [1.32, 1.46] |
-| conv 1x16-32 | 2.214 | 5.191 | 21.77 | 2.06 [1.96, 2.27] |
-| conv 2x32-32 | 2.918 | 6.103 | 49.29 | 1.97 [1.92, 2.25] |
-| lstm t8-d16-h16 | 0.414 | 0.430 | 0.158 | 1.09 [1.03, 1.20] |
-| gru t8-d16-h16 | 0.352 | 0.373 | 0.191 | 1.08 [1.02, 1.15] |
-| lstm t32-d32-h32 | 1.224 | 1.367 | 0.674 | 1.10 [1.00, 1.19] |
-| gru t32-d32-h32 | 1.108 | 1.178 | 0.693 | 1.09 [1.03, 1.19] |
-| lstm t64-d64-h64 | 2.981 | 2.698 | 2.789 | 1.04 [0.97, 1.06] |
-| gru t64-d64-h64 | 1.954 | 2.259 | 2.436 | 1.16 [1.10, 1.21] |
+| dense 8-16-4 | 0.071 | 0.126 | 0.464 | 1.87 [1.81, 2.33] |
+| dense 16-32-8 | 0.089 | 0.164 | 1.379 | 1.98 [1.82, 2.06] |
+| dense 32-64-16 | 0.084 | 0.284 | 5.499 | 3.41 [3.27, 3.64] |
+| dense 64-128-32 | 0.088 | 0.666 | 23.27 | 7.62 [7.58, 8.52] |
+| dense 128-256-64 | 0.117 | 2.808 | 96.24 | 23.27 [19.29, 38.16] |
+| conv 1x8-16 | 0.836 | 1.270 | 2.722 | 1.37 [1.36, 1.59] |
+| conv 1x16-32 | 2.013 | 3.681 | 23.82 | 1.80 [1.73, 2.09] |
+| conv 2x32-32 | 2.245 | 5.201 | 44.67 | 2.33 [2.28, 2.57] |
+| lstm t8-d16-h16 | 0.385 | 0.411 | 0.147 | 1.07 [1.00, 1.13] |
+| gru t8-d16-h16 | 0.355 | 0.425 | 0.144 | 1.10 [0.97, 1.66] |
+| lstm t32-d32-h32 | 1.554 | 1.259 | 0.686 | 1.02 [0.89, 1.12] |
+| gru t32-d32-h32 | 1.136 | 1.112 | 0.684 | 1.10 [1.02, 1.23] |
+| lstm t64-d64-h64 | 2.483 | 2.694 | 2.477 | 1.13 [1.10, 1.32] |
+| gru t64-d64-h64 | 2.342 | 2.390 | 2.520 | 1.14 [1.05, 1.29] |
 
-Paired ratios range from 1.04x to 21.7x. Effect sizes (Cohen's d_z for paired
-samples) range from -0.06 to 6.04; three recurrent workloads have intervals that
-include 1.0 and near-zero effect sizes, because their layer-level traces carry
-few values while their forward pass dominates. Dense graphs show up to 21.7x
-because their operation-level traces serialise every intermediate tensor.
+Paired ratios range from 1.02x to 23.3x. Cohen's d_z for paired samples ranges
+from -0.21 to 4.23; four recurrent workloads have intervals that include 1.0 and
+near-zero or negative effect sizes, because their layer-level traces carry few
+values while their forward pass dominates. Dense graphs reach 23.3x because
+their operation-level traces serialise every intermediate tensor. The
+`dense_128_256_64` ratio has the widest interval in the set (19.3 to 38.2) and an
+effect size far smaller than the ratio suggests, so it should be treated as the
+least precise point rather than as the headline number.
 
 **Scaling sweeps (EXP-06), one factor at a time, fitted in log-log space and
 reported with R-squared and tested range only.**
 
 | Sweep | Tested range | forward exponent (R²) | trace exponent (R²) | trace payload exponent (R²) |
 |---|---|---|---|---|
-| depth | 1-10 | 0.09 (0.34) | 0.63 (0.89) | 0.91 (0.999) |
-| width | 8-256 | 0.06 (0.35) | 0.76 (0.85) | 1.40 (0.989) |
-| sequence length | 4-128 | 0.82 (0.991) | 0.89 (0.963) | 0.87 (0.996) |
-| features | 8-128 | 0.02 (0.02) | 0.16 (0.84) | 0.84 (0.996) |
-| spatial size | 8-64 | 1.43 (0.955) | 1.58 (0.989) | 1.99 (0.99999) |
-| filters | 4-64 | -0.02 (0.02) | 0.36 (0.91) | 0.95 (0.999) |
+| depth | 1-10 | 0.26 (0.90) | 0.61 (0.99) | 0.91 (0.999) |
+| width | 8-256 | 0.06 (0.69) | 0.69 (0.87) | 1.40 (0.989) |
+| sequence length | 4-128 | 0.87 (0.99) | 0.83 (0.99) | 0.87 (0.996) |
+| features | 8-128 | 0.01 (0.56) | 0.09 (0.86) | 0.84 (0.996) |
+| spatial size | 8-64 | 1.44 (0.98) | 1.50 (0.98) | 1.99 (1.000) |
+| filters | 4-64 | 0.09 (0.93) | 0.35 (0.96) | 0.95 (0.999) |
 
-The forward-pass exponent has a low R-squared for depth, width, features and
-filters: over these ranges the forward pass is dominated by fixed per-layer
-overhead rather than by the swept factor, so **no forward-pass scaling law is
-claimed for those sweeps**. The trace and payload exponents are well fitted
-(R² >= 0.84) and are the defensible result.
+Trace-cost and trace-payload exponents are well fitted everywhere (R² >= 0.85)
+and are the defensible result. Forward-pass exponents are well fitted only for
+depth, sequence length, spatial size and filters; for width (R² 0.69) and
+features (R² 0.56) the forward pass is dominated by fixed per-layer overhead
+rather than by the swept factor, so **no forward-pass scaling law is claimed for
+those two sweeps**.
 
 Quantities that do not vary with their sweep factor are reported as invariant
 and are not fitted. Batch dimension and depth above the validator's layer-count

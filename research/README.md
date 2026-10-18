@@ -7,7 +7,7 @@ the evidence programme reached this point; where it disagrees with the status
 file, the status file is correct. In particular the single-case dense diagnostics
 and the hosted-CI overhead ratios described below have been superseded by
 eleven experiments over twenty graph cases, recorded at evidence revision
-`1ab65d16e20ccbb65b70598112bf5dd605c6179b`.
+`750d5ab4a92c097391d669e81a70acb4ab8aaa76`.
 
 This directory contains the research protocol and evidence ledger for the Neurofluxion implementation paper. It is intentionally separate from runtime application code: the work must characterize the pinned implementation, not change it to manufacture a stronger paper.
 
