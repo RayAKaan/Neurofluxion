@@ -42,6 +42,13 @@ The work is an artifact-centered system paper, not a proposal for a new learning
 
 The paper does not claim that every operation of every neural-network architecture is exposed, that the simulator is equivalent to a production framework, or that the interface has been shown to improve learning outcomes. Those claims would require broader coverage evidence or a controlled user study.
 
+\section{Related Work}
+Neurofluxion sits at the intersection of neural-network visualization, execution inspection, visual analytics, and explainable artificial intelligence (XAI). These areas should not be treated as synonymous. Reviews of DNN interpretability describe post-hoc explanation methods and their theoretical and practical evaluation as a broad field of study \cite{samek2021,ali2023,antamis2024,mohamed2025}. In contrast, the primary system contribution here is to expose executable state—such as intermediate tensors, parameters, and gradients—through an interactive inspection workflow. A displayed tensor is therefore not automatically presented as a post-hoc explanation of a model decision.
+
+Several supplied works provide more specific context. Bhati et al. study layer-wise relevance propagation with selected-neuron parsing and visualization, including graph and heatmap representations \cite{bhati2024}. Alicioglu and Sun combine visual analytics with neuron clustering to provide overview and detailed views while addressing visual clutter \cite{alicioglu2024}. Karagounis connects neural-network visualization with generative models and adversarial perturbations and discusses quantitative visualization assessment \cite{karagounis2024}. These works motivate the paper's distinction between rendering internal structure, organizing complex visual representations, and evaluating whether a visualization or explanation is faithful.
+
+Uncertainty and trustworthiness add another boundary. Prabhushankar and AlRegib show that gradient-based visual explanations can themselves exhibit predictive uncertainty and propose a method to quantify and visualize that uncertainty \cite{prabhushankar2024}. The broader XAI literature likewise emphasizes methodological, evaluation, and trust challenges rather than treating any visualization as intrinsically explanatory \cite{samek2021,ali2023,mohamed2025}. Accordingly, Neurofluxion's current claims are restricted to inspectability and execution-linked visualization; canonical LRP, LIME, DeepSHAP, integrated-gradients, or other attribution fidelity is not claimed without method-specific implementation and validation evidence.
+
 \section{System Overview}
 Neurofluxion is implemented as a React 18/Vite/TypeScript client and a FastAPI/Python backend. The client uses Zustand for application state and includes dedicated Lab, Simulator, Training, Prediction, and Models surfaces. HTTP endpoints support prediction, model metadata, Lab operations, and simulator requests; WebSockets support training telemetry and a topology/metrics stream. The README identifies the latter as a topology + metrics stream; until its implementation is audited, it is not treated here as a trace of actual framework execution.
 
@@ -130,7 +137,6 @@ Neurofluxion contains two distinct execution paths with different purposes and o
 Neurofluxion brings framework-backed model exploration and an independently implemented numerical simulator into an interactive environment for constructing, executing, and inspecting neural-network computation. The paper's focus is the connection between executable state and a user-directed inspection workflow. Its final claims will be bounded by source audit, numerical tests, trace-fidelity checks, and reproducibility artifacts. The system is not presented as a new learning algorithm or as a model-accuracy benchmark.
 
 \begin{thebibliography}{00}
-% TODO: Replace with verified, complete primary references after related-work research.
 \bibitem{tensorflow}
 M. Abadi et al., ``TensorFlow: A System for Large-Scale Machine Learning,''
 \emph{12th USENIX Symposium on Operating Systems Design and Implementation (OSDI)}, 2016.
@@ -141,6 +147,46 @@ F. Chollet et al., ``Keras,'' 2015. [Online]. Available: \url{https://keras.io}
 \bibitem{numpy}
 C. R. Harris et al., ``Array programming with NumPy,''
 \emph{Nature}, vol. 585, pp. 357--362, 2020.
+
+\bibitem{samek2021}
+W. Samek, G. Montavon, S. Lapuschkin, C. J. Anders, and K.-R. Müller,
+``Explaining Deep Neural Networks and Beyond: A Review of Methods and Applications,''
+\emph{Proceedings of the IEEE}, vol. 109, no. 3, pp. 247--278, 2021, doi: 10.1109/JPROC.2021.3060483.
+
+\bibitem{ali2023}
+S. Ali, T. Abuhmed, S. El-Sappagh, K. Muhammad, J. M. Alonso-Moral, R. Confalonieri, R. Guidotti, J. Del Ser, N. Díaz-Rodríguez, and F. Herrera,
+``Explainable Artificial Intelligence (XAI): What We Know and What Is Left to Attain Trustworthy Artificial Intelligence,''
+\emph{Information Fusion}, vol. 99, Art. no. 101805, 2023, doi: 10.1016/j.inffus.2023.101805.
+
+\bibitem{antamis2024}
+T. Antamis, A. Drosou, T. Vafeiadis, A. Nizamis, D. Ioannidis, and D. Tzovaras,
+``Interpretability of Deep Neural Networks: A Review of Methods, Classification and Hardware,''
+\emph{Neurocomputing}, vol. 601, Art. no. 128204, 2024, doi: 10.1016/j.neucom.2024.128204.
+
+\bibitem{mohamed2025}
+A. A. E. M. Mohamed, K. J. Abdelqader, and K. Shaalan,
+``Explainable Artificial Intelligence: A Systematic Review of Progress and Challenges,''
+\emph{Intelligent Systems with Applications}, vol. 28, Art. no. 200595, 2025.
+
+\bibitem{bhati2024}
+D. Bhati, F. Neha, M. Amiruzzaman, A. Guercio, D. K. Shukla, and B. Ward,
+``Neural Network Interpretability with Layer-Wise Relevance Propagation: Novel Techniques for Neuron Selection and Visualization,''
+arXiv:2412.05686, 2024.
+
+\bibitem{prabhushankar2024}
+M. Prabhushankar and G. AlRegib,
+``VOICE: Variance of Induced Contrastive Explanations to Quantify Uncertainty in Neural Network Interpretability,''
+arXiv:2406.00573, 2024.
+
+\bibitem{karagounis2024}
+A. Karagounis,
+``Efficient Visualization of Neural Networks with Generative Models and Adversarial Perturbations,''
+arXiv:2409.13559, 2024.
+
+\bibitem{alicioglu2024}
+G. Alicioglu and B. Sun,
+``Visual Analytics in Explaining Neural Networks with Neuron Clustering,''
+\emph{AI}, vol. 5, no. 2, pp. 465--481, 2024, doi: 10.3390/ai5020023.
 \end{thebibliography}
 
 \end{document}
